@@ -2,7 +2,7 @@
 var all = {
     sequelize:{
         username: 'root',
-        password: '123456',
+        password: '12345',
         database: 'siso',
         host: "localhost",
         dialect: 'mysql',
