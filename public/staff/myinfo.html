@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>我的信息</title>
+    <link rel="stylesheet" href="statics/styles/weui.min.css" />
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div class="page">
+
+            <!-- main content - start -->
+            <div class="page__hd">
+                <h1 class="page__title">我的信息</h1>
+            </div>
+            <div class="page__bd page__bd_spacing">
+                <div class="weui-cells weui-cells_form">
+                    <div class="page__bd">
+                        <div class="weui-form-preview">
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="">我的姓名</label>
+                                    <em id="" class="weui-form-preview"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="">我的电话</label>
+                                    <em id="" class="weui-form-preview"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="">我的公司</label>
+                                    <em id="" class="weui-form-preview"></em>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="weui-btn-area"> -->
+                        <!-- <a id="submit" href="edit.html" class="weui-btn weui-btn_primary">编辑</a> -->
+                    <!-- </div> -->
+                </div>
+            </div>
+            <!-- main content - end -->
+        </div>
+    </div>
+
+    <script src="./zepto.min.js"></script>
+    <script src="./example.js"></script>
+    <script src="statics/scripts/jquery.min.js"></script>
+    <script src="/js/dpscommon.js"></script>
+    <script>
+        $(document).ready(function () {
+            var id = g_utils.GetQueryString("id");
+        });
+    </script>
+
+</body>
+
+</html>

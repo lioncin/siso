@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>API-TEST</title>
+</head>
+
+<body>
+    <div>
+        API-TEST
+        <hr>
+        <p/>
+        <input type="button" id="reportfault" value="reportfault" />
+        <p/>
+        <input type="button" id="getreportlist" value="getreportlist" />
+        <p/>
+        <input type="button" id="getfaultlist" value="getfaultlist" />
+        <p/>
+        <input type="button" id="repairsign" value="repairsign" />
+        <p/>
+        <input type="button" id="endrepair" value="endrepair" />
+        <p/>
+        <input type="button" id="getrepairlist" value="getrepairlist" />
+        <p/>
+        <input type="button" id="userconfirm" value="userconfirm" />
+        <p/>
+        <a href="qrcode?str=xixihahallll"><input type="button" id="qrcode" value="qrcode" /></a>
+        <p/>
+    </div>
+</body>
+<script src="/js/jquery.min.js"></script>
+<script>
+    function load(link, async, callback, data) {
+        var cur = this;
+        return $.ajax({
+            url: link,
+            success: function(result) {
+                callback.call(cur, result);
+            },
+            data: data,
+            async: async,
+            type: "post"
+        }).responseText;
+    }
+
+    $("#reportfault").click(function() {
+        var dom = this;
+        load("/reportfault",
+            true,
+            function(ret) {
+                dom.after(JSON.stringify(ret));
+            }, {
+                "name": "user1",
+                "printerid": "1",
+                "phone": "13510502022",
+                "type": "1",
+                "details": "details"
+            });
+    });
+
+    $("#getreportlist").click(function() {
+        var dom = this;
+        load("/getreportlist",
+            true,
+            function(ret) {
+                dom.after(JSON.stringify(ret));
+            }, {
+                "printerid": "1",
+                "phone": "13510502022",
+                "starttime": "2017-04-14 08:00:00",
+                "endtime": "2017-04-14 18:00:00"
+            });
+    });
+
+
+    $("#getfaultlist").click(function() {
+        var dom = this;
+        load("/getfaultlist",
+            true,
+            function(ret) {
+                dom.after(JSON.stringify(ret));
+            }, {
+                "printerid": "1",
+                "starttime": "2017-04-14 08:00:00",
+                "endtime": "2017-04-14 18:00:00"
+            });
+    });
+
+
+    $("#repairsign").click(function() {
+        var dom = this;
+        load("/repairsign",
+            true,
+            function(ret) {
+                dom.after(JSON.stringify(ret));
+            }, {
+                "printerid": "1",
+                "personid": "1",
+
+
+            });
+    });
+
+    $("#endrepair").click(function() {
+        var dom = this;
+        load("/endrepair",
+            true,
+            function(ret) {
+                dom.after(JSON.stringify(ret));
+            }, {
+                "printerid": "1",
+                "personid": "1",
+                "status": "1"
+            });
+    });
+
+    $("#getrepairlist").click(function() {
+        var dom = this;
+        load("/getrepairlist",
+            true,
+            function(ret) {
+                dom.after(JSON.stringify(ret));
+            }, {
+                "printerid": "1",
+                "personid": "1",
+            });
+    });
+
+    $("#userconfirm").click(function() {
+        var dom = this;
+        load("/userconfirm",
+            true,
+            function(ret) {
+                dom.after(JSON.stringify(ret));
+            }, {
+                "faultid": "1",
+                "evaluation": "OK!!!",
+            });
+    });
+</script>
+
+</html>

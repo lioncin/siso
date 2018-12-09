@@ -1,0 +1,398 @@
+﻿<% include header.ejs %>
+    <!-- page content -->
+    <div class="right_col" role="main" id="application-table">
+        <div class="row" v-show="applicationeditshow" style="display: none; margin-right:0" id="editdlg">
+            <div class="x_panel">
+                <div class="x_content">
+                    <br />
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">申请时间<span class="required"></span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="application.time">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">申请人</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="application.people">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">联系电话</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="application.phone">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">申请清单</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="application.applicationList">
+                            </div>
+                        </div>
+						
+						<div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">状态</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="application.state">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">备注</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="application.remarks">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-title">
+            <div class="title_left">
+                <h3>耗材申请</h3>
+            </div>
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="...">
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">搜索</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="clearfix"></div>
+        <div class="row" v-show="applicationaddshow" style="display:none;">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>添加</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a @click="closeapplicationadd"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">申请时间<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="application.time">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">申请人</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="application.people">
+                                </div>
+                            </div>
+							
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">联系电话</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="application.phone">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">申请清单</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="application.applicationList">
+                                </div>
+                            </div>
+							
+							<div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">状态</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="application.state">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">备注</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="application.remarks">
+                                </div>
+                            </div>
+
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                    <input type="button" class="btn btn-primary" @click="closeapplicationadd" value="取消" />
+                                    <input type="button" class="btn btn-success" @click="submitapplicationadd" value="添加">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>基础信息 <small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <a class="btn btn-default source" @click="addapplication"><i class="glyphicon glyphicon-plus">添加申请</i></a>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+
+                    <!-- <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p> -->
+
+                    <div class="table-responsive">
+                        <table class="table table-striped jambo_table bulk_action">
+                            <thead>
+                                <tr class="headings">
+                                    <th>
+                                        <!-- <input type="checkbox" id="check-all" class="flat"> -->
+                                    </th>
+                                    <th class="column-title">申请时间</th>
+                                    <th class="column-title">申请人</th>
+                                    <th class="column-title">联系电话</th>
+                                    <th class="column-title">申请清单</th>
+									<th class="column-title">状态</th>
+                                    <th class="column-title">备注</th>
+                                    <th class="column-title no-link last"><span class="nobr">动作</span>
+                                    </th>
+                                    <th class="bulk-actions" colspan="7">
+                                        <a class="antoo" style="color:#fff; font-weight:500;">( <span class="action-cnt"> </span> )<i class="fa fa-chevron-down"></i></a>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr class="even pointer" v-for="(application,index) in applications" v-show="applicationshow" style="display: none;">
+                                    <td class="a-center "> {{index+1}}</td>
+                                    <td class="a-left">{{application.time}}</td>
+                                    <td class=" ">{{application.people}}</td>
+                                    <td class=" ">{{application.phone}}</td>
+									<td class=" ">{{application.applicationList}}</td>
+                                    <td class=" ">{{application.state}}</td>
+                                    <td class="a-right a-right ">{{application.remarks}}</td>
+                                    <td class="last">
+									<!-- <a class="btn btn-primary btn-xs" @click="viewperson(faultlog)"><i class="fa fa-folder" ></i>查看</a> -->
+                                        <a class="btn btn-info btn-xs" @click="editapplication(application,index)"><i class="fa fa-pencil"></i>修改</a>
+                                        <a class="btn btn-danger btn-xs" @click="deleteapplication(application,index)"><i class="fa fa-trash-o"></i>删除</a>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="btn-group" v-for="n in pageCout">
+                            <button class="btn btn-info" @click="gopage(n)" v-bind:class="activeNumber === n ? 'active' : ''">{{n}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/layui/lay/dest/layui.all.js"></script>
+    <script src="/js/dpscommon.js"></script>
+    <script src="/js/vue.js"></script>
+
+    <script>
+        var applications = [];
+        var pagesize = 10;
+
+        var vm = new Vue({
+            el: "#application-table",
+            data: {
+                application: {},
+                applicationeditshow: false,
+                applicationshow: true,
+                applicationaddshow: false,
+                faultlogeditshow: false,
+                activeNumber: 1,
+                pageCout: 1,
+                applications: []
+            },
+            methods: {
+                viewapplication: function(application) {
+
+                    g_util.load("/applicationquery",
+                        true,
+                        function(result) {
+                            lyview(result);
+                        }, {
+                            "applicationid": application.id
+                        });
+                },
+                editapplication: function(application) {
+                    editview(application);
+                },
+                deleteapplication: function(application, applicationindex) {
+                    layer.confirm('删除&nbsp&nbsp' + application.type + '&nbsp?', {
+                        icon: 2,
+                        title: '警告：请谨慎操作，删除动作不可逆！'
+                    }, function(index) {
+                        g_util.load("/applicationdelete", false, function(ret) {
+                            var pindex = 0;
+                            for (var i = 0; i < applications.length; i++) {
+                                if (applications[i].id == application.id) {
+                                    pindex = i;
+                                }
+                            }
+                            applications.splice(pindex, 1);
+                            reshen(vm.activeNumber);
+                        }, {
+                            "applicationid": application.id
+                        });
+                        layer.close(index);
+                    });
+                },
+
+                popupmaintenancerecord: function(faultlog) {
+                    popupview(faultlog);
+                },
+
+                addapplication: function() {
+                    vm.applicationaddshow = true;
+                },
+                closeapplicationadd: function() {
+                    vm.applicationaddshow = false;
+                },
+                submitapplicationadd: function() {
+
+                    vm.application.age = new Date().toLocaleDateString();
+                    vm.application.status = 0;
+                    delete vm.application.id;
+                    delete vm.application.createdAt;
+                    delete vm.application.updatedAt;
+                    delete vm.application.deletedAt;
+
+                    console.log(JSON.stringify(vm.application));
+
+                    g_util.load("/applicationadd",
+                        true,
+                        function(result) {
+                            if (result.status == 0) {
+                                layer.alert("添加成功");
+                                vm.applicationaddshow = false;
+                                applications.push(result.result);
+                                reshen(vm.pageCout);
+                            } else {
+                                layer.alert("添加失败,错误原因为" + JSON.stringify(result.result));
+                            }
+                        }, vm.application);
+                },
+                convertDate: function(date) {
+                    return new Date(date).toLocaleDateString();
+                },
+                gopage: function(n) {
+                    reshen(n);
+                }
+            }
+        })
+
+        function reshen(n) {
+            vm.pageCout = Math.ceil(applications.length / pagesize);
+            n = n ? n : 1;
+            vm.applications = applications.slice((n - 1) * 10, n * 10);
+            vm.activeNumber = n;
+        }
+
+        function editview(application) {
+            vm.application = application;
+            delete vm.application.createdAt;
+            delete vm.application.updatedAt;
+            delete vm.application.deletedAt;
+            vm.applicationeditshow = true;
+            layer.open({
+                type: 1,
+                title: "信息修改",
+                area: '800px',
+                scrollbar: false,
+                content: $("#editdlg"),
+                btn: ["修改", "关闭"],
+                yes: function(index) {
+                    layer.close(index);
+
+                    g_util.load("/applicationedit",
+                        true,
+                        function(result) {
+                            if (result == "ok") {
+                                vm.applicationeditshow = false;
+                                application = vm.application;
+                                layer.alert("修改成功");
+                            } else {
+                                layer.alert("修改失败,错误原因为" + result.result);
+                            }
+                        }, vm.application);
+                },
+                cancel: function(index) {
+                    vm.applicationeditshow = false;
+                    layer.close(index);
+                },
+                btn2: function(index) {
+                    vm.applicationeditshow = false;
+                    layer.close(index);
+                }
+            });
+        }
+
+        function popupview(faultlog) {
+            vm.faultlog = faultlog;
+            delete vm.faultlog.createdAt;
+            delete vm.faultlog.updatedAt;
+            delete vm.faultlog.deletedAt;
+            vm.faultlogeditshow = true;
+            layer.open({
+                type: 1,
+                title: "维修信息",
+                area: '800px',
+                scrollbar: false,
+                content: $("#editdlg"),
+                btn: ["修改", "关闭"],
+                yes: function(index) {
+                    layer.close(index);
+
+                    g_util.load("/faultlogedit",
+                        true,
+                        function(result) {
+                            if (result == "ok") {
+                                vm.faultlogeditshow = false;
+                                faultlog = vm.faultlog;
+                                layer.alert("修改成功");
+                            } else {
+                                layer.alert("修改失败,错误原因为" + result.result);
+                            }
+                        }, vm.faultlog);
+                },
+                cancel: function(index) {
+                    vm.faultlogeditshow = false;
+                    layer.close(index);
+                },
+                btn2: function(index) {
+                    vm.faultlogeditshow = false;
+                    layer.close(index);
+                }
+            });
+        }
+
+        var g_util = new Utils();
+
+        g_util.load("/application",
+            true,
+            function(ret) {
+                applications = ret;
+                //faultlogs = ret;
+                reshen(1);
+            }, {});
+    </script>
+    <% include footer.ejs %>

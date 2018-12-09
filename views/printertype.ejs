@@ -1,0 +1,378 @@
+<% include header.ejs %>
+<!-- page content -->
+<div class="right_col" role="main" id="printertype-table">
+ <div class="row"  v-show="printertypeeditshow" style="display: none; margin-right:0" id="editdlg">
+     <div class="x_panel">
+       <div class="x_content">
+         <br />
+         <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >名称 <span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="printertype.name">
+             </div>
+           </div>
+		   
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >型号 <span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="printertype.type">
+             </div>
+           </div>
+		              <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">品牌 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="printertype.brand">
+             </div>
+           </div>
+		   
+		              <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">供应商 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12"  type="text" v-model="printertype.supplier">
+             </div>
+           </div>
+		   
+		              <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">供应商联系方式</label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12"  type="text" v-model="printertype.suppliercontact">
+             </div>
+           </div>		   
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">备注 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="printertype.remarks">
+             </div>
+           </div>
+         </form>
+       </div>
+     </div>
+ </div>
+
+
+
+
+
+<div class="page-title">
+  <div class="title_left">
+  <h3>类型列表</h3>
+  </div>
+  <div class="title_right">
+    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="类型...">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">搜索</button>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="clearfix"></div>
+ <div class="row"  v-show="printertypeaddshow" style="display:none;">
+   <div class="col-md-12 col-sm-12 col-xs-12">
+     <div class="x_panel">
+       <div class="x_title">
+         <h2>添加类型</h2>
+		<ul class="nav navbar-right panel_toolbox">
+          <li><a @click="closeprintertypeadd"><i class="fa fa-close"></i></a>
+          </li>
+        </ul>	
+         <div class="clearfix"></div>
+       </div>
+       <div class="x_content">
+         <br />
+         <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+                     <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >名称 <span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="printertype.name">
+             </div>
+           </div>
+		   
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >型号 <span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="printertype.type">
+             </div>
+           </div>
+		              <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">品牌 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="printertype.brand">
+             </div>
+           </div>
+		   
+		              <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">供应商 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12"  type="text" v-model="printertype.supplier">
+             </div>
+           </div>
+		   
+		              <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">供应商联系方式</label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12"  type="text" v-model="printertype.suppliercontact">
+             </div>
+           </div>		   
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">备注 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="printertype.remarks">
+             </div>
+           </div>
+		   
+		    <div class="ln_solid"></div>
+           <div class="form-group">
+             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+               <input type="button"  class="btn btn-primary" @click="closeprintertypeadd" value="取消"/>
+               <input type="button"   class="btn btn-success" @click="submitprintertypeadd" value ="添加">
+             </div>
+           </div>
+         </form>
+       </div>
+     </div>
+   </div>
+ </div>
+
+
+ <div class="col-md-12 col-sm-12 col-xs-12" >
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>基础信息 <small></small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+			<a class="btn btn-default source" @click="addprintertype"><i class="glyphicon glyphicon-plus">添加类型</i></a>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+	  
+      <div class="x_content">
+
+        <!-- <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p> -->
+
+        <div class="table-responsive">
+          <table class="table table-striped jambo_table bulk_action">
+            <thead>
+              <tr class="headings">
+                <th>
+                  <!-- <input type="checkbox" id="check-all" class="flat"> -->
+                </th>
+                <th class="column-title">名称 </th>
+				<th class="column-title">型号 </th>
+                <th class="column-title">品牌</th>
+				<th class="column-title">供应商</th>
+                <th class="column-title">供应商联系方式</th>
+                <th class="column-title">备注</th>
+                <th class="column-title no-link last"><span class="nobr">动作</span>
+                </th>
+                <th class="bulk-actions" colspan="7">
+                  <a class="antoo" style="color:#fff; font-weight:500;">( <span class="action-cnt"> </span> )<i class="fa fa-chevron-down"></i></a>
+                </th>
+              </tr> 			  
+            </thead>
+			
+            <tbody >	
+				<tr class="even pointer"  v-for="(printertype,index) in printertypes" v-show="printertypeshow" style="display: none;">
+			    <!-- <td class="a-center "> -->
+				<!-- <input type="checkbox" class="flat" name="table_records"> -->
+				<!-- {{index+1}} -->
+                <!-- </td> -->
+				<td class="a-center ">{{index+1+(pagen-1)*10}}</td>
+                <td class="a-left">{{printertype.name}}</td>
+				<td class=" ">{{printertype.type}}</td>
+				<td class=" ">{{printertype.brand}}</td>
+                <td class=" ">{{printertype.supplier}}</td>
+				<td class=" ">{{printertype.suppliercontact}}</td>
+                <td class="a-right a-right ">{{printertype.remarks}}</td>
+                <td class="last"> 
+					<!-- <a class="btn btn-primary btn-xs" @click="viewprintertype(printertype)"><i class="fa fa-folder" ></i>查看</a> -->
+                    <a class="btn btn-info btn-xs" @click="editprintertype(printertype,index)"><i class="fa fa-pencil"></i>修改</a>
+                    <a class="btn btn-danger btn-xs" @click="deleteprintertype(printertype,index)"><i class="fa fa-trash-o"></i>删除</a>
+               </td> 
+              </tr>
+	
+            </tbody>					
+          </table>  
+		  <div class="btn-group" v-for ="n in pageCout">
+		   <button class="btn btn-info" @click="gopage(n)"  v-bind:class="activeNumber === n ? 'active' : ''">{{n}}</button>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/layui/lay/dest/layui.all.js"></script> 
+<script src="/js/dpscommon.js"></script> 
+<script src="/js/vue.js"></script>
+
+<script>
+
+var printertypes = [];
+var pagesize = 10;
+
+var vm = new Vue({
+	el: "#printertype-table",
+	data: {	
+		printertype:{},
+		printertypeeditshow:false,
+		printertypeshow:true,
+		printertypeaddshow:false,
+		activeNumber:1,
+		pageCout:1,
+		pagen:1,//页数
+		printertypes: []
+	},
+	methods: {
+		viewprintertype: function (printertype) {	
+					
+			g_util.load("/printertypequery",
+				true,
+				function (result) {	
+				lyview(result);
+			}, {
+				"printertypeid": printertype.id
+			});
+		},
+		editprintertype: function (printertype) {		
+			editview(printertype);
+		},
+		deleteprintertype: function (printertype,printertypeindex) {
+			layer.confirm('删除&nbsp&nbsp' + printertype.name + '&nbsp?', {
+				icon: 2,
+				title: '警告：请谨慎操作！删除动作不可逆！'
+			}, function (index) {
+				g_util.load("/printertypedelete", false, function (ret) {	
+					var pindex =0;
+					for(var i=0;i<printertypes.length;i++){
+						if(printertypes[i].id == printertype.id){
+						pindex = i;
+						}
+					}
+					printertypes.splice(pindex,1);		
+					reshen(vm.activeNumber);
+					window.location.reload();					
+				}, {
+					"printertypeid": printertype.id
+				});
+				layer.close(index);
+			});
+		},
+		addprintertype:function () {
+			vm.printertypeaddshow = true;				
+		},
+		closeprintertypeadd:function(){
+			vm.printertypeaddshow = false;	
+		},
+		submitprintertypeadd:function(){
+		
+			vm.printertype.age = new Date().toLocaleDateString();
+			vm.printertype.status = 0;
+			delete vm.printertype.id;
+			delete vm.printertype.createdAt;
+			delete vm.printertype.updatedAt;
+			delete vm.printertype.deletedAt;
+			
+			console.log(JSON.stringify(vm.printertype));
+			
+			g_util.load("/printertypeadd",
+				true,
+				function (result) {	
+				if(result.status==0){
+					layer.alert("添加成功");
+					vm.printertypeaddshow = false;
+					printertypes.push(result.result);
+					reshen(vm.pageCout);
+				}else{
+					layer.alert("添加失败,错误原因为"+JSON.stringify(result.result));
+				}	
+			},vm.printertype);
+			
+			
+		},
+		convertDate:function(date){
+			return new Date(date).toLocaleDateString();
+		}
+		,
+		gopage: function(n) {
+                vm.pagen=1;
+                reshen(n);
+                vm.pagen=n;
+            }
+		//gopage:function(n){
+			//reshen(n);		
+		//}
+	}
+})
+
+function reshen(n){
+	vm.pageCout = Math.ceil(printertypes.length/pagesize);
+	n=n?n:1;
+	vm.printertypes = printertypes.slice((n-1)*10,n*10);
+	vm.activeNumber = n;
+}
+
+function editview(printertype){
+	vm.printertype = printertype;
+	delete vm.printertype.createdAt;
+	delete vm.printertype.updatedAt;
+	delete vm.printertype.deletedAt;
+	vm.printertypeeditshow = true;
+	layer.open({
+		type:1,
+		title:"类型信息修改",
+		area: '800px',		
+		scrollbar : false,
+		content:$("#editdlg"),
+		btn:["修改","关闭"],
+		yes:function(index){			
+			layer.close(index);
+	
+			g_util.load("/printertypeedit",
+			true,
+			function (result) {
+			if(result=="ok"){
+					vm.printertypeeditshow = false;
+					printertype = vm.printertype;
+					layer.alert("修改成功");
+				}else{
+					layer.alert("修改失败,错误原因为"+result.result);
+				}	
+			}, vm.printertype);
+			
+			
+		},
+		cancel:function(index){	
+			vm.printertypeeditshow = false;				
+			layer.close(index);
+			window.location.reload();
+		},
+		btn2:function(index){	
+			vm.printertypeeditshow = false;				
+			layer.close(index);
+			window.location.reload();
+		}
+		
+	});
+
+}
+
+var g_util = new Utils();
+
+g_util.load("/printertype",
+	true,
+	function (ret) {
+	printertypes = ret;
+	reshen(1);	
+}, {});
+
+</script>
+<% include footer.ejs %>

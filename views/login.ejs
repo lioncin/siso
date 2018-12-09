@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+  <link rel="stylesheet" type="text/css" href="/css/maps/Login.css">
+</head>
+<body>
+  <div id="login">
+    <h1>服务外包学院打印机报修管理系统</h1>
+    <form method="post">
+      <input type="text" required="required" placeholder="用户名" name="username" id="username"></input>
+      <input type="password" required="required" placeholder="密码" name="password" id="password"></input>
+      <!--<input class="but" type="button" onclick="login()" value="登录"/>-->
+      <button class="but" onclick="login();return false;">登录</button>
+    </form>
+  </div>
+  
+  <script>
+    function login(){
+      var username = $("#username").val();
+      var password = $("#password").val();
+      var data = {"username":username, "password":password};
+      $.ajax({
+        url:'/login',
+        type:'post',
+        data:data,
+        dataType:'json',
+        success:function(data){
+          if(data){
+            //alert('登录成功!');
+            //this.location.href = '/obj';
+            window.location.href = '/obj';
+            //location.href = 'localhost:3000/obj';
+          }
+        },
+        error:function(){
+            alert('请填写正确的用户名和密码！');
+            //this.location.href = '/login';
+            window.location.href = '/';
+            //location.href = 'login';
+        }
+      });
+    }
+  </script>
+  <script src="/js/jquery.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<%include header.ejs%>
+<div class="right_col" role="main" id="tempobj-table">
+
+    <div class="row" v-show="tempobjeditshow" style="display: none; margin-right:0" id="editdlg">
+        <div class="x_panel">
+            <div class="x_content">
+                <br />
+                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">故障名称 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">备注 </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="tempobj.remarks">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="page-title">
+        <div class="title_left">
+            <h3>故障类型</h3>
+        </div>
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="故障类型...">
+                    <span class="input-group-btn">
+          <button class="btn btn-default" type="button">搜索</button>
+        </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="row" v-show="tempobjaddshow" style="display:none;">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>添加故障</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a @click="closetempobjadd"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br />
+                 <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">故障名称 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.name">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">备注 </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="tempobj.remarks">
+                        </div>
+                    </div>
+					<div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                <input type="button" class="btn btn-primary" @click="closetempobjadd" value="取消" />
+                                <input type="button" class="btn btn-success" @click="submittempobjadd" value="添加">
+                            </div>
+                        </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>基础信息 <small></small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <a class="btn btn-default source" @click="addtempobj"><i class="glyphicon glyphicon-plus">添加故障</i></a>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+
+                <!-- <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p> -->
+
+                <div class="table-responsive">
+                    <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+                            <tr class="headings">
+                                <th>
+                                    序号
+                                </th>
+                                <th class="column-title">故障名称 </th>
+                                <th class="column-title">备注</th>
+                                <th class="column-title no-link last"><span class="nobr">动作</span>
+                                </th>
+                                <th class="bulk-actions" colspan="7">
+                                    <a class="antoo" style="color:#fff; font-weight:500;">( <span class="action-cnt"> </span> )<i class="fa fa-chevron-down"></i></a>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr class="even pointer" v-for="(tempobj,index) in tempobjs" v-show="tempobjshow" style="display: none;">
+                                <!-- <td class="a-center ">{{index+1}}</td> -->
+								<td class="a-center ">{{index+1+(pagen-1)*10}}</td>
+                                <td class="a-left">{{tempobj.name}}</td>
+                                <td class="a-right a-right ">{{tempobj.remarks}}</td>
+                                <td class="last">
+                                    <!-- <a class="btn btn-primary btn-xs" @click="viewtempobj(tempobj)"><i class="fa fa-folder" ></i>查看</a> -->
+                                    <a class="btn btn-info btn-xs" @click="edittempobj(tempobj,index)"><i class="fa fa-pencil"></i>修改</a>
+                                    <a class="btn btn-danger btn-xs" @click="deletetempobj(tempobj,index)"><i class="fa fa-trash-o"></i>删除</a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <div class="btn-group" v-for="n in pageCout">
+                        <button class="btn btn-info" @click="gopage(n)" v-bind:class="activeNumber === n ? 'active' : ''">{{n}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/layui/lay/dest/layui.all.js"></script>
+<script src="/js/dpscommon.js"></script>
+<script src="/js/vue.js"></script>
+<script>
+    var g_util = new Utils();
+
+    var tbname = "faulttype";
+    var tempobjs = [];
+    var pagesize = 10;
+
+    var vm = new Vue({
+        el: "#tempobj-table",
+        data: {
+            tempobj: {},
+            tempobjeditshow: false,
+            tempobjshow: true,
+            tempobjaddshow: false,
+            qrcodeshow: false,
+            activeNumber: 1,
+            pageCout: 1,
+			pagen:1,//页数
+            tempobjs: [],
+            printertypes: [],
+            person: []
+        },
+        methods: {
+            viewtempobj: function(tempobj) {
+                tempobjview(tempobj);
+            },
+            edittempobj: function(tempobj) {
+                editview(tempobj);
+            },
+            deletetempobj: function(tempobj, tempobjindex) {
+                tempobjdelete(tempobj, tempobjindex);
+            },
+            addtempobj: function() {
+                vm.tempobjaddshow = true;
+            },
+            closetempobjadd: function() {
+                vm.tempobjaddshow = false;
+            },
+            submittempobjadd: function() {
+                tempobjadd();
+            },
+			gopage: function(n) {
+                vm.pagen=1;
+                reshen(n);
+                vm.pagen=n;
+            }
+			//gopage: function(n) {
+                //reshen(n);
+            //}
+        }
+    });
+
+
+    g_util.load("/getlist",
+        true,
+        function(ret) {
+            tempobjs = ret;
+            reshen(1);
+        }, {
+            "tbname": tbname
+        });
+</script>
+<script src="/js/crud.js"></script>
+<script src="/js/qrcode.min.js"></script>
+<%include footer.ejs%>

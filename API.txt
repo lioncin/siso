@@ -1,0 +1,68 @@
+除对基础表的CRUD外 所有api 返回方式均为
+
+{
+	status:"ok",
+	msg:{
+		name:"张三",
+		age:22
+	}
+}
+或
+{
+	status:"ok",
+	msg:"测试返回值"
+}
+形式，其中只有当status为OK时代表API请求成功。msg 内容可为json对象或者字符串
+
+
+
+/reportfault
+**用户报障
+*printerid 打印机ID
+*name 报障人
+*phone 联系电话
+*type 故障类型
+*details 详情
+
+/getreportlist
+**获取报障列表
+*printerid 打印机ID
+*phone 联系电话
+*starttime
+*endtime
+**返回fault表中的内容 
+
+
+/getfaultlist
+**获取故障列表
+*printerid
+*starttime
+*endtime
+**返回fault表中的内容
+
+
+/repairsign
+**维修签到
+*personid 维修员工id
+*printerid 打印机id
+
+
+/endrepair
+**维修结单
+*personid 维修员工id
+*printerid 打印机id
+*status 维修状态
+
+/getrepairlist
+**获取维修记录列表
+*personid 维修员工id
+*printerid 打印机id
+**返回
+
+
+/userconfirm
+**用户确认
+*faultid 故障id
+*evaluation 评价
+
+

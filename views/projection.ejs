@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<!--Added by JingCheng 2017/4/18 -->
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+      #box1{position:relative}
+      #box1 #time1{position:absolute;right:0;bottom:0}
+    </style>
+	<style type="text/css">
+table.altrowstable {
+	font-family: verdana,arial,sans-serif;
+	font-size:11px;
+	color:#333333;
+	border-width: 1px;
+	border-color: #a9c6c9;
+	border-collapse: collapse;
+}
+table.altrowstable th {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #a9c6c9;
+}
+table.altrowstable td {
+	border-width: 1px;
+	padding: 8px;
+	border-style: solid;
+	border-color: #a9c6c9;
+}
+.oddrowcolor{
+	background-color:#d4e3e5;
+}
+.evenrowcolor{
+	background-color:#c3dde0;
+}
+</style>
+    <script src="/js/jquery.min.js"></script>
+     <!-- <script type="text/javascript" src="/js/jweixin-1.0.0.js"></script>  -->
+ <script src="/js/dpscommon.js"></script> 
+</head>
+
+<body  bgcolor="#8A8A8A">
+  <div id="box1">
+  <h1 align="center" style="color:#FFFFFF">服务外包学院资产管理系统</h1>
+  
+  <div id="time1" align="right" style="margin-top:0px;font-size:20px;color:#FFFFFF">
+    current time
+  </div> 
+  </div>
+  <table border=1 width='100%' id='tabletitle'  class="altrowstable">
+    <!-- <tr align="center"><td colspan=3>服务外包学院打印机报修管理系统</td> -->
+    <tr align="center" style='width:100%' >  
+      <td style='width:15%; height:30px; color:#4ad610; font-size:20px'><strong>部署位置</strong></td>
+      <td style='width:15%; height:30px; color:#4ad610; font-size:20px'><strong>设备品牌</strong></td>     
+      <td style='width:20%; height:30px; color:#4ad610; font-size:20px'><strong>设备类型</strong></td>  
+      <td style='width:20%; height:30px; color:#4ad610; font-size:20px'><strong>设备型号</strong></td>
+      <td style='width:15%; height:30px; color:#4ad610; font-size:20px'><strong>状态</strong></td>
+	  <td style='width:15%; height:30px; color:#4ad610; font-size:20px'><strong>耗时</strong></td>
+    </tr>
+  </table>
+  <script type="text/javascript">            
+    setInterval("document.getElementById('time1').innerHTML = new Date().toLocaleString();", 1000);
+    //间隔一秒刷新一次
+	//1
+	window.setInterval( refresh,1000);
+    //刷新方法
+    function refresh(){
+      g_utils.load("/getfaulttestlist",
+        true,
+        function(ret) {          
+          var html = "";
+          html +='<tr align=\"center\" style=\'width:100%\' ><td style=\'width:15%; height:30px; color:#4ad610; font-size:20px\'><strong>部署位置</strong></td>';
+          html +=' <td style=\'width:15%; height:30px; color:#4ad610; font-size:20px\'><strong>设备品牌</strong></td>';     
+         html +='<td style=\'width:20%; height:30px; color:#4ad610; font-size:20px\'><strong>设备类型</strong></td>';  
+         html +='<td style=\'width:20%; height:30px; color:#4ad610; font-size:20px\'><strong>设备型号</strong></td>';
+         html +='<td style=\'width:15%; height:30px; color:#4ad610; font-size:20px\'><strong>状态</strong></td>';
+		 html +='<td style=\'width:15%; height:30px; color:#4ad610; font-size:20px\'><strong>耗时</strong></td></tr>';
+            ret.forEach(function(element) {
+			  //当前时间
+				var time1 = new Date();
+			    //alert(time1);
+				var time2 = element.time;
+				var s1 = time1.getTime();
+				var s2 = Date.parse(new Date(time2.replace(/-/g, "/")));
+				var total = (s1 - s2)/1000;
+				//alert(total);
+				var day = parseInt(total / (24*60*60));//计算整数天数
+				var afterDay = total - day*24*60*60;//取得算出天数后剩余的秒数
+				var hour = parseInt(afterDay/(60*60));//计算整数小时数
+				var afterHour = total - day*24*60*60 - hour*60*60;//取得算出小时数后剩余的秒数
+				var min = parseInt(afterHour/60);//计算整数分
+				//alert(hour);
+				//alert(time2);
+			
+              if(element.status=='2'){
+                element.status='订购配件中';
+              }else if(element.status=='3'){
+                 element.status='使用备机中';
+              }
+              else if(element.status=='4'){
+                 element.status='维修中';
+              }
+              else {
+                 element.status='故障中';
+              }
+                html+='<tr align=\'center\' style=\'width:100%\' class=\"even pointer\"style=\"display: none;\"><td style=\'width:15%; color:#FFFF00; font-size:15px; height:30px\'>'+element.realposition+'</td>';
+                html +='<td style=\'width:15%; color:#FFFF00; font-size:15px; height:30px\'>'+element.brand+'</td>';//设备品牌
+                html +='<td style=\'width:20%; color:#FFFF00; font-size:15px; height:30px\'>'+element.model +'</td>';//设备类型
+               html +='<td style=\'width:20%; color:#FFFF00; font-size:15px; height:30px\'>'+element.printertype+'</td>';//设备型号
+               html +='<td style=\'width:15%; color:#FFFF00; font-size:15px; height:30px\'>'+element.status+'</td>';//状态
+			   html +='<td style=\'width:15%; color:#FFFF00; font-size:15px; height:30px\'>'+ day + ' ' + '天' + ' ' + hour + ' ' + '时' + ' ' + min + ' ' + '分' +'</td></tr>';//耗时
+              });
+                $("#tabletitle").html(html);
+        }, {
+            "tbname": tbname
+        })
+    }
+	
+	
+	
+    var tbname = "fault";
+      $(document).ready(function() {
+   g_utils.load("/getfaulttestlist",
+        true,
+        function(ret) {
+          var html = "";
+            ret.forEach(function(element) {
+			if(element.status=='2'){
+                element.status='订购配件中';
+              }else if(element.status=='3'){
+                 element.status='使用备机中';
+              }
+              else if(element.status=='4'){
+                 element.status='维修中';
+              }
+              else {
+                 element.status='故障中';
+              }
+                html+='<tr align=\'center\' style=\'width:100%\' class=\"even pointer\"style=\"display: none;\"><td style=\'width:15%; color:#FFFF00; font-size:15px; height:30px\'>'+element.realposition+'</td>';
+                html +='<td style=\'width:15%; color:#FFFF00; font-size:15px; height:30px\'>'+element.brand+'</td>';//设备品牌
+                html +='<td style=\'width:20%; color:#FFFF00; font-size:15px; height:30px\'>'+element.model +'</td>';//设备类型
+               html +='<td style=\'width:20%; color:#FFFF00; font-size:15px; height:30px\'>'+element.printertype+'</td>';//设备型号
+               html +='<td style=\'width:15%; color:#FFFF00; font-size:15px; height:30px\'>'+element.status+'</td>';//状态
+			   html +='<td style=\'width:15%; color:#FFFF00; font-size:15px; height:30px\'>'+ '天' + '时' + '分' +'</td></tr>';//状态
+              });
+                    $("#tabletitle").append(html);
+        }, {
+            "tbname": tbname
+        });
+      })
+	  
+	function altRows(id){
+	if(document.getElementsByTagName){  
+		
+		var table = document.getElementById(id);  
+		var rows = table.getElementsByTagName("tr"); 
+		 
+		for(i = 0; i < rows.length; i++){          
+			if(i % 2 == 0){
+				rows[i].className = "evenrowcolor";
+			}else{
+				rows[i].className = "oddrowcolor";
+			}      
+		}
+	}
+}
+
+window.onload=function(){
+	altRows('tabletitle');
+}
+	  
+  </script>
+</body>
+</html>

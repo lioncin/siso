@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>设备维修</title>
+    <link rel="stylesheet" href="statics/styles/weui.min.css">
+</head>
+
+<body>
+    <div class="page">
+        <div class="page__hd">
+            <h1 class="page__title">设备维修</h1>
+            <p class="page__desc"></p>
+        </div>
+        <div class="page__bd">
+            <div class="weui-form-preview">
+                <!-- <div class="weui-form-preview__hd">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">客户信息</label>
+                        <em id="name"></em>
+                    </div>
+                </div> -->
+                <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="printertype_id">设备类型</label>
+                                    <em id="printermodel"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="name">设备品牌</label>
+                                    <em id="printerbrand"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="printertype_id">设备型号</label>
+                                    <em id="printertype"></em>
+                                </div>
+                            </div>
+                
+                <div class="weui-form-preview__hd">
+                   <div class="weui-form-preview__item">
+                      <label class="weui-form-preview__label" id="id">设备ID</label>
+                      <em id="printerid"></em>
+                      </div>
+                </div>
+                
+                <div class="weui-form-preview__hd">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">序列号</label>
+                        <em id="printerserialnum"></em>
+                    </div>
+                </div>
+                
+                <!-- <div class="weui-form-preview__hd">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">故障情况</label>
+                        <em id="faultName"></em>
+                    </div>
+                </div>
+                <div class="weui-form-preview__hd">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">报修时间</label>
+                        <em id="faultTime"></em>
+                    </div>
+                </div> -->
+            </div>
+            
+            <div class="weui-cells">
+               <div class="weui-cell weui-cell_select weui-cell_select-after">
+                  <div class="weui-cell__hd">
+                     <label for="" class="weui-label" >维修结果</label>
+                  </div>
+                  <div class="weui-cell__bd">
+                     <select class="weui-select" id="represultid" name="select2">
+                     </select>
+                  </div>
+                </div>
+            </div>
+            
+            <div class="weui-cells__title">更换零配件清单</div>
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <textarea id="status" name="status" maxlength="200" onkeydown="countChar('status','counter')" onkeyup="countChar('status','counter')" class="weui-textarea" placeholder="请输入更换零配件清单" rows="3"></textarea>
+                        <div class="weui-textarea-counter"><span id="counter">200</span>/200</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weui-cells__title">维修结果描述</div>
+
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <textarea id="status1" name="status1" maxlength="200" onkeydown="countChar('status1','counter1')" onkeyup="countChar('status1','counter1')" class="weui-textarea" placeholder="请输入维修结果" rows="3"></textarea>
+                        <div class="weui-textarea-counter"><span id="counter1">200</span>/200</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- <div class="weui-cells__title">维修结果：</div>
+            <div class="weui-cells weui-cells_radio">
+                <label class="weui-cell weui-check__label" id="nocomplete" for="x11">
+                <div class="weui-cell__bd">
+                    <p>未完成</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" class="weui-check" name="radio1" id="x11">
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+                <label class="weui-cell weui-check__label" for="x12">
+
+                <div class="weui-cell__bd" id="complete">
+                    <p>已完成</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" name="radio1" class="weui-check" id="x12" checked="checked">
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+            </div> -->
+            
+            <div class="weui-btn-area">
+                <a class="weui-btn weui-btn_primary" id="submit">维修提交</a>
+            </div>
+            
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="/js/jweixin-1.0.0.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/dpscommon.js"></script>
+<script>
+    function countChar(textareaName, spanName) {
+        var rem = document.getElementById(spanName).innerHTML;
+        document.getElementById(spanName).innerHTML = 200 - document.getElementById(textareaName).value.length;
+        if (rem < 0) {
+            rem = 0;
+        }
+    }
+    
+    var printerid = 0;
+    var code, state;
+    
+    $(document).ready(function() {
+        var id = g_utils.GetQueryString("id");
+        code = g_utils.GetQueryString("code");
+        state = g_utils.GetQueryString("state");
+        
+        g_utils.load("/queryprinter",
+            true,
+            function(result) {
+                $("#printermodel").text(result.model);
+                   $("#printermodel").val(result.model);
+                   $("#printerbrand").text(result.brand);
+                   $("#printerbrand").val(result.brand);
+				   $("#printertype").text(result.type);
+                   $("#printertype").val(result.type);
+                $("#printerid").text(result.id);
+                $("#printerid").val(result.id);
+                $("#printerserialnum").text(result.serialnum);
+                $("#printerserialnum").val(result.serialnum);
+                //converttype(result.type);
+            }, {
+                "id": id,
+                "code": code,
+                "state": state
+            });
+            
+        g_utils.load("/getlist",
+          true,
+          function(result) {
+            console.dir(result);
+            $("#represultid").empty();
+            var html = "";
+            result.forEach(function(element) {
+              html+="<option value="+element.id+">"+element.name+"</option>"
+              });
+            $("#represultid").html(html);
+              }, {
+              "tbname": "represult",
+            })
+            
+    })
+    
+    //function converttype(type){
+            //g_utils.load("/query",
+               // true,
+                //function(result) {
+                   // $("#printertype").text(result.type);
+                   // console.log(result.type);
+                //}, {
+                   // "tbname": "printertype",
+                   // "obj":JSON.stringify({"id":type})
+                //});
+       // }
+
+    $("#submit").click(function() {
+		var id = g_utils.GetQueryString("id");
+            code = g_utils.GetQueryString("code");
+            state = g_utils.GetQueryString("state");
+			customername = g_utils.GetQueryString("customername");//所在客户
+	
+        g_utils.load("/stafffaultlog",
+            true,
+            function(result) {
+                if (result != null) {
+                    //alert("提交成功");
+                    window.location.href = "msg_success.html?id=" + id + "&code=" + code + "&state=" + state;
+                }
+            }, {
+                "printerid": $("#printerid").val(),
+                "time": new Date(),
+                "represult": $("#represultid").val(),
+                "list": $("#status").val(),
+                "description": $("#status1").val(),
+                "code": code,
+                "state": state
+            });
+			
+		//TV
+		//封装对象
+             g_utils.load("/updatestatus",
+            true,
+            function(result) {
+                if (result != null) {
+                    //alert("提交成功");
+                    window.location.href = "msg_success.html?id=" + id + "&code=" + code + "&state=" + state;
+                }
+            }, {
+                "printerid": $("#printerid").val(),               
+                "time": new Date(),
+                "status": $("#represultid").val(),
+                "list": $("#status").val(),
+                "description": $("#status1").val(),
+                "code": code,
+                "state": state
+            });
+    });
+</script>
+
+</html>

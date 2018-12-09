@@ -1,0 +1,405 @@
+﻿<% include header.ejs %>
+    <!-- page content -->
+    <div class="right_col" role="main" id="group-table">
+        <div class="row" v-show="groupeditshow" style="display: none; margin-right:0" id="editdlg">
+            <div class="x_panel">
+                <div class="x_content">
+                    <br />
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">父组织<span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="group.pid">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">根</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="group.rootid">
+                            </div>
+                        </div>
+						<div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">组织名称</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="group.name">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">客户管理员</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="group.manager">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">组织位置</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="group.address">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">备注</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="group.remarks">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-title">
+            <div class="title_left">
+                <h3>组织机构</h3>
+            </div>
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="组织机构...">
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">搜索</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="clearfix"></div>
+        <div class="row" v-show="groupaddshow" style="display:none;">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>添加组织机构</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a @click="closegroupadd"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">父组织<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="group.pid">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">根</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="group.rootid">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">组织名称</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="group.name">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">客户管理员</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="group.manager">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">组织位置</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="group.address">
+                                </div>
+                            </div>
+							
+							<div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">备注</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="group.remarks">
+                                </div>
+                            </div>
+
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                    <input type="button" class="btn btn-primary" @click="closegroupadd" value="取消" />
+                                    <input type="button" class="btn btn-success" @click="submitgroupadd" value="添加">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>组织机构信息 <small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <a class="btn btn-default source" @click="addgroup"><i class="glyphicon glyphicon-plus">添加组织机构</i></a>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+
+                    <!-- <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p> -->
+
+                    <div class="table-responsive">
+                        <table class="table table-striped jambo_table bulk_action">
+                            <thead>
+                                <tr class="headings">
+                                    <th>
+                                        <!-- <input type="checkbox" id="check-all" class="flat"> -->
+                                    </th>
+                                    <th class="column-title">父组织</th>
+                                    <th class="column-title">根组织</th>
+                                    <th class="column-title">组织名称</th>
+                                    <th class="column-title">客户管理员</th>
+                                    <th class="column-title">组织位置</th>
+									<th class="column-title">备注</th>
+                                    <th class="column-title no-link last"><span class="nobr">动作</span>
+                                    </th>
+                                    <th class="bulk-actions" colspan="7">
+                                        <a class="antoo" style="color:#fff; font-weight:500;">( <span class="action-cnt"> </span> )<i class="fa fa-chevron-down"></i></a>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr class="even pointer" v-for="(group,index) in groups" v-show="groupshow" style="display: none;">
+                                    <!-- <td class="a-center "> {{index+1}}</td> -->
+									<td class="a-center ">{{index+1+(pagen-1)*10}}</td>
+                                    <td class="a-left">{{group.pid}}</td>
+                                    <td class=" ">{{group.rootid}}</td>
+                                    <td class=" ">{{group.name}}</td>
+                                    <td class=" ">{{group.manager}}</td>
+									<td class=" ">{{group.address}}</td>
+                                    <td class="a-right a-right ">{{group.remarks}}</td>
+                                    <td class="last">
+                                        <a class="btn btn-info btn-xs" @click="editgroup(group,index)"><i class="fa fa-pencil"></i>修改</a>
+                                        <a class="btn btn-danger btn-xs" @click="deletegroup(group,index)"><i class="fa fa-trash-o"></i>删除</a>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="btn-group" v-for="n in pageCout">
+                            <button class="btn btn-info" @click="gopage(n)" v-bind:class="activeNumber === n ? 'active' : ''">{{n}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/layui/lay/dest/layui.all.js"></script>
+    <script src="/js/dpscommon.js"></script>
+    <script src="/js/vue.js"></script>
+
+    <script>
+        var groups = [];
+        var pagesize = 10;
+
+        var vm = new Vue({
+            el: "#group-table",
+            data: {
+                group: {},
+                groupeditshow: false,
+                groupshow: true,
+                groupaddshow: false,
+                faultlogeditshow: false,
+                activeNumber: 1,
+                pageCout: 1,
+				pagen:1,//页数
+                groups: []
+            },
+            methods: {
+                viewgroup: function(group) {
+
+                    g_util.load("/groupquery",
+                        true,
+                        function(result) {
+                            lyview(result);
+                        }, {
+                            "groupid": group.id
+                        });
+                },
+                editgroup: function(group) {
+                    editview(group);
+                },
+                deletegroup: function(group, groupindex) {
+                    layer.confirm('删除&nbsp&nbsp' + group.type + '&nbsp?', {
+                        icon: 2,
+                        title: '警告：请谨慎操作！删除动作不可逆！'
+                    }, function(index) {
+                        g_util.load("/groupdelete", false, function(ret) {
+                            var pindex = 0;
+                            for (var i = 0; i < groups.length; i++) {
+                                if (groups[i].id == group.id) {
+                                    pindex = i;
+                                }
+                            }
+                            groups.splice(pindex, 1);
+                            reshen(vm.activeNumber);
+							window.location.reload();
+                        }, {
+                            "groupid": group.id
+                        });
+                        layer.close(index);
+                    });
+                },
+
+                popupmaintenancerecord: function(faultlog) {
+                    popupview(faultlog);
+                },
+
+                addgroup: function() {
+                    vm.groupaddshow = true;
+                },
+                closegroupadd: function() {
+                    vm.groupaddshow = false;
+                },
+                submitgroupadd: function() {
+
+                    vm.group.age = new Date().toLocaleDateString();
+                    vm.group.status = 0;
+                    delete vm.group.id;
+                    delete vm.group.createdAt;
+                    delete vm.group.updatedAt;
+                    delete vm.group.deletedAt;
+
+                    console.log(JSON.stringify(vm.group));
+
+                    g_util.load("/groupadd",
+                        true,
+                        function(result) {
+                            if (result.status == 0) {
+                                layer.alert("添加成功");
+                                vm.groupaddshow = false;
+                                groups.push(result.result);
+                                reshen(vm.pageCout);
+                            } else {
+                                layer.alert("添加失败,错误原因为" + JSON.stringify(result.result));
+                            }
+                        }, vm.group);
+                },
+                convertDate: function(date) {
+                    return new Date(date).toLocaleDateString();
+                },
+				gopage: function(n) {
+                vm.pagen=1;
+                reshen(n);
+                vm.pagen=n;
+            }
+                //gopage: function(n) {
+                    //reshen(n);
+                //}
+            }
+        })
+
+        function reshen(n) {
+            vm.pageCout = Math.ceil(groups.length / pagesize);
+            n = n ? n : 1;
+            vm.groups = groups.slice((n - 1) * 10, n * 10);
+            vm.activeNumber = n;
+        }
+
+        function editview(group) {
+            vm.group = group;
+            delete vm.group.createdAt;
+            delete vm.group.updatedAt;
+            delete vm.group.deletedAt;
+            vm.groupeditshow = true;
+            layer.open({
+                type: 1,
+                title: "组织机构信息修改",
+                area: '800px',
+                scrollbar: false,
+                content: $("#editdlg"),
+                btn: ["修改", "关闭"],
+                yes: function(index) {
+                    layer.close(index);
+
+                    g_util.load("/groupedit",
+                        true,
+                        function(result) {
+                            if (result == "ok") {
+                                vm.groupeditshow = false;
+                                group = vm.group;
+                                layer.alert("修改成功");
+                            } else {
+                                layer.alert("修改失败,错误原因为" + result.result);
+                            }
+                        }, vm.group);
+                },
+                cancel: function(index) {
+                    vm.groupeditshow = false;
+                    layer.close(index);
+					window.location.reload();
+                },
+                btn2: function(index) {
+                    vm.groupeditshow = false;
+                    layer.close(index);
+					window.location.reload();
+                }
+            });
+        }
+
+        function popupview(faultlog) {
+            vm.faultlog = faultlog;
+            delete vm.faultlog.createdAt;
+            delete vm.faultlog.updatedAt;
+            delete vm.faultlog.deletedAt;
+            vm.faultlogeditshow = true;
+            layer.open({
+                type: 1,
+                title: "维修信息",
+                area: '800px',
+                scrollbar: false,
+                content: $("#editdlg"),
+                btn: ["修改", "关闭"],
+                yes: function(index) {
+                    layer.close(index);
+
+                    g_util.load("/faultlogedit",
+                        true,
+                        function(result) {
+                            if (result == "ok") {
+                                vm.faultlogeditshow = false;
+                                faultlog = vm.faultlog;
+                                layer.alert("修改成功");
+                            } else {
+                                layer.alert("修改失败,错误原因为" + result.result);
+                            }
+                        }, vm.faultlog);
+                },
+                cancel: function(index) {
+                    vm.faultlogeditshow = false;
+                    layer.close(index);
+                },
+                btn2: function(index) {
+                    vm.faultlogeditshow = false;
+                    layer.close(index);
+                }
+            });
+        }
+
+        var g_util = new Utils();
+
+        g_util.load("/group",
+            true,
+            function(ret) {
+                groups = ret;
+                //faultlogs = ret;
+                reshen(1);
+            }, {});
+    </script>
+    <% include footer.ejs %>

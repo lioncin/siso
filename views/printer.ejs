@@ -1,0 +1,415 @@
+<% include header.ejs %>
+<!-- page content -->
+<div class="right_col" role="main" id="printer-table">
+ <div class="row"  v-show="printereditshow" style="display: none; margin-right:0" id="editdlg">
+     <div class="x_panel">
+       <div class="x_content">
+         <br />
+         <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >名称 <span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="printer.name">
+             </div>
+           </div>
+		   
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >位置 <span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="printer.position">
+             </div>
+           </div>
+		              <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">型号 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="printer.type">
+             </div>
+           </div>
+		   
+		              <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">纸盒数 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12"  type="text" v-model="printer.ppbox">
+             </div>
+           </div>
+		   
+		              <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">纸容量/张 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12"  type="text" v-model="printer.ppmax">
+             </div>
+           </div>
+		   
+		              <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">剩余纸量/百分比 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12"  type="text" v-model="printer.ppnum">
+             </div>
+           </div>
+		   
+		              <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">墨量/百分比 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12"  type="text" v-model="printer.inknum">
+             </div>
+           </div>
+		   
+		              <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">负责人 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="printer.manager">
+             </div>
+           </div>
+		   
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">备注 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="printer.remarks">
+             </div>
+           </div>
+         </form>
+       </div>
+     </div>
+ </div>
+
+
+
+<div class="page-title">
+  <div class="title_left">
+  <h3>打印机列表</h3>
+  </div>
+  <div class="title_right">
+    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="打印机...">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">搜索</button>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="clearfix"></div>
+ <div class="row"  v-show="printeraddshow" style="display:none;">
+   <div class="col-md-12 col-sm-12 col-xs-12">
+     <div class="x_panel">
+       <div class="x_title">
+         <h2>添加打印机</h2>
+		<ul class="nav navbar-right panel_toolbox">
+          <li><a @click="closeprinteradd"><i class="fa fa-close"></i></a>
+          </li>
+        </ul>	
+         <div class="clearfix"></div>
+       </div>
+       <div class="x_content">
+         <br />
+         <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >名称 <span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="printer.name">
+             </div>
+           </div>
+		   
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >位置 <span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="printer.position">
+             </div>
+           </div>
+		       <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">型号 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="printer.type">
+             </div>
+           </div>
+		   
+		              <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">纸盒数 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12"  type="text" v-model="printer.ppbox">
+             </div>
+           </div>
+		   
+		              <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">纸容量/张 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12"  type="text" v-model="printer.ppmax">
+             </div>
+           </div>
+		   
+		              <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">剩余纸量/百分比 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12"  type="text" v-model="printer.ppnum">
+             </div>
+           </div>
+		   
+		              <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">墨量/百分比 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12"  type="text" v-model="printer.inknum">
+             </div>
+           </div>
+		   
+		              <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">负责人 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="printer.manager">
+             </div>
+           </div>
+		   
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">备注 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="printer.remarks">
+             </div>
+           </div>
+		   
+           <div class="ln_solid"></div>
+           <div class="form-group">
+             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+               <input type="button"  class="btn btn-primary" @click="closeprinteradd" value="取消"/>
+               <input type="button"   class="btn btn-success" @click="submitprinteradd" value ="添加">
+             </div>
+           </div>
+         </form>
+       </div>
+     </div>
+   </div>
+ </div>
+
+
+ <div class="col-md-12 col-sm-12 col-xs-12" >
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>基础信息 <small></small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+			<a class="btn btn-default source" @click="addprinter"><i class="glyphicon glyphicon-plus">添加打印机</i></a>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+	  
+      <div class="x_content">
+
+        <!-- <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p> -->
+
+        <div class="table-responsive">
+          <table class="table table-striped jambo_table bulk_action">
+            <thead>
+              <tr class="headings">
+                <th>
+                  <!-- <input type="checkbox" id="check-all" class="flat"> -->
+                </th>
+                <th class="column-title">名称 </th>
+                <th class="column-title">位置 </th>
+				<th class="column-title">型号 </th>
+                <th class="column-title">放置时间</th>
+				<th class="column-title">负责人</th>
+                <th class="column-title">状态</th>
+                <th class="column-title">备注</th>
+                <th class="column-title no-link last"><span class="nobr">动作</span>
+                </th>
+                <th class="bulk-actions" colspan="7">
+                  <a class="antoo" style="color:#fff; font-weight:500;">( <span class="action-cnt"> </span> )<i class="fa fa-chevron-down"></i></a>
+                </th>
+              </tr> 			  
+            </thead>
+			
+            <tbody >	
+				<tr class="even pointer"  v-for="(printer,index) in printers" v-show="printershow" style="display: none;">
+			    <td class="a-center ">
+				<!-- <input type="checkbox" class="flat" name="table_records"> -->
+				{{index+1}}
+                </td>
+                <td class="a-left">{{printer.name}}</td>
+                <td class=" ">{{printer.position}}</td>
+				<td class=" ">{{printer.type}}</td>
+                <td class=" ">{{convertDate(printer.age)}}</td>
+				<td class=" ">{{printer.manager}}</td>
+                <td class=" ">{{printer.status}}</td>
+                <td class="a-right a-right ">{{printer.remarks}}</td>
+                <td class="last"> 
+					<!-- <a class="btn btn-primary btn-xs" @click="viewprinter(printer)"><i class="fa fa-folder" ></i>查看</a> -->
+                    <a class="btn btn-info btn-xs" @click="editprinter(printer,index)"><i class="fa fa-pencil"></i>修改</a>
+                    <a class="btn btn-danger btn-xs" @click="deleteprinter(printer,index)"><i class="fa fa-trash-o"></i>删除</a>
+               </td> 
+              </tr>
+	
+            </tbody>					
+          </table>  
+		  <div class="btn-group" v-for ="n in pageCout">
+		   <button class="btn btn-info" @click="gopage(n)"  v-bind:class="activeNumber === n ? 'active' : ''">{{n}}</button>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/layui/lay/dest/layui.all.js"></script> 
+<script src="/js/dpscommon.js"></script> 
+<script src="/js/vue.js"></script>
+
+<script>
+
+var printers = [];
+var pagesize = 10;
+
+var vm = new Vue({
+	el: "#printer-table",
+	data: {	
+		printer:{},
+		printereditshow:false,
+		printershow:true,
+		printeraddshow:false,
+		activeNumber:1,
+		pageCout:1,
+		printers: []
+	},
+	methods: {
+		viewprinter: function (printer) {	
+					
+			g_util.load("/printerquery",
+				true,
+				function (result) {	
+				lyview(result);
+			}, {
+				"printerid": printer.id
+			});
+		},
+		editprinter: function (printer) {		
+			editview(printer);
+		},
+		deleteprinter: function (printer,printerindex) {
+			layer.confirm('删除&nbsp&nbsp' + printer.name + '&nbsp?', {
+				icon: 2,
+				title: '警告'
+			}, function (index) {
+				g_util.load("/printerdelete", false, function (ret) {	
+					var pindex =0;
+					for(var i=0;i<printers.length;i++){
+						if(printers[i].id == printer.id){
+						pindex = i;
+						}
+					}
+					printers.splice(pindex,1);		
+					reshen(vm.activeNumber);			
+				}, {
+					"printerid": printer.id
+				});
+				layer.close(index);
+			});
+		},
+		addprinter:function () {
+			vm.printeraddshow = true;				
+		},
+		closeprinteradd:function(){
+			vm.printeraddshow = false;	
+		},
+		submitprinteradd:function(){
+		
+			vm.printer.age = new Date().toLocaleDateString();
+			vm.printer.status = 0;
+			delete vm.printer.id;
+			delete vm.printer.createdAt;
+			delete vm.printer.updatedAt;
+			delete vm.printer.deletedAt;
+			
+			console.log(JSON.stringify(vm.printer));
+			
+			g_util.load("/printeradd",
+				true,
+				function (result) {	
+				if(result.status==0){
+					layer.alert("添加成功");
+					vm.printeraddshow = false;
+					printers.push(result.result);
+					reshen(vm.pageCout);
+				}else{
+					layer.alert("添加失败,错误原因为"+JSON.stringify(result.result));
+				}	
+			},vm.printer);
+			
+			
+		},
+		convertDate:function(date){
+			return new Date(date).toLocaleDateString();
+		}
+		,
+		gopage:function(n){
+			reshen(n);		
+		}
+	}
+})
+
+function reshen(n){
+
+	console.log(n);
+	vm.pageCout = Math.ceil(printers.length/pagesize);	
+	n=n?n:1;
+	vm.printers = printers.slice((n-1)*10,n*10);
+	vm.activeNumber = n;
+	console.log(vm.activeNumber);
+}
+
+function editview(printer){
+	vm.printer = printer;
+	delete vm.printer.createdAt;
+	delete vm.printer.updatedAt;
+	delete vm.printer.deletedAt;
+	vm.printereditshow = true;
+	layer.open({
+		type:1,
+		title:"打印机信息修改",
+		area: '800px',		
+		scrollbar : false,
+		content:$("#editdlg"),
+		btn:["修改","关闭"],
+		yes:function(index){			
+			layer.close(index);
+	
+			g_util.load("/printeredit",
+			true,
+			function (result) {
+			if(result=="ok"){
+					vm.printereditshow = false;
+					printer = vm.printer;
+					layer.alert("修改成功");
+				}else{
+					layer.alert("修改失败,错误原因为"+result.result);
+				}	
+			}, vm.printer);
+			
+			
+		},
+		cancel:function(index){	
+			vm.printereditshow = false;				
+			layer.close(index);
+		},
+		btn2:function(index){	
+			vm.printereditshow = false;				
+			layer.close(index);
+		}
+		
+	});
+
+}
+
+var g_util = new Utils();
+
+g_util.load("/printer",
+	true,
+	function (ret) {
+	printers = ret;
+	reshen(1);	
+}, {});
+
+</script>
+<% include footer.ejs %>

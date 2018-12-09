@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<!--Added by JingCheng 2017/4/18 -->
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>报修记录</title>
+    <link rel="stylesheet" href="statics/styles/weui.min.css">
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div class="page">
+
+            <!-- main content - start -->
+            <div class="page__hd">
+                <h1 class="page__title">报修记录</h1>
+            </div>
+			
+            <div class="page__bd page__bd_spacing">
+                <div class="weui-cells weui-cells_form">
+                    <div class="page__bd">
+                        <div class="weui-form-preview">
+                             <div class="weui-form-preview__hd"> 
+                                 <div class="weui-form-preview__item"> 
+                                    <table class='table' >
+									<tbody id='table'>
+									<tr>
+									<th style='width:20%;text-align:center;'>序号</th>
+									<th style='width:50%;text-align:center;'>时间</th>
+									<th style='width:30%;text-align:center;'>操作</th>
+									</tr>
+									</tbody>
+									</table>
+                                 </div> 								 
+                            </div> 
+							
+                        </div>
+						 <div  id='recivehtml'>		
+							<div class="js_dialog" id="iosDialog1" style="display: none;">	
+								<div class="weui-mask"></div>
+								<div class="weui-dialog">	
+									<div class="weui-dialog__hd"><strong class="weui-dialog__title">具体信息:</strong></div>	
+									<div class="weui-dialog__bd">									
+										<div class="weui-form-preview__hd">
+											<div class="weui-form-preview__item">
+												<label class="weui-form-preview__label" id="id">设备ID</label>
+												<em id="printerid"></em>
+											</div>
+										</div>                           
+										<div class="weui-form-preview__hd">
+											<div class="weui-form-preview__item">
+												<label class="weui-form-preview__label" id="position">部署位置</label>
+												<em id="printerposition"></em>
+											</div>
+										</div>
+									</div>
+									<div class="weui-dialog__ft">
+									<!-- <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default">取消</a> -->
+									<a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+									</div>
+								</div>
+								</div>
+                        </div>
+						</div>
+						
+                    </div>
+                </div>
+            </div>
+            <!-- main content - end -->
+        </div>
+    </div>
+    <script type="text/javascript" src="/js/jweixin-1.0.0.js"></script>
+    <script src="statics/scripts/jquery.min.js"></script>
+    <script src="/js/dpscommon.js"></script>
+    <script>
+        $(document).ready(function() {
+		var code = g_utils.GetQueryString("code"); 
+		
+            g_utils.load("/queryrecords",
+                true,
+                function(result) {				
+                   var html='';
+					result.forEach(function(item,index){
+					html +='<tr><td style=\'width:25%;text-align:center;\' >'+(index+1)+'</td>';
+					html +='<td  style=\'width:50%;text-align:center;\'>'+item.time+'</td>';
+					 html +='<td style=\'width:25%;text-align:center;\'onclick=\'recive('+item.id+')\' >查看</td></tr>'; 
+					})
+					$('#table').append(html);
+                },{
+					"code": code,
+				});
+        });
+			//查看
+			function recive(id){
+			g_utils.load("/recordqueryrecords",
+                true,
+                function(result) {					
+                   $("#printerid").text(result.printerid);
+                   $("#printerid").val(result.printerid);
+                   $("#printerposition").text(result.realposition);
+                   $("#printerposition").val(result.realposition);		
+					
+					$('#recivehtml').on('click', '.weui-dialog__btn', function(){
+            $(this).parents('.js_dialog').fadeOut(100);
+                 });
+				 
+            $('#iosDialog1').fadeIn(100);
+                
+              
+                },{
+					"id": id,
+				});
+			}
+
+		</script>
+</body>
+
+</html>

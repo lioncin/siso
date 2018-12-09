@@ -1,0 +1,540 @@
+<% include header.ejs %>
+    <!-- page content -->
+    <div class="right_col" role="main" id="person-table">
+		<div class="row" v-show="qrcodeshow" style="display: none; margin-right:0;margin-left:18" id="qrcode">
+          <div class="x_panel" style="margin:0 auto;"> 
+            <div class="x_content" id="qrcodepic" style="width:100%;height:100%;margin-top:10%;"></div>
+          </div>
+        </div>
+		
+        <div class="row" v-show="personeditshow" style="display: none; margin-right:0" id="editdlg">
+            <div class="x_panel">
+                <div class="x_content">
+                    <br />
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">员工代码 <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="person.num">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">员工姓名 <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="person.name">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">性别<span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <!--<input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="person.sex">-->
+                                <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="person.sex">
+                                 <option value=1>男</option>
+                                <option value=2>女</option>
+                             </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">手机号码 </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="person.phone">
+                            </div>
+                        </div>
+
+                        <!--<div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">工号</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="person.num">
+                            </div>
+                        </div>-->
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">当前状态 </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <!--<input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="person.status">-->
+                                <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="person.status">
+                                <option  value=0>正常</option>
+                                <option  value=1>忙</option>
+                            </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">所在客户 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <!--<input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.serviceperson">-->
+                            <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="person.servcustomer">
+                              <option v-for="item in customer" v-bind:value="item.id">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                        
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">备注 </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="person.remarks">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="page-title">
+            <div class="title_left">
+                <h3>工作人员列表</h3>
+            </div>
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="工作人员...">
+                        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">搜索</button>
+        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="clearfix"></div>
+        <div class="row" v-show="personaddshow" style="display:none;">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>添加人员</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a @click="closepersonadd"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                            <div class="form-group">
+                              <label class="control-label col-md-3 col-sm-3 col-xs-12">员工代码 <span class="required">*</span>
+                              </label>
+                              <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="person.num">
+                              </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">员工姓名 <span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="person.name">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">性别<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <!--<input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="person.sex">-->
+                                    <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="person.sex">
+                                      <option value=1>男</option>
+                                      <option value=2>女</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">手机号码 </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="person.phone">
+                                </div>
+                            </div>
+
+                            <!--<div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">工号</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="person.num">
+                                </div>
+                            </div>-->
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">当前状态 </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <!--<input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="person.status">-->
+                                    <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="person.status">
+                                      <option  value=0>正常</option>
+                                      <option  value=1>忙</option>
+                            </select>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                              <label class="control-label col-md-3 col-sm-3 col-xs-12">所在客户 <span class="required">*</span></label>
+                              <div class="col-md-6 col-sm-6 col-xs-12">
+                                  <!--<input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.serviceperson">-->
+                                <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="person.servcustomer">
+                                  <option v-for="item in customer" v-bind:value="item.id">{{item.name}}</option>
+                                </select>
+                              </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">备注 </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="person.remarks">
+                                </div>
+                            </div>
+
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                    <input type="button" class="btn btn-primary" @click="closepersonadd" value="取消" />
+                                    <input type="button" class="btn btn-success" @click="submitpersonadd" value="添加">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>基础信息 <small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <a class="btn btn-default source" @click="addperson"><i class="glyphicon glyphicon-plus">添加人员</i></a>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+
+                    <!-- <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p> -->
+
+                    <div class="table-responsive">
+                        <table class="table table-striped jambo_table bulk_action">
+                            <thead>
+                                <tr class="headings">
+                                    <th>
+                                        <!-- <input type="checkbox" id="check-all" class="flat"> -->
+                                    </th>
+                                    <th class="column-title">员工代码 </th>
+                                    <th class="column-title">员工姓名 </th>
+                                    <th class="column-title">性别</th>
+                                    <th class="column-title">手机号码</th>
+                                    <th class="column-title">当前状态</th>
+                                    <th class="column-title">所在客户</th>
+                                    <th class="column-title">备注</th>
+                                    <th class="column-title no-link last"><span class="nobr">动作</span>
+                                    </th>
+                                    <th class="bulk-actions" colspan="7">
+                                        <a class="antoo" style="color:#fff; font-weight:500;">( <span class="action-cnt"> </span> )<i class="fa fa-chevron-down"></i></a>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr class="even pointer" v-for="(person,index) in persons" v-show="personshow" style="display: none;">
+                                    <!-- <td class="a-center "> {{index+1}}</td> -->
+									<td class="a-center ">{{index+1+(pagen-1)*10}}</td>
+                                    <td class=" ">{{person.num}}</td>
+                                    <td class="a-left">{{person.name}}</td>
+                                    <td class=" ">{{convertsex(person.sex)}}</td>
+                                    <td class=" ">{{person.phone}}</td>
+                                    <td class=" ">{{convertstatus(person.status)}}</td>
+                                    <td class="a-left">{{convertsc(person.servcustomer)}}</td>
+                                    <td class="a-right a-right ">{{person.remarks}}</td>
+                                    <td class="last">
+                                        <a class="btn btn-info btn-xs" @click="editperson(person,index)"><i class="fa fa-pencil"></i>修改</a>
+                                        <a class="btn btn-danger btn-xs" @click="deleteperson(person,index)"><i class="fa fa-trash-o"></i>删除</a>
+										<a class="btn btn-success btn-xs" @click="qrcodeperson(person,index)"><i class="fa fa-qrcode"></i>员工二维码</a>
+                                        <a class="btn btn-info btn-xs" @click="popupmaintenancerecord(faultlog,index)" href="faultlog"><i class="fa fa-wrench"></i>维修记录</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="btn-group" v-for="n in pageCout">
+                            <button class="btn btn-info" @click="gopage(n)" v-bind:class="activeNumber === n ? 'active' : ''">{{n}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/layui/lay/dest/layui.all.js"></script>
+    <script src="/js/dpscommon.js"></script>
+    <script src="/js/vue.js"></script>
+
+    <script>
+        var persons = [];
+        var pagesize = 10;
+
+        var vm = new Vue({
+            el: "#person-table",
+            data: {
+                person: {},
+                personeditshow: false,
+                personshow: true,
+                personaddshow: false,
+				qrcodeshow: false,
+                //popup jingcheng 2017/4/13
+                //faultlog:{},
+                faultlogeditshow: false,
+                //faultlogs:[]
+                //popup jingcheng 2017/4/13
+                activeNumber: 1,
+                pageCout: 1,
+				pagen:1,//页数
+                persons: [],
+                customer: []
+            },
+            methods: {
+                viewperson: function(person) {
+
+                    g_util.load("/personquery",
+                        true,
+                        function(result) {
+                            lyview(result);
+                        }, {
+                            "personid": person.id
+                        });
+                },
+                editperson: function(person) {
+                    editview(person);
+                },
+                deleteperson: function(person, personindex) {
+                    layer.confirm('删除&nbsp&nbsp' + person.name + '&nbsp?', {
+                        icon: 2,
+                        title: '警告：请谨慎操作，删除动作不可逆！'
+                    }, function(index) {
+                        g_util.load("/persondelete", false, function(ret) {
+                            var pindex = 0;
+                            for (var i = 0; i < persons.length; i++) {
+                                if (persons[i].id == person.id) {
+                                    pindex = i;
+                                }
+                            }
+                            persons.splice(pindex, 1);
+                            reshen(vm.activeNumber);
+							window.location.reload();
+                        }, {
+                            "personid": person.id
+                        });
+                        layer.close(index);
+                    });
+                },
+
+                popupmaintenancerecord: function(faultlog) {
+                    popupview(faultlog);
+                },
+
+                addperson: function() {
+                    vm.personaddshow = true;
+                },
+				qrcodeperson :function(person, personindex){
+                    getqrcode("http://siso.sipso.com.cn/wxbindperson?id="+person.id);
+                },
+                closepersonadd: function() {
+                    vm.personaddshow = false;
+                },
+                submitpersonadd: function() {
+
+                    vm.person.age = new Date().toLocaleDateString();
+                    vm.person.status = 0;
+                    delete vm.person.id;
+                    delete vm.person.createdAt;
+                    delete vm.person.updatedAt;
+                    delete vm.person.deletedAt;
+
+                    console.log(JSON.stringify(vm.person));
+
+                    g_util.load("/personadd",
+                        true,
+                        function(result) {
+                            if (result.status == 0) {
+                                layer.alert("添加成功");
+                                vm.personaddshow = false;
+                                persons.push(result.result);
+                                reshen(vm.pageCout);
+                            } else {
+                                layer.alert("添加失败,错误原因为" + JSON.stringify(result.result));
+                            }
+                        }, vm.person);
+
+
+                },
+                convertDate: function(date) {
+                    return new Date(date).toLocaleDateString();
+                },
+                convertsc: function(name) {
+                    for (var i = 0; i < vm.customer.length; i++) {
+                    if (vm.customer[i].id == name) {
+                        return vm.customer[i].name;
+                      }
+                    }
+                },
+                convertsex: function(sex) {
+                  if(sex == 1){
+                    return "男";
+                  }else if(sex == 2){
+                    return "女";
+                  }
+                },
+                convertstatus: function(status) {
+                  return (status == 0) ? "正常" : "忙碌";
+                },
+				gopage: function(n) {
+                vm.pagen=1;
+                reshen(n);
+                vm.pagen=n;
+            }
+                //gopage: function(n) {
+                    //reshen(n);
+                //}
+            }
+        })
+		
+		function getqrcode(str) {
+          $("#qrcodepic").empty();
+          var qrcode = new QRCode(document.getElementById("qrcodepic"), {
+            text: str,
+            width: 128,
+            height: 128,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.Q
+          });
+          vm.qrcodeshow = true;
+          layer.open({
+            type: 1,
+            title: "员工二维码",
+            content: $("#qrcode"),
+            cancel: function(index, layero) {
+                vm.qrcodeshow = false;
+                layer.close(index);
+            }
+          });
+        }
+
+        function reshen(n) {
+            vm.pageCout = Math.ceil(persons.length / pagesize);
+            n = n ? n : 1;
+            vm.persons = persons.slice((n - 1) * 10, n * 10);
+            vm.activeNumber = n;
+        }
+
+        function editview(person) {
+            vm.person = person;
+            delete vm.person.createdAt;
+            delete vm.person.updatedAt;
+            delete vm.person.deletedAt;
+            vm.personeditshow = true;
+            layer.open({
+                type: 1,
+                title: "工作人员信息修改",
+                area: '800px',
+                scrollbar: false,
+                content: $("#editdlg"),
+                btn: ["修改", "关闭"],
+                yes: function(index) {
+                    layer.close(index);
+
+                    g_util.load("/personedit",
+                        true,
+                        function(result) {
+                            if (result == "ok") {
+                                vm.personeditshow = false;
+                                person = vm.person;
+                                layer.alert("修改成功");
+                            } else {
+                                layer.alert("修改失败,错误原因为" + result.result);
+                            }
+                        }, vm.person);
+
+
+                },
+                cancel: function(index) {
+                    vm.personeditshow = false;
+                    layer.close(index);
+					window.location.reload();
+                },
+                btn2: function(index) {
+                    vm.personeditshow = false;
+                    layer.close(index);
+					window.location.reload();
+                }
+
+            });
+
+        }
+
+        function popupview(faultlog) {
+            vm.faultlog = faultlog;
+            delete vm.faultlog.createdAt;
+            delete vm.faultlog.updatedAt;
+            delete vm.faultlog.deletedAt;
+            vm.faultlogeditshow = true;
+            layer.open({
+                type: 1,
+                title: "维修信息",
+                area: '800px',
+                scrollbar: false,
+                content: $("#editdlg"),
+                btn: ["修改", "关闭"],
+                yes: function(index) {
+                    layer.close(index);
+
+                    g_util.load("/faultlogedit",
+                        true,
+                        function(result) {
+                            if (result == "ok") {
+                                vm.faultlogeditshow = false;
+                                faultlog = vm.faultlog;
+                                layer.alert("修改成功");
+                            } else {
+                                layer.alert("修改失败,错误原因为" + result.result);
+                            }
+                        }, vm.faultlog);
+
+
+                },
+                cancel: function(index) {
+                    vm.faultlogeditshow = false;
+                    layer.close(index);
+                },
+                btn2: function(index) {
+                    vm.faultlogeditshow = false;
+                    layer.close(index);
+                }
+
+            });
+        }
+
+        var g_util = new Utils();
+
+        g_util.load("/person",
+            true,
+            function(ret) {
+                persons = ret;
+                //faultlogs = ret;
+                reshen(1);
+            }, {});
+            
+        g_util.load("/getlist",
+        true,
+        function(ret) {
+            vm.customer = ret;
+        }, {
+            "tbname": "customer"
+        });
+    </script>
+	<script src="/js/qrcode.min.js"></script>
+    <% include footer.ejs %>

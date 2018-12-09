@@ -1,0 +1,582 @@
+<%include header.ejs%>
+<div class="right_col" role="main" id="customer-table">
+
+    <div class="row" v-show="customereditshow" style="display: none; margin-right:0" id="editdlg">
+        <div class="x_panel">
+            <div class="x_content">
+                <br />
+                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">客户代码 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.customercode">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">客户名称 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">拼音代码 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.pinyincode">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">客户地址 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.customeraddr">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">联系人名 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.contactname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">办公电话 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.officetel">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">手机号码 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.telphone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">服务主管 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <!--<input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.serviceperson">-->
+                            <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="customer.serviceperson">
+                              <option v-for="item in person" v-bind:value="item.id">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">主管手机 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.servicephone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">报修电话 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.repairtel">
+                        </div>
+                    </div>
+                    <!--<div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">性别 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                             <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="customer.sex">
+                                 <option  value=1>男</option>
+                                <option  value=2>女</option>
+                             </select>
+                        </div>
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">手机号码<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                             <input type="text" required="required" class="form-control col-md-7 col-xs-12"  v-model="customer.phone">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">所属组织 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="customer.group">
+                                <option v-for="item in printertypes" v-bind:value="item.id">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">状态 </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="customer.status">
+                                <option  value=0>正常</option>
+                                <option  value=1>忙</option>
+                            </select>
+                        </div>
+                    </div>-->
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">备注 </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="customer.remarks">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="page-title">
+        <div class="title_left">
+            <h3>客户列表</h3>
+        </div>
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="客户...">
+                    <span class="input-group-btn">
+          <button class="btn btn-default" type="button">搜索</button>
+        </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="row" v-show="customeraddshow" style="display:none;">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>添加客户</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a @click="closecustomeradd"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br />
+                 <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">客户代码 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.customercode">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">客户名称 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">拼音代码 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.pinyincode">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">客户地址 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.customeraddr">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">联系人名 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.contactname">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">办公电话 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.officetel">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">手机号码 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.telphone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">服务主管 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <!--<input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.serviceperson">-->
+                            <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="customer.serviceperson">
+                              <option v-for="item in person" v-bind:value="item.id">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">主管手机 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.servicephone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">报修电话 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="customer.repairtel">
+                        </div>
+                    </div>
+                    <!--<div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">性别 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                             <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="customer.sex">
+                                 <option  value=1>男</option>
+                                <option  value=2>女</option>
+                             </select>
+                        </div>
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">手机号码<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                             <input type="text" required="required" class="form-control col-md-7 col-xs-12"  v-model="customer.phone">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">所属组织 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="customer.group">
+                                <option v-for="item in printertypes" v-bind:value="item.id">{{item.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">状态 </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="customer.status">
+                                <option  value=0>正常</option>
+                                <option  value=1>忙</option>
+                            </select>
+                        </div>
+                    </div>-->
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">备注 </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="customer.remarks">
+                        </div>
+                    </div>
+                    <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                <input type="button" class="btn btn-primary" @click="closecustomeradd" value="取消" />
+                                <input type="button" class="btn btn-success" @click="submitcustomeradd" value="添加">
+                            </div>
+                        </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>基础信息 <small></small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <a class="btn btn-default source" @click="addcustomer"><i class="glyphicon glyphicon-plus">添加客户</i></a>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+
+                <!-- <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p> -->
+
+                <div class="table-responsive">
+                    <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+                            <tr class="headings">
+                                <th>
+                                    <!-- <input type="checkbox" id="check-all" class="flat"> -->
+                                </th>
+                                <th class="column-title">客户代码 </th>
+                                <th class="column-title">客户名称 </th>
+                                <th class="column-title">拼音代码 </th>
+                                <th class="column-title">客户地址 </th>
+                                <th class="column-title">联系人名</th>
+                                <th class="column-title">办公电话</th>
+                                <th class="column-title">手机号码</th>
+                                <th class="column-title">服务主管</th>
+                                <th class="column-title">主管手机</th>
+                                <th class="column-title">报修电话</th>
+                                <th class="column-title">备注</th>
+                                <th class="column-title no-link last"><span class="nobr">动作</span>
+                                </th>
+                                <th class="bulk-actions" colspan="7">
+                                    <a class="antoo" style="color:#fff; font-weight:500;">( <span class="action-cnt"> </span> )<i class="fa fa-chevron-down"></i></a>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr class="even pointer" v-for="(customer,index) in customers" v-show="customershow" style="display: none;">
+                                <!-- <td class="a-center ">{{index+1}}</td> -->
+								<td class="a-center ">{{index+1+(pagen-1)*10}}</td>
+                                <td class="a-left">{{customer.customercode}}</td>
+                                <td class="a-left">{{customer.name}}</td>
+                                <td class="a-left">{{customer.pinyincode}}</td>
+                                <td class="a-left">{{customer.customeraddr}}</td>
+                                <td class="a-left">{{customer.contactname}}</td>
+                                <td class="a-left">{{customer.officetel}}</td>
+                                <td class="a-left">{{customer.telphone}}</td>
+                                <td class="a-left">{{convertsp(customer.serviceperson)}}</td>
+                                <td class="a-left">{{customer.servicephone}}</td>
+                                <td class="a-left">{{customer.repairtel}}</td>
+                                <td class="a-right a-right ">{{customer.remarks}}</td>
+                                <td class="last">
+                                    <!-- <a class="btn btn-primary btn-xs" @click="viewtempobj(tempobj)"><i class="fa fa-folder" ></i>查看</a> -->
+                                    <a class="btn btn-info btn-xs" @click="editcustomer(customer,index)"><i class="fa fa-pencil"></i>修改</a>
+                                    <a class="btn btn-danger btn-xs" @click="deletecustomer(customer,index)"><i class="fa fa-trash-o"></i>删除</a>
+                                    <!-- <a class="btn btn-info btn-xs" @click="specificcustomer(customer,index)"><i class="fa fa-search"></i>查看具体信息</a> -->
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <div class="btn-group" v-for="n in pageCout">
+                        <button class="btn btn-info" @click="gopage(n)" v-bind:class="activeNumber === n ? 'active' : ''">{{n}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/layui/lay/dest/layui.all.js"></script>
+<script src="/js/dpscommon.js"></script>
+<script src="/js/vue.js"></script>
+<script>
+    //var tbname = "customer";
+    var customers = [];
+    var pagesize = 10;
+
+    var vm = new Vue({
+        el: "#customer-table",
+        data: {
+            customer: {},
+            customereditshow: false,
+            customershow: true,
+            customeraddshow: false,
+            qrcodeshow: false,
+            activeNumber: 1,
+            pageCout: 1,
+			pagen:1,//页数
+            customers: [],
+            printertypes: [],
+            person: []
+        },
+        methods: {
+            viewcustomer: function(customer) {
+                //tempobjview(tempobj);
+                g_util.load("/customerquery",
+                  true,
+                  function (result) {	
+                  lyview(result);
+                }, {
+                  "customerid": customer.id
+                });
+            },
+            editcustomer: function(customer) {
+                editview(customer);
+            },
+            deletecustomer: function(customer, customerindex) {
+                //tempobjdelete(tempobj, tempobjindex);
+              layer.confirm('删除&nbsp&nbsp' + customer.name + '&nbsp?', {
+                icon: 2,
+                title: '警告:请谨慎操作，删除动作不可逆！'
+              }, function (index) {
+                g_util.load("/customerdelete", false, function (ret) {	
+                  var mindex =0;
+                  for(var i=0;i<customers.length;i++){
+                    if(customers[i].id == customer.id){
+                    mindex = i;
+                    }
+                  }
+                  customers.splice(mindex,1);		
+                  reshen(vm.activeNumber);
+				  window.location.reload();
+                }, {
+                  "customerid": customer.id
+                });
+                layer.close(index);
+              });                
+            },
+            //2017.6.12 start jingcheng 客户具体信息
+            specificcustomer: function(customer) {
+              viewperson(customer);
+            },
+            //2017.6.12 end jingcheng 客户具体信息
+            addcustomer: function() {
+                vm.customeraddshow = true;
+            },
+            closecustomeradd: function() {
+                vm.customeraddshow = false;
+            },
+            submitcustomeradd: function() {
+                //tempobjadd();
+                vm.customer.age = new Date().toLocaleDateString();
+                vm.customer.status = 0;
+                delete vm.customer.id;
+                delete vm.customer.createdAt;
+                delete vm.customer.updatedAt;
+                delete vm.customer.deletedAt;
+                
+                console.log(JSON.stringify(vm.customer));
+                
+                g_util.load("/customeradd",
+                  true,
+                  function (result) {	
+                  if(result.status==0){
+                    layer.alert("添加成功");
+                    vm.customeraddshow = false;
+                    customers.push(result.result);
+                    reshen(vm.pageCout);
+                  }else{
+                    layer.alert("添加失败,错误原因为"+JSON.stringify(result.result));
+                    }	
+                  },vm.customer);
+            },
+            convertDate: function(date) {
+                return new Date(date).toLocaleDateString();
+            },
+            convertsp: function(name) {
+                for (var i = 0; i < vm.person.length; i++) {
+                    if (vm.person[i].id == name) {
+                        return vm.person[i].name;
+                    }
+                }
+            },
+            convertsex: function(sex) {
+                if(sex == 1){
+                    return "男";
+                }else if(sex == 2){
+                    return "女";
+                }
+            },
+            // convertgroup: function(groupid) {
+            //     for (var i = 0; i < vm.person.length; i++) {
+            //         if (vm.person[i].id == personid) {
+            //             return vm.person[i].name;
+            //         }
+            //     }
+            // },
+            convertstatus: function(status) {
+                return (status == 0) ? "正常" : "忙碌";
+            },
+			gopage: function(n) {
+                vm.pagen=1;
+                reshen(n);
+                vm.pagen=n;
+            }
+            //gopage: function(n) {
+                //reshen(n);
+            //}
+        }
+    })
+    
+    function reshen(n){
+      vm.pageCout = Math.ceil(customers.length/pagesize);
+      n=n?n:1;
+      vm.customers = customers.slice((n-1)*10,n*10);
+      vm.activeNumber = n;
+    }
+    
+    function editview(customer){
+      vm.customer = customer;
+      delete vm.customer.createdAt;
+      delete vm.customer.updatedAt;
+      delete vm.customer.deletedAt;
+      vm.customereditshow = true;
+      layer.open({
+        type:1,
+        title:"客户信息修改",
+        area: '800px',		
+        scrollbar : false,
+        content:$("#editdlg"),
+        btn:["修改","关闭"],
+        yes:function(index){			
+        layer.close(index);
+	
+        g_util.load("/customeredit",
+        true,
+        function (result) {
+        if(result=="ok"){
+					vm.customereditshow = false;
+					customer = vm.customer;
+					layer.alert("修改成功");
+         }else{
+					layer.alert("修改失败,错误原因为"+result.result);
+         }	
+			}, vm.customer);
+			
+			
+      },
+      cancel:function(index){	
+			vm.customereditshow = false;				
+			layer.close(index);
+			window.location.reload();
+		},
+		btn2:function(index){	
+			vm.customereditshow = false;				
+			layer.close(index);
+			window.location.reload();
+		}
+		
+	});
+
+}
+
+  //2017.6.12 start jingcheng 客户具体信息
+  function viewperson(customer){
+    layer.open({
+        type:1,
+        title:"客户信息",
+        area: '800px',		
+        scrollbar : false,
+        //content:$("#editdlg"),
+        yes:function(index){			
+        layer.close(index);
+			
+      }
+		
+	});
+  }
+  //2017.6.12 end jingcheng 客户具体信息
+
+  var g_util = new Utils();
+  
+    g_util.load("/customer",
+      true,
+      function(ret){
+        customers = ret;
+        reshen(1);
+      },{});
+
+    // g_util.load("/getlist",
+    //     true,
+    //     function(ret) {
+    //         customers = ret;
+    //         reshen(1);
+    //     }, {
+    //         "tbname": "customer"
+    //     });
+
+    g_util.load("/getlist",
+        true,
+        function(ret) {
+            vm.printertypes = ret;
+        }, {
+            "tbname": "printertype"
+        });
+
+    g_util.load("/getlist",
+        true,
+        function(ret) {
+            vm.person = ret;
+        }, {
+            "tbname": "person"
+        });
+</script>
+<!--<script src="/js/crud.js"></script>-->
+<script src="/js/qrcode.min.js"></script>
+<%include footer.ejs%>

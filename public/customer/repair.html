@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<!--Added by JingCheng 2017/4/18 -->
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>设备报修</title>
+    <link rel="stylesheet" href="statics/styles/weui.min.css">
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="page">
+
+            <!-- main content - start -->
+            <div class="page__hd">
+                <h1 class="page__title">DPS设备报修</h1>
+            </div>
+			
+			
+			<!-- 2017.7.25 realposition start -->
+			<div id="dialogs">
+              <div class="js_dialog" id="iosDialog1" style="display: none;">
+              <div class="weui-mask"></div>
+              <div class="weui-dialog">
+                <div class="weui-dialog__hd"><strong class="weui-dialog__title">温馨提示:</strong></div>
+                <div class="weui-dialog__bd">请填写打印机实际位置信息,谢谢合作!</div>
+                <div class="weui-dialog__ft">
+                    <!-- <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_default">取消</a> -->
+                    <a href="javascript:;" class="weui-dialog__btn weui-dialog__btn_primary">确定</a>
+                </div>
+              </div>
+              </div>
+            </div>
+			<!-- 2017.7.25 realposition end -->
+			
+            <div class="page__bd page__bd_spacing">
+                <div class="weui-cells weui-cells_form">
+                    <div class="page__bd">
+                        <div class="weui-form-preview">
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="printertype_id">设备类型</label>
+                                    <em id="printermodel"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="name">设备品牌</label>
+                                    <em id="printerbrand"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="printertype_id">设备型号</label>
+                                    <em id="printertype"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="id">设备ID</label>
+                                    <em id="printerid"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="serialnum">序列号</label>
+                                    <em id="printerserialnum"></em>
+                                </div>
+                            </div>
+							<div class="weui-form-preview__hd" hidden>
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="drumptype">硒鼓类型</label>
+                                    <em id="printerdrumtype"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="position">部署位置</label>
+                                    <em id="printerposition"></em>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="weui-cells">
+                            <div class="weui-cell weui-cell_select weui-cell_select-after">
+                                <div class="weui-cell__hd">
+                                    <label for="" class="weui-label" >问题类型</label>
+                                </div>
+                                <div class="weui-cell__bd">
+                                    <select class="weui-select" id="typeid" name="select2">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="weui-cell">
+                                <div class="weui-cell_hd"><label class="weui-form-preview__label">用户姓名</label></div>
+                                <div class="weui-cell_bd"><input class="weui-input" type="name" placeholder="请输入姓名" id="personname" onkeyup="showBtn()"></div>
+                                <div class="weui-cell_bd"><input type="submit" class="clearer" id="clearBtn" onclick="clearText();" value="x" style="display:none;"></div>
+                            </div>
+                            <div class="weui-cell">
+                                <div class="weui-cell_hd"><label class="weui-form-preview__label">联系电话</label></div>
+                                <div class="weui-cell_bd"><input class="weui-input" type="tel" placeholder="请输入电话" id="phone" maxlength="11" onblur="checkPhone()" onkeyup="showBtn1()"></div>
+                                <div class="weui-cell_bd"><input type="submit" class="clearer" id="clearBtn1" onclick="clearText1()" value="x" style="display:none;"></div>
+                            </div>
+							<!-- 2017.7.25 realposition start -->
+							<div class="weui-cell">
+                                <div class="weui-cell_hd"><label class="weui-form-preview__label">打印机实际位置（必填）</label></div>
+                                <div class="weui-cell_bd"><input class="weui-input" type="text" placeholder="请输入实际位置" id="realposition" maxlength="11"required='required' ></div>
+                                <div class="weui-cell_bd"><input type="submit" class="clearer" id="clearBtn1" onclick="clearText1()" value="x" style="display:none;"></div>
+                            </div>
+							<!-- 2017.7.25 realposition end -->
+                        </div>
+                        <div class="weui-cells__title">问题描述</div>
+                        <div class="weui-cells weui-cells_form">
+                            <div class="weui-cell">
+                                <div class="weui-cell__bd">
+                                    <textarea id="status" name="status" maxlength="200" onkeydown="countChar('status','counter')" onkeyup="countChar('status','counter')" class="weui-textarea" placeholder="请输入报修问题描述" rows="3"></textarea>
+                                    <div class="weui-textarea-counter"><span id="counter">200</span>/200</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="page__bd">
+                        <div class="weui-gallery" id="gallery">
+                          <span class="weui-gallery__img" id="galleryImg"></span>
+                          <div class="weui-gallery__opr">
+                            <a href="javascript:" class="weui-gallery__del">
+                              <i class="weui-icon-delete weui-icon_gallery-delete"></i>
+                            </a>
+                          </div>
+                        </div>
+                        <!-- <div class="weui-cells weui-cells_form"> -->
+                            <!-- <div class="weui-cell"> -->
+                                <!-- <div class="weui-cell__bd"> -->
+                                    <!-- <div class="weui-uploader"> -->
+                                        <!-- <div class="weui-uploader__hd"> -->
+                                            <!-- <p class="weui-uploader__title">图片上传</p> -->
+                                        <!-- </div> -->
+                                        <!-- <div class="weui-uploader__bd"> -->
+                                            <!-- <ul class="weui-uploader__files" id="uploaderFiles"> -->
+                                            <!-- </ul> -->
+                                            <!-- <div class="weui-uploader__input-box"> -->
+                                                <!-- <form id="upfileform" method="post" enctype="multipart/form-data"> -->
+                                                <!-- <input id="uploaderInput" class="weui-uploader__input" type="file" name="file" accept="image/*" multiple/> -->
+                                                <!-- </form> -->
+                                            <!-- </div> -->
+                                        <!-- </div> -->
+                                    <!-- </div> -->
+                                <!-- </div> -->
+                            <!-- </div> -->
+                        <!-- </div> -->
+                        </div>
+
+                        <div class="weui-btn-area">
+                            <a id="submit" class="weui-btn weui-btn_primary">提交</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- main content - end -->
+
+        </div>
+    </div>
+    <script type="text/javascript" src="/js/jweixin-1.0.0.js"></script>
+    <script src="statics/scripts/jquery.min.js"></script>
+    <script src="/js/dpscommon.js"></script>
+    <script>
+
+        //clear input start jingcheng 2017/5/10
+        function showBtn(){
+            if($("#personname").val().length > 0){
+                document.getElementById('clearBtn').style.display = 'block';
+            }else{
+                document.getElementById('clearBtn').style.display = 'none';
+            }
+        }
+        function clearText(){
+            $("#personname").val("");
+            document.getElementById('clearBtn').style.display = 'none';
+        }
+
+        function showBtn1(){
+            if($("#phone").val().length > 0){
+                document.getElementById('clearBtn1').style.display = 'block';
+            }else{
+                document.getElementById('clearBtn1').style.display = 'none';
+            }
+        }
+        function clearText1(){
+            $("#phone").val("");
+            document.getElementById('clearBtn1').style.display = 'none';
+        }
+        //clear input end jingcheng 2017/5/10
+
+        //check phone num start jingcheng 2017/5/8
+        //function checkPhone(){
+          //var phoneNum = $("#phone").val();
+          //if(/^1[34578]\d{9}$/.test(phoneNum)&&phoneNum.length==11&&isNaN($("#phone").val())==false){
+		  //if(/^1(3[0-9]|4[57]|5[0-35-9]|7[0135678]|8[0-9])\d{8}$/.test(phoneNum)&&phoneNum.length==11&&isNaN($("#phone").val())==false){
+            //alert("输入正确");
+            //}else{
+            //alert("请输入正确的电话号码");
+            //$("#phone").val("");
+            //document.getElementById('clearBtn1').style.display = 'none';
+            //}
+         //}
+		 function checkPhone(){
+          var phoneNum = $("#phone").val();
+          var flag=/^1(3[0-9]|4[57]|5[0-35-9]|7[0135678]|8[0-9])\d{8}$/.test(phoneNum)&&phoneNum.length==11&&isNaN($("#phone").val())==false;
+          var flg=phoneNum.length==4 || phoneNum.length==8;
+          if(flag || flg){
+            //alert("输入正确");
+            }else{
+            alert("请输入正确的电话号码");
+            $("#phone").val("");
+            document.getElementById('clearBtn1').style.display = 'none';
+            }
+         }
+        //check phone num end jingcheng 2017/5/8
+
+        function countChar(textareaName, spanName) {
+            var rem = document.getElementById(spanName).innerHTML;
+            document.getElementById(spanName).innerHTML = 200 - document.getElementById(textareaName).value.length;
+            if (rem < 0) {
+                rem = 0;
+            }
+        }
+
+        var printerid = 0;
+
+        var imageid =0;
+
+        var code,state;
+
+        $(document).ready(function() {
+            var id = g_utils.GetQueryString("id");
+            code = g_utils.GetQueryString("code");
+            state = g_utils.GetQueryString("state");
+            
+            g_utils.load("/queryprinter",
+                true,
+                function(result) {
+                    console.dir(result);
+                   $("#printermodel").text(result.model);
+                   $("#printermodel").val(result.model);
+                   $("#printerbrand").text(result.brand);
+                   $("#printerbrand").val(result.brand);
+				   $("#printertype").text(result.type);
+                   $("#printertype").val(result.type);
+                   $("#printerid").text(result.id);
+                   $("#printerid").val(result.id);
+                   $("#printerserialnum").text(result.serialnum);
+                   $("#printerserialnum").val(result.serialnum);
+				   $("#printerdrumtype").text(result.drumtype);
+                   $("#printerdrumtype").val(result.drumtype);
+                   $("#printerposition").text(result.position);
+                   $("#printerposition").val(result.position);
+                   //converttype(result.type);
+                }, {
+                    "id": id,
+                    "code": code,
+                    "state": state
+                });
+                
+             g_utils.load("/getlist",
+                true,
+                function(result) {
+                    console.dir(result);
+                    $("#typeid").empty();
+                    var html = "";
+                    result.forEach(function(element) {
+                        html+="<option value="+element.id+">"+element.name+"</option>"
+                    });
+                    $("#typeid").html(html);
+                    }, {
+                        "tbname": "faulttype",
+                   });
+
+        });
+
+
+        $("#submit").click(function(){
+            var realposition=$('#realposition').val();//实际位置
+            if(realposition.length<=0 || realposition ==''||realposition ==undefined )
+            {
+             //  alert('进来了');
+                $('#dialogs').on('click', '.weui-dialog__btn', function(){
+            $(this).parents('.js_dialog').fadeOut(200);
+                 });
+              var $iosDialog1 = $('#iosDialog1');
+                $iosDialog1.fadeIn(100);
+                return false;
+            }else{
+		
+		var id = g_utils.GetQueryString("id");
+            code = g_utils.GetQueryString("code");
+            state = g_utils.GetQueryString("state");
+            var formData = new FormData($("#upfileform")[0]);
+			//alert("到了这一步");
+            $.ajax({
+                url: "/upload",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                "code": code,
+                "state": state,
+                success:function(result){
+                    $("#result").html(result.data);
+                    //alert("提交成功");
+					window.location.href = "msg_success.html?id=" + id + "&code=" + code + "&state=" + state;
+                },
+            });
+
+
+            g_utils.load("/reportfault",
+                true,
+                function(result) {
+                    if(result != null){
+                        //alert("提交成功");
+                    }
+                    }, {
+                    "printerid":$("#printerid").val(),
+					"printermodel":$("#printermodel").val(),
+					"printerbrand":$("#printerbrand").val(),
+					"printertype":$("#printertype").val(),
+					"printerdrumtype": $("#printerdrumtype").val(),
+					"printerposition":$("#printerposition").val(),
+                    "type":$("#typeid").val(),
+                    "name": $("#personname").val(),
+                    "phone": $("#phone").val(),
+                    "details":$("#status").val(),
+					"realposition":$("#realposition").val(),
+                    "code": code,
+                    "state": state
+                });}
+        });
+
+
+        //function converttype(type){
+            //g_utils.load("/query",
+                //true,
+                //function(result) {
+                    //$("#printertype").text(result.type);
+                    //console.log(result.type);
+                //}, {
+                    //"tbname": "printertype",
+                    //"obj":JSON.stringify({"id":type})
+                //});
+        //}
+
+        //show picture start jingcheng 2017/5/2
+        $(function(){
+        var tmpl = '<li id="#uploadimage_id#" class="weui-uploader__file" style="background-image:url(#url#)"></li>',
+            $gallery = $("#gallery"), $galleryImg = $("#galleryImg"),
+            $uploaderInput = $("#uploaderInput"),
+            $uploaderFiles = $("#uploaderFiles");
+
+
+        $uploaderInput.on("change", function(e){
+            var src, url = window.URL || window.webkitURL || window.mozURL, files = e.target.files;
+            for (var i = 0, len = files.length; i < len; ++i) {
+                var file = files[i];
+
+                if (url) {
+                    src = url.createObjectURL(file);
+                } else {
+                    src = e.target.result;
+                }
+                var imgid = "uploadimage_"+imageid;
+                imageid++;
+                var temp= tmpl.replace('#uploadimage_id#', imgid);            
+                $uploaderFiles.append($(temp.replace('#url#', src)));
+
+            }
+        });
+        $uploaderFiles.on("click", "li", function(){
+            $galleryImg.attr("style", this.getAttribute("style"));
+            $gallery.attr("imageid",this.id);
+            $gallery.fadeIn(100);
+        });
+		$gallery.on("click", function(){
+            $gallery.fadeOut(100);
+        });
+        $gallery.on("click", "i",function(){
+            if(confirm('确认删除？')){
+                //console.log($("#gallery").attr("imageid"));
+                $("#"+$("#gallery").attr("imageid")).remove();
+            }
+            $gallery.fadeOut(100);
+        });
+
+        });
+        //show picture end jingcheng 2017/5/2
+    </script>
+</body>
+
+</html>

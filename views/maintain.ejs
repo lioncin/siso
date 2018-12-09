@@ -1,0 +1,577 @@
+﻿<% include header.ejs %>
+    <!-- page content -->
+    <div class="right_col" role="main" id="maintain-table">
+        <div class="row" v-show="maintaineditshow" style="display: none; margin-right:0" id="editdlg">
+            <div class="x_panel">
+                <div class="x_content">
+                    <br />
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">设备名称<span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="maintain.name">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">设备ID</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="maintain.equipmentid">
+                            </div>
+                        </div>
+						
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">部署位置</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="maintain.location">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">维护日期</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="maintain.date">
+                            </div>
+                        </div>
+						
+						<div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">维护内容</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="maintain.content">
+                            </div>
+                        </div>
+						
+						<div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">耗材使用</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="maintain.use">
+                            </div>
+                        </div>
+						
+						<div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">维护电话</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="maintain.phone">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">备注</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="maintain.remarks">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-title">
+            <div class="title_left">
+                <h3>日常维护</h3>
+            </div>
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input id="maintainvalue" type="text" class="form-control" placeholder="维护报表...">
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">搜索</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="clearfix"></div>
+        <div class="row" v-show="maintainaddshow" style="display:none;">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>添加</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a @click="closemaintainadd"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">设备名称<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="maintain.name">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">设备ID</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="maintain.equipmentid">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">部署位置</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="maintain.location">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">维护日期</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="maintain.date">
+                                </div>
+                            </div>
+							
+							<div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">维护内容</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="maintain.content">
+                                </div>
+                            </div>
+							
+							<div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">耗材使用</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="maintain.use">
+                                </div>
+                            </div>
+							
+							<div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">维护电话</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="maintain.phone">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">备注</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="maintain.remarks">
+                                </div>
+                            </div>
+
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                    <input type="button" class="btn btn-primary" @click="closemaintainadd" value="取消" />
+                                    <input type="button" class="btn btn-success" @click="submitmaintainadd" value="添加">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>基础信息 <small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <a class="btn btn-default source" @click="addmaintain"><i class="glyphicon glyphicon-plus">添加维护</i></a>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+				
+				<div align="right">
+                  <!-- <a class="btn btn-default source"><i class="glyphicon glyphicon-plus">导出报表</i></a> -->
+                  <button id="exportExcel" class="btn btn-default source"><i class="glyphicon glyphicon-plus">导出报表</i></button>
+                </div>
+
+                <div class="x_content">
+
+                    <!-- <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p> -->
+
+                    <div class="table-responsive">
+                        <table class="table table-striped jambo_table bulk_action">
+                            <thead>
+                                <tr class="headings">
+                                    <th>
+                                        <!-- <input type="checkbox" id="check-all" class="flat"> -->
+                                    </th>
+                                    <th class="column-title">设备名称</th>
+                                    <th class="column-title">设备ID</th>
+                                    <th class="column-title">部署位置</th>
+                                    <th class="column-title">维护日期</th>
+                                    <th class="column-title">维护内容</th>
+									<th class="column-title">耗材使用</th>
+									<th class="column-title">维护电话</th>
+									<th class="column-title">备注</th>
+                                    <th class="column-title no-link last"><span class="nobr">动作</span>
+                                    </th>
+                                    <th class="bulk-actions" colspan="7">
+                                        <a class="antoo" style="color:#fff; font-weight:500;">( <span class="action-cnt"> </span> )<i class="fa fa-chevron-down"></i></a>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr class="even pointer" v-for="(maintain,index) in maintains" v-show="maintainshow" style="display: none;">
+                                    <!-- <td class="a-center "> {{index+1}}</td> -->
+                                    <td class="a-center ">{{index+1+(pagen-1)*10}}</td>
+									<td class="a-left">{{maintain.name}}</td>
+                                    <td class=" ">{{maintain.equipmentid}}</td>
+                                    <td class=" ">{{maintain.location}}</td>
+                                    <td class=" ">{{maintain.date}}</td>
+									<td class=" ">{{maintain.content}}</td>
+									<td class=" ">{{maintain.use}}</td>
+									<td class=" ">{{maintain.phone}}</td>
+                                    <td class="a-right a-right ">{{maintain.remarks}}</td>
+                                    <td class="last">
+									<!-- <a class="btn btn-primary btn-xs" @click="viewperson(faultlog)"><i class="fa fa-folder" ></i>查看</a> -->
+                                        <a class="btn btn-info btn-xs" @click="editmaintain(maintain,index)"><i class="fa fa-pencil"></i>修改</a>
+                                        <a class="btn btn-danger btn-xs" @click="deletemaintain(maintain,index)"><i class="fa fa-trash-o"></i>删除</a>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="btn-group" v-for="n in pageCout">
+                            <button class="btn btn-info" @click="gopage(n)" v-bind:class="activeNumber === n ? 'active' : ''">{{n}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/layui/lay/dest/layui.all.js"></script>
+    <script src="/js/dpscommon.js"></script>
+    <script src="/js/vue.js"></script>
+
+    <script>
+        var maintains = [];
+        var pagesize = 10;
+
+        var vm = new Vue({
+            el: "#maintain-table",
+            data: {
+                maintain: {},
+                maintaineditshow: false,
+                maintainshow: true,
+                maintainaddshow: false,
+                faultlogeditshow: false,
+                activeNumber: 1,
+                pageCout: 1,
+				pagen:1,//页数
+                maintains: []
+            },
+            methods: {
+                viewmaintain: function(maintain) {
+
+                    g_util.load("/maintainquery",
+                        true,
+                        function(result) {
+                            lyview(result);
+                        }, {
+                            "maintainid": maintain.id
+                        });
+                },
+                editmaintain: function(maintain) {
+                    editview(maintain);
+                },
+                deletemaintain: function(maintain, maintainindex) {
+                    layer.confirm('删除&nbsp&nbsp' + maintain.type + '&nbsp?', {
+                        icon: 2,
+                        title: '警告'
+                    }, function(index) {
+                        g_util.load("/maintaindelete", false, function(ret) {
+                            var pindex = 0;
+                            for (var i = 0; i < maintains.length; i++) {
+                                if (maintains[i].id == maintain.id) {
+                                    pindex = i;
+                                }
+                            }
+                            maintains.splice(pindex, 1);
+                            reshen(vm.activeNumber);
+							window.location.reload();
+                        }, {
+                            "maintainid": maintain.id
+                        });
+                        layer.close(index);
+                    });
+                },
+
+                popupmaintenancerecord: function(faultlog) {
+                    popupview(faultlog);
+                },
+
+                addmaintain: function() {
+                    vm.maintainaddshow = true;
+                },
+                closemaintainadd: function() {
+                    vm.maintainaddshow = false;
+                },
+                submitmaintainadd: function() {
+
+                    vm.maintain.age = new Date().toLocaleDateString();
+                    vm.maintain.status = 0;
+                    delete vm.maintain.id;
+                    delete vm.maintain.createdAt;
+                    delete vm.maintain.updatedAt;
+                    delete vm.maintain.deletedAt;
+
+                    console.log(JSON.stringify(vm.maintain));
+
+                    g_util.load("/maintainadd",
+                        true,
+                        function(result) {
+                            if (result.status == 0) {
+                                layer.alert("添加成功");
+                                vm.maintainaddshow = false;
+                                maintains.push(result.result);
+                                reshen(vm.pageCout);
+                            } else {
+                                layer.alert("添加失败,错误原因为" + JSON.stringify(result.result));
+                            }
+                        }, vm.maintain);
+                },
+                convertDate: function(date) {
+                    return new Date(date).toLocaleDateString();
+                },
+                gopage: function(n) {
+                vm.pagen=1;
+                reshen(n);
+                vm.pagen=n;
+            }
+                //gopage: function(n) {
+                    //reshen(n);
+                //}
+            }
+        })
+
+        function reshen(n) {
+            vm.pageCout = Math.ceil(maintains.length / pagesize);
+            n = n ? n : 1;
+            vm.maintains = maintains.slice((n - 1) * 10, n * 10);
+            vm.activeNumber = n;
+        }
+
+        function editview(maintain) {
+            vm.maintain = maintain;
+            delete vm.maintain.createdAt;
+            delete vm.maintain.updatedAt;
+            delete vm.maintain.deletedAt;
+            vm.maintaineditshow = true;
+            layer.open({
+                type: 1,
+                title: "信息修改",
+                area: '800px',
+                scrollbar: false,
+                content: $("#editdlg"),
+                btn: ["修改", "关闭"],
+                yes: function(index) {
+                    layer.close(index);
+
+                    g_util.load("/maintainedit",
+                        true,
+                        function(result) {
+                            if (result == "ok") {
+                                vm.maintaineditshow = false;
+                                maintain = vm.maintain;
+                                layer.alert("修改成功");
+                            } else {
+                                layer.alert("修改失败,错误原因为" + result.result);
+                            }
+                        }, vm.maintain);
+                },
+                cancel: function(index) {
+                    vm.maintaineditshow = false;
+                    layer.close(index);
+					window.location.reload();
+                },
+                btn2: function(index) {
+                    vm.maintaineditshow = false;
+                    layer.close(index);
+					window.location.reload();
+                }
+            });
+        }
+
+        function popupview(faultlog) {
+            vm.faultlog = faultlog;
+            delete vm.faultlog.createdAt;
+            delete vm.faultlog.updatedAt;
+            delete vm.faultlog.deletedAt;
+            vm.faultlogeditshow = true;
+            layer.open({
+                type: 1,
+                title: "维修信息",
+                area: '800px',
+                scrollbar: false,
+                content: $("#editdlg"),
+                btn: ["修改", "关闭"],
+                yes: function(index) {
+                    layer.close(index);
+
+                    g_util.load("/faultlogedit",
+                        true,
+                        function(result) {
+                            if (result == "ok") {
+                                vm.faultlogeditshow = false;
+                                faultlog = vm.faultlog;
+                                layer.alert("修改成功");
+                            } else {
+                                layer.alert("修改失败,错误原因为" + result.result);
+                            }
+                        }, vm.faultlog);
+                },
+                cancel: function(index) {
+                    vm.faultlogeditshow = false;
+                    layer.close(index);
+                },
+                btn2: function(index) {
+                    vm.faultlogeditshow = false;
+                    layer.close(index);
+                }
+            });
+        }
+
+        var g_util = new Utils();
+
+        g_util.load("/maintain",
+            true,
+            function(ret) {
+                maintains = ret;
+                //faultlogs = ret;
+                reshen(1);
+            }, {});
+			
+	//导出Excel      
+         var newhtml = '';
+         var tbname='maintain';
+         $("#exportExcel").click(function(){
+              var maintainvalue = $("#maintainvalue").val().trim();//组织机构
+            g_utils.load("/maintaingetlist",
+                true,
+                function(ret) {
+                    if(ret != null){
+                    
+                       //表头拼接--开始
+                        var html = "<table  ><thead><tr >";
+                        html += '<th>设备名称</th><th >设备ID </th><th >部署位置 </th><th >维护日期</th>';
+                        html += '<th >维护内容</th><th >耗材使用</th><th>维护电话</th><th>备注</th> </tr></thead><tbody>';
+                        //表头拼接--结束
+                        ret.forEach(function (element) {
+                            html += '<tr  >';
+                            html += '<td >' + element.name + '</td>';//设备名称
+                            html += ' <td >' + element.equipmentid + '</td>';//设备ID
+                            html += ' <td >' + element.location + '</td>';//部署位置
+                            html += ' <td >' + element.date + '</td>';//维护日期
+                            html += ' <td >' + element.content + '</td>';//维护内容
+                            html += ' <td >' + element.use + '</td>';//耗材使用
+                            html += ' <td >' + element.phone + '</td>';//维护电话
+                            html += '<td >' + element.remarks + '</td></tr>';//备注
+                        });
+                        newhtml = html + '</tbody></table>';
+                       // alert('newhtml' + newhtml);
+                       // $('#newtable').append(newhtml);//追加到newtable后
+                        maintains = ret;
+                         method1(newhtml);
+                          reshen(1);
+                    }
+                    }, {
+                     "tbname": tbname,//表名
+                     "maintainvalue":maintainvalue
+                });
+        });
+        //导出excel--------begin-------zhailiuhui-------2017-07-31 09:08:50------------------ 
+        var idTmr;
+        function getExplorer() {
+            console.log('判断浏览器!');
+            var explorer = window.navigator.userAgent;
+            //ie 
+            if (explorer.indexOf("MSIE") >= 0) {
+                return 'ie';
+            }
+            //firefox 
+            else if (explorer.indexOf("Firefox") >= 0) {
+                return 'Firefox';
+            }
+            //Chrome
+            else if (explorer.indexOf("Chrome") >= 0) {
+                return 'Chrome';
+            }
+            //Opera
+            else if (explorer.indexOf("Opera") >= 0) {
+                return 'Opera';
+            }
+            //Safari
+            else if (explorer.indexOf("Safari") >= 0) {
+                return 'Safari';
+            }
+        }
+        function method1(newhtml) {//整个表格拷贝到EXCEL中
+           // console.log('导出开始');
+            if (getExplorer() == 'ie') {
+               var curTbl =newhtml;  //document.getElementById(tableid);
+                var oXL = new ActiveXObject("Excel.Application");
+
+                //创建AX对象excel 
+                var oWB = oXL.Workbooks.Add();
+                //获取workbook对象 
+                var xlsheet = oWB.Worksheets(1);
+                //激活当前sheet 
+                var sel = document.body.createTextRange();
+                sel.moveToElementText(curTbl);
+                //把表格中的内容移到TextRange中 
+                sel.select;
+                //全选TextRange中内容 
+                sel.execCommand("Copy");
+                //复制TextRange中内容  
+                xlsheet.Paste();
+                //粘贴到活动的EXCEL中       
+                oXL.Visible = true;
+                //设置excel可见属性
+
+                try {
+                    var fname = oXL.Application.GetSaveAsFilename("Excel.xls", "Excel Spreadsheets (*.xls), *.xls");
+                } catch (e) {
+                    print("Nested catch caught " + e);
+                } finally {
+                    oWB.SaveAs(fname);
+
+                    oWB.Close(savechanges = false);
+                    //xls.visible = false;
+                    oXL.Quit();
+                    oXL = null;
+                    //结束excel进程，退出完成
+                    //window.setInterval("Cleanup();",1);
+                    idTmr = window.setInterval("Cleanup();", 1);
+
+                }
+
+            }
+            else {
+                tableToExcel(newhtml)
+            }
+        }
+        function Cleanup() {
+            window.clearInterval(idTmr);
+            CollectGarbage();
+        }
+        var tableToExcel = (function () {
+            var uri = 'data:application/vnd.ms-excel;base64,',
+                template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="Content-Type" charset=utf-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body>{table}</body></html>',
+                base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) },
+                format = function (s, c) {
+                    return s.replace(/{(\w+)}/g,
+                        function (m, p) { return c[p]; })
+                }
+            return function (table, name) {
+               // if (!table.nodeType)
+                 table =newhtml// document.getElementById(table)
+                var ctx = { worksheet: '导出' || 'Worksheet', table: table }
+               // alert('template:'+template);
+              // alert(JSON.stringify(ctx));
+                window.location.href = uri + base64(format(template, ctx))
+            }
+        })()
+    //导出excel--------end------------zhailiuhui---2017-07-31 09:08:38------------
+    </script>
+    <% include footer.ejs %>

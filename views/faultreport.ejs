@@ -1,0 +1,527 @@
+<% include header.ejs %>
+    <!-- page content -->
+    <div class="right_col" role="main" id="faultreport-table">
+        <div class="row" v-show="faultreporteditshow" style="display: none; margin-right:0" id="editdlg">
+            <div class="x_panel">
+                <div class="x_content">
+                    <br />
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">设备型号<span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="faultreport.type">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">报障人</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="faultreport.people">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">联系电话</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="faultreport.phone">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">故障详情</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="faultreport.details">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">维修电话</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="faultreport.repairphone">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-title">
+            <div class="title_left">
+                <h3>故障报表</h3>
+            </div>
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input id="faultreportvalue" type="text" class="form-control" placeholder="故障报表...">
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">搜索</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="clearfix"></div>
+        <div class="row" v-show="faultreportaddshow" style="display:none;">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>添加</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a @click="closefaultreportadd"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">设备型号<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="faultreport.type">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">报障人</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="faultreport.people">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">联系电话</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="faultreport.phone">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">故障详情</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="faultreport.details">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">维修电话</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="faultreport.repairphone">
+                                </div>
+                            </div>
+
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                    <input type="button" class="btn btn-primary" @click="closefaultreportadd" value="取消" />
+                                    <input type="button" class="btn btn-success" @click="submitfaultreportadd" value="添加">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>基础信息 <small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <a class="btn btn-default source" @click="addfaultreport"><i class="glyphicon glyphicon-plus">添加故障</i></a>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+				
+				<div align="right">
+                  <!-- <a class="btn btn-default source"><i class="glyphicon glyphicon-plus">导出报表</i></a> -->
+                  <button id="exportExcel" class="btn btn-default source"><i class="glyphicon glyphicon-plus">导出报表</i></button>
+                </div>
+
+                <div class="x_content">
+
+                    <!-- <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p> -->
+
+                    <div class="table-responsive">
+                        <table class="table table-striped jambo_table bulk_action">
+                            <thead>
+                                <tr class="headings">
+                                    <th>
+                                        <!-- <input type="checkbox" id="check-all" class="flat"> -->
+                                    </th>
+                                    <th class="column-title">设备型号 </th>
+                                    <th class="column-title">报障人 </th>
+                                    <th class="column-title">联系电话</th>
+                                    <th class="column-title">故障详情</th>
+                                    <th class="column-title">维修电话</th>
+                                    <th class="column-title no-link last"><span class="nobr">动作</span>
+                                    </th>
+                                    <th class="bulk-actions" colspan="7">
+                                        <a class="antoo" style="color:#fff; font-weight:500;">( <span class="action-cnt"> </span> )<i class="fa fa-chevron-down"></i></a>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr class="even pointer" v-for="(faultreport,index) in faultreports" v-show="faultreportshow" style="display: none;">
+                                    <!-- <td class="a-center "> {{index+1}}</td> -->
+                                    <td class="a-center ">{{index+1+(pagen-1)*10}}</td>
+									<td class="a-left">{{faultreport.type}}</td>
+                                    <td class=" ">{{faultreport.people}}</td>
+                                    <td class=" ">{{faultreport.phone}}</td>
+                                    <td class=" ">{{faultreport.details}}</td>
+                                    <td class="a-right a-right ">{{faultreport.repairphone}}</td>
+                                    <td class="last">
+									<!-- <a class="btn btn-primary btn-xs" @click="viewperson(faultlog)"><i class="fa fa-folder" ></i>查看</a> -->
+                                        <a class="btn btn-info btn-xs" @click="editfaultreport(faultreport,index)"><i class="fa fa-pencil"></i>修改</a>
+                                        <a class="btn btn-danger btn-xs" @click="deletefaultreport(faultreport,index)"><i class="fa fa-trash-o"></i>删除</a>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="btn-group" v-for="n in pageCout">
+                            <button class="btn btn-info" @click="gopage(n)" v-bind:class="activeNumber === n ? 'active' : ''">{{n}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/layui/lay/dest/layui.all.js"></script>
+    <script src="/js/dpscommon.js"></script>
+    <script src="/js/vue.js"></script>
+
+    <script>
+        var faultreports = [];
+        var pagesize = 10;
+
+        var vm = new Vue({
+            el: "#faultreport-table",
+            data: {
+                faultreport: {},
+                faultreporteditshow: false,
+                faultreportshow: true,
+                faultreportaddshow: false,
+                faultlogeditshow: false,
+                activeNumber: 1,
+                pageCout: 1,
+				pagen:1,//页数
+                faultreports: []
+            },
+            methods: {
+                viewfaultreport: function(faultreport) {
+
+                    g_util.load("/faultreportquery",
+                        true,
+                        function(result) {
+                            lyview(result);
+                        }, {
+                            "faultreportid": faultreport.id
+                        });
+                },
+                editfaultreport: function(faultreport) {
+                    editview(faultreport);
+                },
+                deletefaultreport: function(faultreport, faultreportindex) {
+                    layer.confirm('删除&nbsp&nbsp' + faultreport.type + '&nbsp?', {
+                        icon: 2,
+                        title: '警告：请谨慎操作，删除动作不可逆！'
+                    }, function(index) {
+                        g_util.load("/faultreportdelete", false, function(ret) {
+                            var pindex = 0;
+                            for (var i = 0; i < faultreports.length; i++) {
+                                if (faultreports[i].id == faultreport.id) {
+                                    pindex = i;
+                                }
+                            }
+                            faultreports.splice(pindex, 1);
+                            reshen(vm.activeNumber);
+							window.location.reload();
+                        }, {
+                            "faultreportid": faultreport.id
+                        });
+                        layer.close(index);
+                    });
+                },
+
+                popupmaintenancerecord: function(faultlog) {
+                    popupview(faultlog);
+                },
+
+                addfaultreport: function() {
+                    vm.faultreportaddshow = true;
+                },
+                closefaultreportadd: function() {
+                    vm.faultreportaddshow = false;
+                },
+                submitfaultreportadd: function() {
+
+                    vm.faultreport.age = new Date().toLocaleDateString();
+                    vm.faultreport.status = 0;
+                    delete vm.faultreport.id;
+                    delete vm.faultreport.createdAt;
+                    delete vm.faultreport.updatedAt;
+                    delete vm.faultreport.deletedAt;
+
+                    console.log(JSON.stringify(vm.faultreport));
+
+                    g_util.load("/faultreportadd",
+                        true,
+                        function(result) {
+                            if (result.status == 0) {
+                                layer.alert("添加成功");
+                                vm.faultreportaddshow = false;
+                                faultreports.push(result.result);
+                                reshen(vm.pageCout);
+                            } else {
+                                layer.alert("添加失败,错误原因为" + JSON.stringify(result.result));
+                            }
+                        }, vm.faultreport);
+                },
+                convertDate: function(date) {
+                    return new Date(date).toLocaleDateString();
+                },
+                gopage: function(n) {
+                vm.pagen=1;
+                reshen(n);
+                vm.pagen=n;
+            }
+                //gopage: function(n) {
+                    //reshen(n);
+                //}
+            }
+        })
+
+        function reshen(n) {
+            vm.pageCout = Math.ceil(faultreports.length / pagesize);
+            n = n ? n : 1;
+            vm.faultreports = faultreports.slice((n - 1) * 10, n * 10);
+            vm.activeNumber = n;
+        }
+
+        function editview(faultreport) {
+            vm.faultreport = faultreport;
+            delete vm.faultreport.createdAt;
+            delete vm.faultreport.updatedAt;
+            delete vm.faultreport.deletedAt;
+            vm.faultreporteditshow = true;
+            layer.open({
+                type: 1,
+                title: "信息修改",
+                area: '800px',
+                scrollbar: false,
+                content: $("#editdlg"),
+                btn: ["修改", "关闭"],
+                yes: function(index) {
+                    layer.close(index);
+
+                    g_util.load("/faultreportedit",
+                        true,
+                        function(result) {
+                            if (result == "ok") {
+                                vm.faultreporteditshow = false;
+                                faultreport = vm.faultreport;
+                                layer.alert("修改成功");
+                            } else {
+                                layer.alert("修改失败,错误原因为" + result.result);
+                            }
+                        }, vm.faultreport);
+                },
+                cancel: function(index) {
+                    vm.faultreporteditshow = false;
+                    layer.close(index);
+					window.location.reload();
+                },
+                btn2: function(index) {
+                    vm.faultreporteditshow = false;
+                    layer.close(index);
+					window.location.reload();
+                }
+            });
+        }
+
+        function popupview(faultlog) {
+            vm.faultlog = faultlog;
+            delete vm.faultlog.createdAt;
+            delete vm.faultlog.updatedAt;
+            delete vm.faultlog.deletedAt;
+            vm.faultlogeditshow = true;
+            layer.open({
+                type: 1,
+                title: "维修信息",
+                area: '800px',
+                scrollbar: false,
+                content: $("#editdlg"),
+                btn: ["修改", "关闭"],
+                yes: function(index) {
+                    layer.close(index);
+
+                    g_util.load("/faultlogedit",
+                        true,
+                        function(result) {
+                            if (result == "ok") {
+                                vm.faultlogeditshow = false;
+                                faultlog = vm.faultlog;
+                                layer.alert("修改成功");
+                            } else {
+                                layer.alert("修改失败,错误原因为" + result.result);
+                            }
+                        }, vm.faultlog);
+                },
+                cancel: function(index) {
+                    vm.faultlogeditshow = false;
+                    layer.close(index);
+                },
+                btn2: function(index) {
+                    vm.faultlogeditshow = false;
+                    layer.close(index);
+                }
+            });
+        }
+
+        var g_util = new Utils();
+
+        g_util.load("/faultreport",
+            true,
+            function(ret) {
+                faultreports = ret;
+                //faultlogs = ret;
+                reshen(1);
+            }, {});
+			
+	 var newhtml = '';
+        //导出Excel
+        $("#exportExcel").click(function () {
+        //alert("进来了~~~~~");
+            var faultreportvalue = $("#faultreportvalue").val().trim();//组织机构
+            g_utils.load("/faultreportgetlist",
+                true,
+                function (ret) {
+                    if (ret != null) {
+                        //表头拼接--开始
+                        var html = "<table  ><thead><tr >";
+                        html += '<th>设备ID</th><th >设备型号 </th><th class=\"column-title\">报障人 </th><th >联系电话</th>';
+                        html += '<th >故障详情</th><th >维修电话</th> </tr></thead><tbody>';
+                        //表头拼接--结束
+                        ret.forEach(function (element) {
+                            html += '<tr  >';
+                            html += '<td >' + element.id + 1 + '</td>';//序号
+                            html += ' <td >' + element.type + '</td>';//设备型号
+                            html += ' <td >' + element.people + '</td>';//报障人
+                            html += ' <td >' + element.phone + '</td>';//联系电话
+                            html += ' <td >' + element.details + '</td>';//故障详情
+                            html += '<td >' + element.repairphone + '</td></tr>';//维修电话
+                        });
+                        newhtml = html + '</tbody></table>';
+                       // alert('newhtml' + newhtml);
+                       // $('#newtable').append(newhtml);//追加到newtable后
+                        faultreports = ret;
+                        reshen(1);
+                         method1(newhtml);
+                    }
+
+                }, {
+                    "tbname": "faultreport",//表名
+                    "faultreportvalue": faultreportvalue
+                });
+           
+        });
+        //导出excel--------begin-------zhailiuhui-------2017-07-31 09:08:50------------------ 
+        var idTmr;
+        function getExplorer() {
+            console.log('判断浏览器!');
+            var explorer = window.navigator.userAgent;
+            //ie 
+            if (explorer.indexOf("MSIE") >= 0) {
+                return 'ie';
+            }
+            //firefox 
+            else if (explorer.indexOf("Firefox") >= 0) {
+                return 'Firefox';
+            }
+            //Chrome
+            else if (explorer.indexOf("Chrome") >= 0) {
+                return 'Chrome';
+            }
+            //Opera
+            else if (explorer.indexOf("Opera") >= 0) {
+                return 'Opera';
+            }
+            //Safari
+            else if (explorer.indexOf("Safari") >= 0) {
+                return 'Safari';
+            }
+        }
+        function method1(newhtml) {//整个表格拷贝到EXCEL中
+            console.log('导出开始');
+            if (getExplorer() == 'ie') {
+               var curTbl =newhtml;  //document.getElementById(tableid);
+                var oXL = new ActiveXObject("Excel.Application");
+
+                //创建AX对象excel 
+                var oWB = oXL.Workbooks.Add();
+                //获取workbook对象 
+                var xlsheet = oWB.Worksheets(1);
+                //激活当前sheet 
+                var sel = document.body.createTextRange();
+                sel.moveToElementText(curTbl);
+                //把表格中的内容移到TextRange中 
+                sel.select;
+                //全选TextRange中内容 
+                sel.execCommand("Copy");
+                //复制TextRange中内容  
+                xlsheet.Paste();
+                //粘贴到活动的EXCEL中       
+                oXL.Visible = true;
+                //设置excel可见属性
+
+                try {
+                    var fname = oXL.Application.GetSaveAsFilename("Excel.xls", "Excel Spreadsheets (*.xls), *.xls");
+                } catch (e) {
+                    print("Nested catch caught " + e);
+                } finally {
+                    oWB.SaveAs(fname);
+
+                    oWB.Close(savechanges = false);
+                    //xls.visible = false;
+                    oXL.Quit();
+                    oXL = null;
+                    //结束excel进程，退出完成
+                    //window.setInterval("Cleanup();",1);
+                    idTmr = window.setInterval("Cleanup();", 1);
+
+                }
+
+            }
+            else {
+                tableToExcel(newhtml)
+            }
+        }
+        function Cleanup() {
+            window.clearInterval(idTmr);
+            CollectGarbage();
+        }
+        var tableToExcel = (function () {
+            var uri = 'data:application/vnd.ms-excel;base64,',
+                template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="Content-Type" charset=utf-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body>{table}</body></html>',
+                base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) },
+                format = function (s, c) {
+                    return s.replace(/{(\w+)}/g,
+                        function (m, p) { return c[p]; })
+                }
+            return function (table, name) {
+               // if (!table.nodeType)
+                 table =newhtml// document.getElementById(table)
+                var ctx = { worksheet: '导出' || 'Worksheet', table: table }
+                //alert('template:'+template);
+               //alert(JSON.stringify(ctx));
+                window.location.href = uri + base64(format(template, ctx))
+            }
+        })()
+    //导出excel--------end------------zhailiuhui---2017-07-31 09:08:38------------
+    </script>
+    <% include footer.ejs %>

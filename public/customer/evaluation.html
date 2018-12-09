@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<!--Added by JingCheng 2017/4/18 -->
+<html lang="zh-cmn-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>报修评价</title>
+    <link rel="stylesheet" href="statics/styles/weui.min.css">
+	<link rel="stylesheet" href="statics/styles/new_file.css">
+	 <!-- <script src="statics/scripts/jquery-1.8.2.min.js" type="text/javascript"></script>    -->
+	  
+      <script src="statics/scripts/jquery.min.js"></script> 
+     <script type="text/javascript" src="../js/jweixin-1.0.0.js"></script> 
+ <script src="../js/dpscommon.js"></script> 
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div class="page">
+
+            <!-- main content - start -->
+            <div class="page__hd">
+                <h1 class="page__title">DPS报修评价</h1>
+            </div>
+            <div class="page__bd page__bd_spacing">
+                <div class="weui-cells weui-cells_form">
+                    <div class="page__bd">
+                        <div class="weui-form-preview">
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="printertype_id">设备类型</label>
+                                    <em id="printermodel"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="name">设备品牌</label>
+                                    <em id="printerbrand"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="printertype_id">设备型号</label>
+                                    <em id="printertype"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="id">设备ID</label>
+                                    <em id="printerid"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="serialnum">序列号</label>
+                                    <em id="printerserialnum"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="position">设备位置</label>
+                                    <em id="printerposition"></em>
+                                </div>
+                            </div>
+							 <div class="contaniner fixed-cont">
+			<section class="main">
+			<div class="main-wrap">
+				<span class="revtit">服务态度</span>
+				<div id="mydiv1" currentIndex="0" class="mydiv">
+	    			<ul class="star_ul">
+				        <li num="1"><img src="images/star_empty.png" class="xing_hui"/></li>
+				        <li num="2"><img src="images/star_empty.png"  class="xing_hui"/></li>
+				        <li num="3"><img src="images/star_empty.png"  class="xing_hui"/></li>
+				        <li num="4"><img src="images/star_empty.png"  class="xing_hui"/></li>
+				        <li num="5"><img src="images/star_empty.png"  class="xing_hui"/></li>
+			   		</ul>
+				</div>
+				<span id="myspan1">未评价</span>
+			</div>			
+			<div class="main-wrap">
+				<span class="revtit">技术水平</span>
+				<div id="mydiv2" currentIndex="0" class="mydiv">
+	    			<ul class="star_ul">
+				        <li num="1"><img src="images/star_empty.png" class="xing_hui"/></li>
+				        <li num="2"><img src="images/star_empty.png"  class="xing_hui"/></li>
+				        <li num="3"><img src="images/star_empty.png"  class="xing_hui"/></li>
+				        <li num="4"><img src="images/star_empty.png"  class="xing_hui"/></li>
+				        <li num="5"><img src="images/star_empty.png"  class="xing_hui"/></li>
+			   		</ul>
+				</div>
+				<span id="myspan2"  >未评价</span>
+
+			</div>
+		
+			<div class="main-wrap">
+				<span class="revtit">响应时效</span>
+				<div id="mydiv3" currentIndex="0" class="mydiv">
+	    			<ul class="star_ul">
+				        <li num="1"><img src="images/star_empty.png" class="xing_hui"/></li>
+				        <li num="2"><img src="images/star_empty.png"  class="xing_hui"/></li>
+				        <li num="3"><img src="images/star_empty.png"  class="xing_hui"/></li>
+				        <li num="4"><img src="images/star_empty.png"  class="xing_hui"/></li>
+				        <li num="5"><img src="images/star_empty.png"  class="xing_hui"/></li>
+			   		</ul>
+				</div>
+				<span id="myspan3">未评价</span>
+			</div>
+	</section>
+		</div>
+							<div class="weui-cells__title">报修评价</div>
+                        <div class="weui-cells weui-cells_form">
+                            <div class="weui-cell">
+                                <div class="weui-cell__bd">
+                                    <textarea id="status" name="status" maxlength="200" onkeydown="countChar('status','counter')" onkeyup="countChar('status','counter')" class="weui-textarea" placeholder="请输入报修评价" rows="3"></textarea>
+                                    <div class="weui-textarea-counter"><span id="counter">200</span>/200</div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        
+ 
+                        <div class="weui-btn-area">
+                            <a id="submit" class="weui-btn weui-btn_primary">评价提交</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+			
+            <!-- main content - end -->
+
+        </div>
+    </div>
+	
+		 <script type="text/javascript">
+
+	$(".assess-footer ul li label").on('touchstart',function(){
+			if($(this).hasClass('assd')){
+				$(".assess-footer ul li label").removeClass("assd")
+			}else{
+				$(".assess-footer ul li label").addClass("assd")
+			};
+		});
+			
+//匿名评价
+        var isclick = false;
+        function change(mydivid,num) {
+            if (!isclick) {
+                var tds = $("#"+mydivid+" ul li");
+                for (var i = 0; i < num; i++) {
+                    var td = tds[i];
+                    $(td).find("img").attr("src","images\/star_full.png");
+                }
+                var tindex = $("#"+mydivid).attr("currentIndex");
+                tindex = tindex==0?0:tindex+1;
+                for (var j = num; j < tindex; j++) {
+                    var td = tds[j];
+                    $(td).find("img").attr("src","images\/star_empty.png");
+                }
+                $("#"+mydivid).attr("currentIndex",num);
+				var txt='';
+				if(num=='1'){txt='很差';}
+				else if(num=='2'){txt='较差';}
+				else if(num=='3'){txt='一般';}
+				else if(num =='4'){txt='满意';}
+				else if(num=='5'){txt='很满意';}
+				else {txt='未评价';}
+			var result=	$("#"+mydivid).next("span").eq(0).text(txt);
+            $("#"+mydivid).next("span").eq(0).attr('flag',num);
+			txt='';//清空txt
+            }
+        }
+        function repeal(mydivid,num) {
+            if (!isclick) {
+                var tds = $("#"+mydivid+" ul li");
+                var tindex = $("#"+mydivid).attr("currentIndex");
+                tindex = tindex==0?0:tindex+1;
+                for (var i = tindex; i < num; i++) {
+                    var td = tds[i];
+                    $(td).find("img").attr("src","images\/star_empty.png");
+                }
+                $("#"+mydivid).attr("currentIndex",num);
+            }
+        }
+        function change1(mydivid,num) {
+            if (!isclick) {
+                change(mydivid,num);
+
+            }
+            else {
+                alert("Sorry,You had clicked me!");
+            }
+        }
+        $(function(){
+            initEvent('mydiv1');//服务态度
+            initEvent('mydiv2');//技术水平
+            initEvent('mydiv3');//响应时效
+        });
+        function initEvent(mydivid) {
+            var tds = $("#"+mydivid+" ul li");
+            for (var i = 0; i < tds.length; i++) {
+                var td = tds[i];
+                //$(td).live('mouseover',function(){var num = $(this).attr("num");
+				//alert("num_mouseover"+num);
+				//change(mydivid,num);
+				//});
+                $(td).on('click',function(){var num = $(this).attr("num");
+				//alert("num_click"+num);
+				change1(mydivid,num);
+				});
+            }
+        }
+
+	
+	
+        function countChar(textareaName, spanName) {
+            var rem = document.getElementById(spanName).innerHTML;
+            document.getElementById(spanName).innerHTML = 200 - document.getElementById(textareaName).value.length;
+            if (rem < 0) {
+                rem = 0;
+            }
+        }
+
+        var printerid = 0;
+
+        var code,state;
+
+        $(document).ready(function() {
+            var id = g_utils.GetQueryString("id");
+            code = g_utils.GetQueryString("code");
+            state = g_utils.GetQueryString("state");
+            g_utils.load("/queryprinter",
+                true,
+                function(result) {
+                    console.dir(result);
+                   $("#printermodel").text(result.model);
+                   $("#printermodel").val(result.model);
+                   $("#printerbrand").text(result.brand);
+                   $("#printerbrand").val(result.brand);
+				   $("#printertype").text(result.type);
+                   $("#printertype").val(result.type);
+                   $("#printerid").text(result.id);
+                   $("#printerid").val(result.id);
+                   $("#printerserialnum").text(result.serialnum);
+                   $("#printerserialnum").val(result.serialnum);
+                   $("#printerposition").text(result.position);
+                   $("#printerposition").val(result.position);
+                   //converttype(result.type);
+                }, {
+                    "id": id,
+                    "code": code,
+                    "state": state
+                });
+                
+             g_utils.load("/getlist",
+                true,
+                function(result) {
+                    console.dir(result);
+                    $("#typeid").empty();
+                    var html = "";
+                    result.forEach(function(element) {
+                        html+="<option value="+element.id+">"+element.name+"</option>"
+                    });
+                    $("#typeid").html(html);
+                    }, {
+                        "tbname": "faulttype",
+                   });
+
+        });
+        //function converttype(type){
+            //g_utils.load("/query",
+                //true,
+                //function(result) {
+                    //$("#printertype").text(result.type);
+                    //console.log(result.type);
+                //}, {
+                    //"tbname": "printertype",
+                    //"obj":JSON.stringify({"id":type})
+                //});
+        //}
+        
+         $("#submit").click(function(){
+            var id = g_utils.GetQueryString("id");
+            code = g_utils.GetQueryString("code");
+            state = g_utils.GetQueryString("state");
+            g_utils.load("/evaluation",
+                true,
+                function(result) {
+                    if(result != null){
+                        //alert("提交成功");
+                        window.location.href = "msg_success.html?id=" + id + "&code=" + code + "&state=" + state;
+                    }
+                    }, {
+                    "printerid":$("#printerid").val(),//设备ID
+                    "repairevaluation":$("#status").val(),//报修评价
+                    "serviceattitude": $("#myspan1").attr('flag'),//服务态度
+                    "technicallevel": $("#myspan2").attr('flag'),//技术水平
+                    "responsetime":$("#myspan3").attr('flag'),//响应时间
+                    "code": code,
+                    "state": state
+                });
+        });
+    </script>
+
+   
+</body>
+
+</html>

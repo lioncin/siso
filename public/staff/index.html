@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>DPS维修系统</title>
+    <link rel="stylesheet" href="statics/styles/weui.min.css">
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div class="page">
+            <div class="page__hd">
+                <h1 class="page__title">DPS维修系统</h1>
+            </div>
+            <div class="weui-cells weui-cells_form">
+                <div class="page__bd">
+                    <div class="weui-btn-area">
+                      <a id="repairsign" class="weui-btn weui-btn_primary">维修签到</a>
+                      <a id="supplysign" class="weui-btn weui-btn_primary">配送签到</a>
+                      <a id="distribute" class="weui-btn weui-btn_primary">耗材配送</a>
+                      <a id="repair" class="weui-btn weui-btn_primary">设备维修</a>
+                      <!-- <a id="maintain" class="weui-btn weui-btn_primary">日常维护</a> -->
+                      <!-- <a id="myinfo" class="weui-btn weui-btn_primary">我的信息</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/dpscommon.js"></script>
+<script>
+    $(document).ready(function() {
+        var id = g_utils.GetQueryString("id");
+        var code = g_utils.GetQueryString("code");
+        var state = g_utils.GetQueryString("state");
+        $("#repairsign").attr('href', "repairsign.html?id=" + id + "&code=" + code + "&state=" + state);
+        $("#supplysign").attr('href', "supplysign.html?id=" + id + "&code=" + code + "&state=" + state);
+        $("#distribute").attr('href', "distribute.html?id=" + id + "&code=" + code + "&state=" + state);
+        $("#repair").attr('href', "repair.html?id=" + id + "&code=" + code + "&state=" + state);
+        $("#maintain").attr('href', "maintain.html?id=" + id + "&code=" + code + "&state=" + state);
+        $("#myinfo").attr('href', "myinfo.html?id=" + id + "&code=" + code + "&state=" + state);
+    });
+</script>
+
+</html>

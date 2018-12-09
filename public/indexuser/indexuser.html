@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<!--Added by JingCheng 2017/4/18 -->
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>设备报修平台</title>
+    <link rel="stylesheet" href="../customer/statics/styles/weui.min.css">
+</head>
+
+<body>
+    <div class="container" id="container">
+        <div class="page">
+
+            <!-- main content - start -->
+            <div class="weui-cells__title">设备信息</div>
+            <div class="page__bd page__bd_spacing">
+                <div class="weui-cells weui-cells_form">
+                    <div class="page__bd">
+                        <div class="weui-form-preview">
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="printertype_id">设备类型</label>
+                                    <em id="printermodel"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="name">设备品牌</label>
+                                    <em id="printerbrand"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="printertype_id">设备型号</label>
+                                    <em id="printertype"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="id">设备ID</label>
+                                    <em id="printerid"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="serialnum">序列号</label>
+                                    <em id="printerserialnum"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="position">部署位置</label>
+                                    <em id="printerposition"></em>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="weui-btn-area">
+                            <a id="user" class="weui-btn weui-btn_primary">用户点这里</a>
+                            <a id="engineer" class="weui-btn weui-btn_warn">工程师点这里</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- main content - end -->
+
+        </div>
+    </div>
+    <script type="text/javascript" src="../js/jweixin-1.0.0.js"></script>
+    <script src="../customer/statics/scripts/jquery.min.js"></script>
+    <script src="../js/dpscommon.js"></script>
+    <script>
+
+        var printerid = 0;
+
+        var code,state;
+
+        $(document).ready(function() {
+            var id = g_utils.GetQueryString("id");
+            code = g_utils.GetQueryString("code");
+            state = g_utils.GetQueryString("state");
+            $("#user").attr('href', "/customer/index.html?id=" + id + "&code=" + code + "&state=" + state);
+            $("#engineer").attr('href', "/staff/index.html?id=" + id + "&code=" + code + "&state=" + state);
+            g_utils.load("/queryprinter",
+                true,
+                function(result) {
+                    console.dir(result);
+                   $("#printermodel").text(result.model);
+                   $("#printermodel").val(result.model);
+                   $("#printerbrand").text(result.brand);
+                   $("#printerbrand").val(result.brand);
+				   $("#printertype").text(result.type);
+                   $("#printertype").val(result.type);
+				   $("#printerid").text(result.id);
+                   $("#printerid").val(result.id);
+                   $("#printerserialnum").text(result.serialnum);
+                   $("#printerserialnum").val(result.serialnum);
+                   $("#printerposition").text(result.position);
+                   $("#printerposition").val(result.position);
+                   //converttype(result.type);
+                }, {
+                    "id": id,
+                    "code": code,
+                    "state": state
+                });
+                
+             g_utils.load("/getlist",
+                true,
+                function(result) {
+                    console.dir(result);
+                    $("#typeid").empty();
+                    var html = "";
+                    result.forEach(function(element) {
+                        html+="<option value="+element.id+">"+element.name+"</option>"
+                    });
+                    $("#typeid").html(html);
+                    }, {
+                        "tbname": "faulttype",
+                   });
+                   
+             g_utils.load("/customerquery",
+                true,
+                function(result) {
+                  console.dir(result);
+                  $("#customername").text(result.name);
+                  $("#customername").val(result.name);
+                }, {
+                  "id": id,
+                  "code": code,
+                  "state": state
+                });      
+
+        });
+
+
+        //function converttype(type){
+            //g_utils.load("/query",
+                //true,
+                //function(result) {
+                    //$("#printertype").text(result.type);
+                    //console.log(result.type);
+                //}, {
+                    //"tbname": "printertype",
+                    //"obj":JSON.stringify({"id":type})
+                //});
+        //}
+    </script>
+</body>
+
+</html>

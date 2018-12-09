@@ -1,0 +1,424 @@
+﻿<% include header.ejs %>
+    <!-- page content -->
+    <div class="right_col" role="main" id="paper-table">
+        <div class="row" v-show="papereditshow" style="display: none; margin-right:0" id="editdlg">
+            <div class="x_panel">
+                <div class="x_content">
+                    <br />
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">设备名称<span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="paper.name">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">设备型号</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="paper.type">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">设备ID</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="paper.printerid">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">张数/天</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="paper.dpaper">
+                            </div>
+                        </div>
+						
+						<div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">张数/周</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="paper.wpaper">
+                            </div>
+                        </div>
+						
+						<div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">张数/月</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="paper.mpaper">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">备注</label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="paper.remarks">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="page-title">
+            <div class="title_left">
+                <h3>纸记录</h3>
+            </div>
+            <div class="title_right">
+                <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" placeholder="纸记录...">
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button">搜索</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="clearfix"></div>
+        <div class="row" v-show="paperaddshow" style="display:none;">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>添加纸记录</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a @click="closepaperadd"><i class="fa fa-close"></i></a>
+                            </li>
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <br />
+                        <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">设备名称<span class="required">*</span>
+                                </label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="paper.name">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">设备型号</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="paper.type">
+                                </div>
+                            </div>
+							
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">设备ID</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="paper.printerid">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">张数/天</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="paper.dpaper">
+                                </div>
+                            </div>
+							
+							<div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">张数/周</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="paper.wpaper">
+                                </div>
+                            </div>
+							
+							<div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">张数/月</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="paper.mpaper">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="control-label col-md-3 col-sm-3 col-xs-12">备注</label>
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="paper.remarks">
+                                </div>
+                            </div>
+
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                                <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                    <input type="button" class="btn btn-primary" @click="closepaperadd" value="取消" />
+                                    <input type="button" class="btn btn-success" @click="submitpaperadd" value="添加">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>基础信息 <small></small></h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <a class="btn btn-default source" @click="addpaper"><i class="glyphicon glyphicon-plus">添加纸记录</i></a>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+
+                <div class="x_content">
+
+                    <!-- <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p> -->
+
+                    <div class="table-responsive">
+                        <table class="table table-striped jambo_table bulk_action">
+                            <thead>
+                                <tr class="headings">
+                                    <th>
+                                        <!-- <input type="checkbox" id="check-all" class="flat"> -->
+                                    </th>
+                                    <th class="column-title">设备名称</th>
+                                    <th class="column-title">设备型号</th>
+                                    <th class="column-title">设备ID</th>
+                                    <th class="column-title">张数/天</th>
+                                    <th class="column-title">张数/周</th>
+									<th class="column-title">张数/月</th>
+									<th class="column-title">备注</th>
+                                    <th class="column-title no-link last"><span class="nobr">动作</span>
+                                    </th>
+                                    <th class="bulk-actions" colspan="7">
+                                        <a class="antoo" style="color:#fff; font-weight:500;">( <span class="action-cnt"> </span> )<i class="fa fa-chevron-down"></i></a>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr class="even pointer" v-for="(paper,index) in papers" v-show="papershow" style="display: none;">
+                                    <!-- <td class="a-center "> {{index+1}}</td> -->
+									<td class="a-center ">{{index+1+(pagen-1)*10}}</td>
+                                    <td class="a-left">{{paper.name}}</td>
+                                    <td class=" ">{{paper.type}}</td>
+                                    <td class=" ">{{paper.printerid}}</td>
+									<td class=" ">{{paper.dpaper}}</td>
+									<td class=" ">{{paper.wpaper}}</td>
+                                    <td class=" ">{{paper.mpaper}}</td>
+                                    <td class="a-right a-right ">{{paper.remarks}}</td>
+                                    <td class="last">
+									<!-- <a class="btn btn-primary btn-xs" @click="viewperson(faultlog)"><i class="fa fa-folder" ></i>查看</a> -->
+                                        <a class="btn btn-info btn-xs" @click="editpaper(paper,index)"><i class="fa fa-pencil"></i>修改</a>
+                                        <a class="btn btn-danger btn-xs" @click="deletepaper(paper,index)"><i class="fa fa-trash-o"></i>删除</a>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="btn-group" v-for="n in pageCout">
+                            <button class="btn btn-info" @click="gopage(n)" v-bind:class="activeNumber === n ? 'active' : ''">{{n}}</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/layui/lay/dest/layui.all.js"></script>
+    <script src="/js/dpscommon.js"></script>
+    <script src="/js/vue.js"></script>
+
+    <script>
+        var papers = [];
+        var pagesize = 10;
+
+        var vm = new Vue({
+            el: "#paper-table",
+            data: {
+                paper: {},
+                papereditshow: false,
+                papershow: true,
+                paperaddshow: false,
+                faultlogeditshow: false,
+                activeNumber: 1,
+                pageCout: 1,
+				pagen:1,//页数
+                papers: []
+            },
+            methods: {
+                viewpaper: function(paper) {
+
+                    g_util.load("/paperquery",
+                        true,
+                        function(result) {
+                            lyview(result);
+                        }, {
+                            "paperid": paper.id
+                        });
+                },
+                editpaper: function(paper) {
+                    editview(paper);
+                },
+                deletepaper: function(paper, paperindex) {
+                    layer.confirm('删除&nbsp&nbsp' + paper.type + '&nbsp?', {
+                        icon: 2,
+                        title: '警告：请谨慎操作，删除动作不可逆！'
+                    }, function(index) {
+                        g_util.load("/paperdelete", false, function(ret) {
+                            var pindex = 0;
+                            for (var i = 0; i < papers.length; i++) {
+                                if (papers[i].id == paper.id) {
+                                    pindex = i;
+                                }
+                            }
+                            papers.splice(pindex, 1);
+                            reshen(vm.activeNumber);
+							window.location.reload();
+                        }, {
+                            "paperid": paper.id
+                        });
+                        layer.close(index);
+                    });
+                },
+
+                popupmaintenancerecord: function(faultlog) {
+                    popupview(faultlog);
+                },
+
+                addpaper: function() {
+                    vm.paperaddshow = true;
+                },
+                closepaperadd: function() {
+                    vm.paperaddshow = false;
+                },
+                submitpaperadd: function() {
+
+                    vm.paper.age = new Date().toLocaleDateString();
+                    vm.paper.status = 0;
+                    delete vm.paper.id;
+                    delete vm.paper.createdAt;
+                    delete vm.paper.updatedAt;
+                    delete vm.paper.deletedAt;
+
+                    console.log(JSON.stringify(vm.paper));
+
+                    g_util.load("/paperadd",
+                        true,
+                        function(result) {
+                            if (result.status == 0) {
+                                layer.alert("添加成功");
+                                vm.paperaddshow = false;
+                                papers.push(result.result);
+                                reshen(vm.pageCout);
+                            } else {
+                                layer.alert("添加失败,错误原因为" + JSON.stringify(result.result));
+                            }
+                        }, vm.paper);
+                },
+                convertDate: function(date) {
+                    return new Date(date).toLocaleDateString();
+                },
+                gopage: function(n) {
+                vm.pagen=1;
+                reshen(n);
+                vm.pagen=n;
+            }
+                //gopage: function(n) {
+                    //reshen(n);
+                //}
+            }
+        })
+
+        function reshen(n) {
+            vm.pageCout = Math.ceil(papers.length / pagesize);
+            n = n ? n : 1;
+            vm.papers = papers.slice((n - 1) * 10, n * 10);
+            vm.activeNumber = n;
+        }
+
+        function editview(paper) {
+            vm.paper = paper;
+            delete vm.paper.createdAt;
+            delete vm.paper.updatedAt;
+            delete vm.paper.deletedAt;
+            vm.papereditshow = true;
+            layer.open({
+                type: 1,
+                title: "信息修改",
+                area: '800px',
+                scrollbar: false,
+                content: $("#editdlg"),
+                btn: ["修改", "关闭"],
+                yes: function(index) {
+                    layer.close(index);
+
+                    g_util.load("/paperedit",
+                        true,
+                        function(result) {
+                            if (result == "ok") {
+                                vm.papereditshow = false;
+                                paper = vm.paper;
+                                layer.alert("修改成功");
+                            } else {
+                                layer.alert("修改失败,错误原因为" + result.result);
+                            }
+                        }, vm.paper);
+                },
+                cancel: function(index) {
+                    vm.papereditshow = false;
+                    layer.close(index);
+					window.location.reload();
+                },
+                btn2: function(index) {
+                    vm.papereditshow = false;
+                    layer.close(index);
+					window.location.reload();
+                }
+            });
+        }
+
+        function popupview(faultlog) {
+            vm.faultlog = faultlog;
+            delete vm.faultlog.createdAt;
+            delete vm.faultlog.updatedAt;
+            delete vm.faultlog.deletedAt;
+            vm.faultlogeditshow = true;
+            layer.open({
+                type: 1,
+                title: "维修信息",
+                area: '800px',
+                scrollbar: false,
+                content: $("#editdlg"),
+                btn: ["修改", "关闭"],
+                yes: function(index) {
+                    layer.close(index);
+
+                    g_util.load("/faultlogedit",
+                        true,
+                        function(result) {
+                            if (result == "ok") {
+                                vm.faultlogeditshow = false;
+                                faultlog = vm.faultlog;
+                                layer.alert("修改成功");
+                            } else {
+                                layer.alert("修改失败,错误原因为" + result.result);
+                            }
+                        }, vm.faultlog);
+                },
+                cancel: function(index) {
+                    vm.faultlogeditshow = false;
+                    layer.close(index);
+                },
+                btn2: function(index) {
+                    vm.faultlogeditshow = false;
+                    layer.close(index);
+                }
+            });
+        }
+
+        var g_util = new Utils();
+
+        g_util.load("/paper",
+            true,
+            function(ret) {
+                papers = ret;
+                //faultlogs = ret;
+                reshen(1);
+            }, {});
+    </script>
+    <% include footer.ejs %>

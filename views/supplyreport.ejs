@@ -1,0 +1,475 @@
+<% include header.ejs %>
+<!-- page content -->
+<div class="right_col" role="main" id="supplyreport-table">
+ <div class="row"  v-show="supplyreporteditshow" style="display: none; margin-right:0" id="editdlg">
+     <div class="x_panel">
+       <div class="x_content">
+         <br />
+         <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+		 
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >耗材类型<span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="supplyreport.supplytype">
+             </div>
+           </div>
+	
+          <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >耗材数量<span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="supplyreport.supplynum">
+             </div>
+           </div>
+		   
+          <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >租赁位置<span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="supplyreport.leaselocation">
+             </div>
+           </div>
+		   
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">备注 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="supplyreport.remarks">
+             </div>
+           </div>
+		   
+         </form>
+       </div>
+     </div>
+ </div>
+
+<div class="page-title">
+  <div class="title_left">
+  <h3>耗材报表</h3>
+  </div>
+  <div class="title_right">
+    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+      <div class="input-group">
+        <input id="supplyreportvalue" type="text" class="form-control" placeholder="耗材记录...">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">搜索</button>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="clearfix"></div>
+ <div class="row"  v-show="supplyreportaddshow" style="display:none;">
+   <div class="col-md-12 col-sm-12 col-xs-12">
+     <div class="x_panel">
+       <div class="x_title">
+         <h2>添加耗材记录</h2>
+		<ul class="nav navbar-right panel_toolbox">
+          <li><a @click="closesupplyreportadd"><i class="fa fa-close"></i></a>
+          </li>
+        </ul>	
+         <div class="clearfix"></div>
+       </div>
+       <div class="x_content">
+         <br />
+         <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >耗材类型 <span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="supplyreport.supplytype">
+             </div>
+           </div>
+		   
+		   <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >耗材数量<span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="supplyreport.supplynum">
+             </div>
+           </div>
+		   
+		   <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >租赁位置<span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="supplyreport.leaselocation">
+             </div>
+           </div>
+		   
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">备注 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="supplyreport.remarks">
+             </div>
+           </div>
+		   
+           <div class="ln_solid"></div>
+           <div class="form-group">
+             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+               <input type="button"  class="btn btn-primary" @click="closesupplyreportadd" value="取消"/>
+               <input type="button"  class="btn btn-success" @click="submitsupplyreportadd" value ="添加">
+             </div>
+           </div>
+         </form>
+       </div>
+     </div>
+   </div>
+ </div>
+
+
+ <div class="col-md-12 col-sm-12 col-xs-12" >
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>耗材报表信息 <small></small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+			<a class="btn btn-default source" @click="addsupplyreport"><i class="glyphicon glyphicon-plus">添加耗材报表</i></a>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+	  
+	  <div align="right">
+                  <!-- <a class="btn btn-default source"><i class="glyphicon glyphicon-plus">导出报表</i></a> -->
+                  <button id="exportExcel" class="btn btn-default source"><i class="glyphicon glyphicon-plus">导出报表</i></button>
+                </div>
+	  
+      <div class="x_content">
+
+        <div class="table-responsive">
+          <table class="table table-striped jambo_table bulk_action">
+            <thead>
+              <tr class="headings">
+                <th>
+                  <!-- <input type="checkbox" id="check-all" class="flat"> -->
+                </th>
+                <th class="column-title">耗材类型</th>
+								<th class="column-title">耗材数量</th>
+								<th class="column-title">租赁位置</th>
+                <th class="column-title">备注</th>
+                <th class="column-title no-link last"><span class="nobr">动作</span>
+                </th>
+                <th class="bulk-actions" colspan="7">
+                  <a class="antoo" style="color:#fff; font-weight:500;">( <span class="action-cnt"> </span> )<i class="fa fa-chevron-down"></i></a>
+                </th>
+              </tr> 			  
+            </thead>
+			
+            <tbody >	
+				<tr class="even pointer"  v-for="(supplyreport,index) in supplyreports" v-show="supplyreportshow" style="display: none;">
+                <!-- <td class="a-center ">{{index+1}}</td> -->
+                <td class="a-center ">{{index+1+(pagen-1)*10}}</td>
+				<td class="a-left">{{supplyreport.supplytype}}</td>
+								<td class="a-left">{{supplyreport.supplynum}}</td>
+								<td class="a-left">{{supplyreport.leaselocation}}</td>
+                <td class="a-right a-right ">{{supplyreport.remarks}}</td>
+                <td class="last">
+                    <a class="btn btn-info btn-xs" @click="editsupplyreport(supplyreport,index)"><i class="fa fa-pencil"></i>修改</a>
+                    <a class="btn btn-danger btn-xs" @click="deletesupplyreport(supplyreport,index)"><i class="fa fa-trash-o"></i>删除</a>
+               </td> 
+              </tr>
+	
+            </tbody>					
+          </table>  
+		  <div class="btn-group" v-for ="n in pageCout">
+		   <button class="btn btn-info" @click="gopage(n)"  v-bind:class="activeNumber === n ? 'active' : ''">{{n}}</button>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/layui/lay/dest/layui.all.js"></script> 
+<script src="/js/dpscommon.js"></script> 
+<script src="/js/vue.js"></script>
+
+<script>
+
+var supplyreports = [];
+var pagesize = 10;
+
+var vm = new Vue({
+	el: "#supplyreport-table",
+	data: {	
+		supplyreport:{},
+		supplyreporteditshow:false,
+		supplyreportshow:true,
+		supplyreportaddshow:false,
+		activeNumber:1,
+		pageCout:1,
+		pagen:1,//页数
+		supplyreports: []
+	},
+	methods: {
+		viewsupplyreport: function (supplyreport) {	
+					
+			g_util.load("/supplyreportquery",
+				true,
+				function (result) {	
+				lyview(result);
+			}, {
+				"supplyreportid": supplyreport.id
+			});
+		},
+		editsupplyreport: function (supplyreport) {		
+			editview(supplyreport);
+		},
+		deletesupplyreport: function (supplyreport,supplyreportindex) {
+			layer.confirm('删除&nbsp&nbsp' + supplyreport.supplytype + '&nbsp?', {
+				icon: 2,
+				title: '警告：请谨慎操作，删除动作不可逆！'
+			}, function (index) {
+				g_util.load("/supplyreportdelete", false, function (ret) {	
+					var mindex =0;
+					for(var i=0;i<supplyreports.length;i++){
+						if(supplyreports[i].id == supplyreport.id){
+						mindex = i;
+						}
+					}
+					supplyreports.splice(mindex,1);		
+					reshen(vm.activeNumber);
+					window.location.reload();
+				}, {
+					"supplyreportid": supplyreport.id
+				});
+				layer.close(index);
+			});
+		},
+		addsupplyreport:function () {
+			vm.supplyreportaddshow = true;				
+		},
+		closesupplyreportadd:function(){
+			vm.supplyreportaddshow = false;	
+		},
+		submitsupplyreportadd:function(){
+		
+			vm.supplyreport.age = new Date().toLocaleDateString();
+			vm.supplyreport.status = 0;
+			delete vm.supplyreport.id;
+			delete vm.supplyreport.createdAt;
+			delete vm.supplyreport.updatedAt;
+			delete vm.supplyreport.deletedAt;
+			
+			console.log(JSON.stringify(vm.supplyreport));
+			
+			g_util.load("/supplyreportadd",
+				true,
+				function (result) {	
+				if(result.status==0){
+					layer.alert("添加成功");
+					vm.supplyreportaddshow = false;
+					supplyreports.push(result.result);
+					reshen(vm.pageCout);
+				}else{
+					layer.alert("添加失败,错误原因为"+JSON.stringify(result.result));
+				}	
+			},vm.supplyreport);			
+		},
+		convertDate:function(date){
+			return new Date(date).toLocaleDateStringString();
+		},
+		gopage: function(n) {
+                vm.pagen=1;
+                reshen(n);
+                vm.pagen=n;
+            }
+		//gopage:function(n){
+			//reshen(n);		
+		//}
+	}
+})
+
+function reshen(n){
+	vm.pageCout = Math.ceil(supplyreports.length/pagesize);
+	n=n?n:1;
+	vm.supplyreports = supplyreports.slice((n-1)*10,n*10);
+	vm.activeNumber = n;
+}
+
+function editview(supplyreport){
+	vm.supplyreport = supplyreport;
+	delete vm.supplyreport.createdAt;
+	delete vm.supplyreport.updatedAt;
+	delete vm.supplyreport.deletedAt;
+	vm.supplyreporteditshow = true;
+	layer.open({
+		type:1,
+		title:"耗材信息修改",
+		area: '800px',		
+		scrollbar : false,
+		content:$("#editdlg"),
+		btn:["修改","关闭"],
+		yes:function(index){			
+			layer.close(index);
+	
+			g_util.load("/supplyreportedit",
+			true,
+			function (result) {
+			if(result=="ok"){
+					vm.supplyreporteditshow = false;
+					supplyreport = vm.supplyreport;
+					layer.alert("修改成功");
+				}else{
+					layer.alert("修改失败,错误原因为"+result.result);
+				}	
+			}, vm.supplyreport);
+			
+			
+		},
+		cancel:function(index){	
+			vm.supplyreporteditshow = false;				
+			layer.close(index);
+			window.location.reload();
+		},
+		btn2:function(index){	
+			vm.supplyreporteditshow = false;				
+			layer.close(index);
+			window.location.reload();
+		}
+		
+	});
+
+}
+
+var g_util = new Utils();
+
+g_util.load("/supplyreport",
+	true,
+	function (ret) {
+	supplyreports = ret;
+	reshen(1);	
+}, {});
+
+//导出Excel      
+      var newhtml = '';
+       var tbname='supplyreport';
+       $("#exportExcel").click(function(){
+            var supplyreportvalue = $("#supplyreportvalue").val().trim();//耗材类型
+         if(supplyreportvalue==''||supplyreportvalue==undefined){
+            supplyreportvalue=-1;
+        }
+            g_utils.load("/supplyreportgetlist",
+                true,
+                function(ret) {
+                    if(ret != null){
+                      //表头拼接--开始
+                        var html = "<table  ><thead><tr >";
+                        html += '<th>耗材类型</th><th >耗材数量 </th><th >租赁位置 </th><th >备注</th></tr></thead><tbody>';
+                        //表头拼接--结束
+                        ret.forEach(function (element) {
+                            html += '<tr>';
+                            html += '<td >' + element.supplytype + '</td>';//耗材类型
+                            html += ' <td >' + element.supplynum + '</td>';//耗材数量
+                            html += ' <td >' + element.leaselocation + '</td>';//租赁位置
+                            html += '<td >' + element.remarks + '</td></tr>';//备注
+                        });
+                        newhtml = html + '</tbody></table>';
+                       // alert('newhtml' + newhtml);
+                       // $('#newtable').append(newhtml);//追加到newtable后
+                       supplyreports = ret;
+                         method1(newhtml);
+            reshen(1);
+                    }
+                    }, {
+                     "tbname": tbname,//表名
+                     "supplyreportvalue":supplyreportvalue
+                });
+        });
+         //导出excel--------begin-------zhailiuhui-------2017-07-31 09:08:50------------------ 
+        var idTmr;
+        function getExplorer() {
+            console.log('判断浏览器!');
+            var explorer = window.navigator.userAgent;
+            //ie 
+            if (explorer.indexOf("MSIE") >= 0) {
+                return 'ie';
+            }
+            //firefox 
+            else if (explorer.indexOf("Firefox") >= 0) {
+                return 'Firefox';
+            }
+            //Chrome
+            else if (explorer.indexOf("Chrome") >= 0) {
+                return 'Chrome';
+            }
+            //Opera
+            else if (explorer.indexOf("Opera") >= 0) {
+                return 'Opera';
+            }
+            //Safari
+            else if (explorer.indexOf("Safari") >= 0) {
+                return 'Safari';
+            }
+        }
+        function method1(newhtml) {//整个表格拷贝到EXCEL中
+           // console.log('导出开始');
+            if (getExplorer() == 'ie') {
+               var curTbl =newhtml;  //document.getElementById(tableid);
+                var oXL = new ActiveXObject("Excel.Application");
+
+                //创建AX对象excel 
+                var oWB = oXL.Workbooks.Add();
+                //获取workbook对象 
+                var xlsheet = oWB.Worksheets(1);
+                //激活当前sheet 
+                var sel = document.body.createTextRange();
+                sel.moveToElementText(curTbl);
+                //把表格中的内容移到TextRange中 
+                sel.select;
+                //全选TextRange中内容 
+                sel.execCommand("Copy");
+                //复制TextRange中内容  
+                xlsheet.Paste();
+                //粘贴到活动的EXCEL中       
+                oXL.Visible = true;
+                //设置excel可见属性
+
+                try {
+                    var fname = oXL.Application.GetSaveAsFilename("Excel.xls", "Excel Spreadsheets (*.xls), *.xls");
+                } catch (e) {
+                    print("Nested catch caught " + e);
+                } finally {
+                    oWB.SaveAs(fname);
+
+                    oWB.Close(savechanges = false);
+                    //xls.visible = false;
+                    oXL.Quit();
+                    oXL = null;
+                    //结束excel进程，退出完成
+                    //window.setInterval("Cleanup();",1);
+                    idTmr = window.setInterval("Cleanup();", 1);
+
+                }
+
+            }
+            else {
+                tableToExcel(newhtml)
+            }
+        }
+        function Cleanup() {
+            window.clearInterval(idTmr);
+            CollectGarbage();
+        }
+        var tableToExcel = (function () {
+            var uri = 'data:application/vnd.ms-excel;base64,',
+                template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><meta http-equiv="Content-Type" charset=utf-8"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body>{table}</body></html>',
+                base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) },
+                format = function (s, c) {
+                    return s.replace(/{(\w+)}/g,
+                        function (m, p) { return c[p]; })
+                }
+            return function (table, name) {
+               // if (!table.nodeType)
+                 table =newhtml// document.getElementById(table)
+                var ctx = { worksheet: '导出' || 'Worksheet', table: table }
+               // alert('template:'+template);
+              // alert(JSON.stringify(ctx));
+                window.location.href = uri + base64(format(template, ctx))
+            }
+        })()
+    //导出excel--------end------------zhailiuhui---2017-07-31 09:08:38------------
+
+</script>
+<% include footer.ejs %>

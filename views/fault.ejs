@@ -1,0 +1,523 @@
+<%include header.ejs%>
+<div class="right_col" role="main" id="fault-table">
+
+    <div class="row" v-show="faulteditshow" style="display: none; margin-right:0" id="editdlg">
+        <div class="x_panel">
+            <div class="x_content">
+                <br />
+                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" >打印机ID <span class="required">*</span>
+                      </label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="fault.printerid">
+                      </div>
+                    </div>
+					
+					<div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">姓名<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="fault.name">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">手机号码<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                             <input type="text" required="required" class="form-control col-md-7 col-xs-12"  v-model="fault.phone">
+                        </div>
+                    </div>
+					
+					<div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">打印机实际位置<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                             <input type="text" required="required" class="form-control col-md-7 col-xs-12"  v-model="fault.realposition">
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-group"> -->
+                        <!-- <label class="control-label col-md-3 col-sm-3 col-xs-12">所属组织 <span class="required">*</span></label> -->
+                        <!-- <div class="col-md-6 col-sm-6 col-xs-12"> -->
+                          <!-- <input type="text" required="required" class="form-control col-md-7 col-xs-12"  v-model="fault.group"> -->
+                            <!--<select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="fault.group">
+                              <option v-for="item in printertypes" v-bind:value="item.id">{{item.name}}</option>
+                            </select>-->
+                        <!-- </div> -->
+                    <!-- </div> -->
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">故障类型<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                             <input type="text" required="required" class="form-control col-md-7 col-xs-12"  v-model="fault.type">
+                        </div>
+                    </div>
+					
+					<div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">耗材类型<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                             <input type="text" required="required" class="form-control col-md-7 col-xs-12"  v-model="fault.supplytype">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">问题描述<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                             <input type="text" required="required" class="form-control col-md-7 col-xs-12"  v-model="fault.details">
+                        </div>
+                    </div>
+
+                    <!--<div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">状态 </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="fault.status">
+                                <option  value=0>正常</option>
+                                <option  value=1>忙</option>
+                            </select>
+                        </div>
+                    </div>-->
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">备注 </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="fault.remarks">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="page-title">
+        <div class="title_left">
+            <h3>故障记录列表</h3>
+        </div>
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="故障记录...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">搜索</button>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="row" v-show="faultaddshow" style="display:none;">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>添加故障记录</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a @click="closefaultadd"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br />
+                 <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                    <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-12" >打印机ID <span class="required">*</span>
+                      </label>
+                      <div class="col-md-6 col-sm-6 col-xs-12">
+                        <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="fault.printerid">
+                      </div>
+                    </div>
+					
+					<div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">姓名 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="fault.name">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">手机号码<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                             <input type="text" required="required" class="form-control col-md-7 col-xs-12"  v-model="fault.phone">
+                        </div>
+                    </div>
+					
+					<div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">打印机实际位置<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                             <input type="text" required="required" class="form-control col-md-7 col-xs-12"  v-model="fault.realposition">
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-group"> -->
+                        <!-- <label class="control-label col-md-3 col-sm-3 col-xs-12">所属组织 <span class="required">*</span></label> -->
+                        <!-- <div class="col-md-6 col-sm-6 col-xs-12"> -->
+                          <!-- <input type="text" required="required" class="form-control col-md-7 col-xs-12"  v-model="fault.group"> -->
+                            <!--<select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="fault.group">
+                              <option v-for="item in printertypes" v-bind:value="item.id">{{item.name}}</option>
+                            </select>-->
+                        <!-- </div> -->
+                    <!-- </div> -->
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">故障类型<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                             <input type="text" required="required" class="form-control col-md-7 col-xs-12"  v-model="fault.type">
+                        </div>
+                    </div>
+					
+					<div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">耗材类型<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                             <input type="text" required="required" class="form-control col-md-7 col-xs-12"  v-model="fault.supplytype">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">问题描述<span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                             <input type="text" required="required" class="form-control col-md-7 col-xs-12"  v-model="fault.details">
+                        </div>
+                    </div>
+
+                    <!--<div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">状态 </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="fault.status">
+                                <option  value=0>正常</option>
+                                <option  value=1>忙</option>
+                            </select>
+                        </div>
+                    </div>-->
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">备注 </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="fault.remarks">
+                        </div>
+                    </div>
+                    <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                <input type="button" class="btn btn-primary" @click="closefaultadd" value="取消" />
+                                <input type="button" class="btn btn-success" @click="submitfaultadd" value="添加">
+                            </div>
+                        </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>故障记录信息 <small></small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+                    <a class="btn btn-default source" @click="addfault"><i class="glyphicon glyphicon-plus">添加故障记录</i></a>
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+
+            <div class="x_content">
+
+                <!-- <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p> -->
+
+                <div class="table-responsive">
+                    <table class="table table-striped jambo_table bulk_action">
+                        <thead>
+                            <tr class="headings">
+                                <th>
+                                    <!-- <input type="checkbox" id="check-all" class="flat"> -->
+                                </th>
+								<th class="column-title">时间</th>
+								<th class="column-title">打印机ID</th>
+                                <th class="column-title">姓名</th>
+                                <th class="column-title">手机号码</th>
+								<th class="column-title">打印机实际位置</th>
+                                <!-- <th class="column-title">所属组织</th> -->
+                                <th class="column-title">故障类型</th>
+								<th class="column-title">耗材类型</th>
+                                <th class="column-title">问题描述</th>
+                                <!--<th class="column-title">状态</th>-->
+                                <th class="column-title">备注</th>
+                                <th class="column-title no-link last"><span class="nobr">动作</span>
+                                </th>
+                                <th class="bulk-actions" colspan="7">
+                                    <a class="antoo" style="color:#fff; font-weight:500;">( <span class="action-cnt"> </span> )<i class="fa fa-chevron-down"></i></a>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr class="even pointer" v-for="(fault,index) in faults" v-show="faultshow" style="display: none;">
+                                <!-- <td class="a-center ">{{index+1}}</td> -->
+								<td class="a-center ">{{index+1+(pagen-1)*10}}</td>
+								<td class="a-left">{{fault.time}}</td>
+								<td class="a-left">{{fault.printerid}}</td>
+                                <td class="a-left">{{fault.name}}</td>
+                                <td class=" ">{{fault.phone}}</td>
+								<td class=" ">{{fault.realposition}}</td>
+                                <!-- <td class=" ">{{fault.group}}</td> -->
+                                <td class=" ">{{converttype(fault.type)}}</td>
+								<td class=" ">{{convertsupplytype(fault.supplytype)}}</td>
+                                <td class=" ">{{fault.details}}</td>
+                                <!--<td class=" ">{{convertgroup(fault.group)}}</td>-->
+                                <!--<td class=" ">{{convertstatus(fault.status)}}</td>-->
+                                <td class="a-right a-right ">{{fault.remarks}}</td>
+                                <td class="last">
+                                    <!-- <a class="btn btn-primary btn-xs" @click="viewtempobj(tempobj)"><i class="fa fa-folder" ></i>查看</a> -->
+                                    <a class="btn btn-info btn-xs" @click="editfault(fault,index)"><i class="fa fa-pencil"></i>修改</a>
+                                    <a class="btn btn-danger btn-xs" @click="deletefault(fault,index)"><i class="fa fa-trash-o"></i>删除</a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <div class="btn-group" v-for="n in pageCout">
+                        <button class="btn btn-info" @click="gopage(n)" v-bind:class="activeNumber === n ? 'active' : ''">{{n}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/layui/lay/dest/layui.all.js"></script>
+<script src="/js/dpscommon.js"></script>
+<script src="/js/vue.js"></script>
+<script>
+    //var g_util = new Utils();
+
+    //var tbname = "fault";
+    var faults = [];
+    var pagesize = 10;
+
+    var vm = new Vue({
+        el: "#fault-table",
+        data: {
+            fault: {},
+            faulteditshow: false,
+            faultshow: true,
+            faultaddshow: false,
+            qrcodeshow: false,
+            activeNumber: 1,
+            pageCout: 1,
+			pagen:1,//页数
+            faults: [],
+            printertypes: [],
+            //person: []
+        },
+        methods: {
+            viewfault: function(fault) {
+                //tempobjview(tempobj);
+                g_util.load("/faultquery",
+                  true,
+                  function (result) {	
+                  lyview(result);
+                }, {
+                  "faultid": fault.id
+                });
+            },
+            editfault: function(fault) {
+                editview(fault);
+            },
+            deletefault: function(fault, faultindex) {
+                //tempobjdelete(tempobj, tempobjindex);
+                layer.confirm('删除&nbsp&nbsp' + fault.id + '&nbsp?', {
+                icon: 2,
+                title: '警告:请谨慎操作，删除动作不可逆！'
+              }, function (index) {
+                g_util.load("/faultdelete", false, function (ret) {	
+                  var mindex =0;
+                  for(var i=0;i<faults.length;i++){
+                    if(faults[i].id == fault.id){
+                    mindex = i;
+                    }
+                  }
+                  faults.splice(mindex,1);		
+                  reshen(vm.activeNumber);	
+				  window.location.reload();
+                }, {
+                  "faultid": fault.id
+                });
+                layer.close(index);
+              });
+            },
+            addfault: function() {
+                vm.faultaddshow = true;
+            },
+            closefaultadd: function() {
+                vm.faultaddshow = false;
+            },
+            submitfaultadd: function() {
+                //tempobjadd();
+                vm.fault.age = new Date().toLocaleDateString();
+                vm.fault.status = 0;
+                delete vm.fault.id;
+                delete vm.fault.createdAt;
+                delete vm.fault.updatedAt;
+                delete vm.fault.deletedAt;
+                
+                console.log(JSON.stringify(vm.fault));
+                
+                g_util.load("/faultadd",
+                  true,
+                  function (result) {	
+                  if(result.status==0){
+                    layer.alert("添加成功");
+                    vm.faultaddshow = false;
+                    faults.push(result.result);
+                    reshen(vm.pageCout);
+                  }else{
+                    layer.alert("添加失败,错误原因为"+JSON.stringify(result.result));
+                    }	
+                  },vm.fault);
+            },
+            convertDate: function(date) {
+                return new Date(date).toLocaleDateString();
+            },
+            //convertsex: function(sex) {
+                //if(sex == 1){
+                    //return "男";
+                //}else if(sex == 2){
+                    //return "女";
+                //}
+            //},
+            //convertgroup: function(groupid) {
+                //for (var i = 0; i < vm.person.length; i++) {
+                    //if (vm.person[i].id == personid) {
+                        //return vm.person[i].name;
+                    //}
+                //}
+            //},
+            converttype: function(type) {
+                if(type == 1){
+                    return "卡纸";
+                }else if(type == 2){
+                    return "字迹异常";
+                }else if(type == 3){
+                    return "开关机异常";
+                }else if(type == 4){
+                    return "打印无反应";
+                }else if(type == 5){
+                    return "异响";
+                }else if(type == 6){
+                    return "指示灯异常";
+                }else if(type == 7){
+                    return "扫描异常";
+                }else if(type == 8){
+                    return "软件故障";
+                }else if(type == 9){
+                    return "其他";
+                }
+            },
+			convertsupplytype: function(supplytype) {
+              if(supplytype == 1) {
+                return "缺墨";
+              }else if(supplytype == 2){
+                return "缺粉";
+              }
+            },
+            convertstatus: function(status) {
+                return (status == 0) ? "正常" : "忙碌";
+            },
+            gopage: function(n) {
+                vm.pagen=1;
+                reshen(n);
+                vm.pagen=n;
+            }
+            //gopage: function(n) {
+                //reshen(n);
+            //}
+        }
+    });
+    
+    function reshen(n){
+      vm.pageCout = Math.ceil(faults.length/pagesize);
+      n=n?n:1;
+      vm.faults = faults.slice((n-1)*10,n*10);
+      vm.activeNumber = n;
+    }
+
+    function editview(fault){
+      vm.fault = fault;
+      delete vm.fault.createdAt;
+      delete vm.fault.updatedAt;
+      delete vm.fault.deletedAt;
+      vm.faulteditshow = true;
+      layer.open({
+        type:1,
+        title:"故障记录修改",
+        area: '800px',		
+        scrollbar : false,
+        content:$("#editdlg"),
+        btn:["修改","关闭"],
+        yes:function(index){			
+        layer.close(index);
+	
+        g_util.load("/faultedit",
+        true,
+        function (result) {
+        if(result=="ok"){
+					vm.faulteditshow = false;
+					fault = vm.fault;
+					layer.alert("修改成功");
+         }else{
+					layer.alert("修改失败,错误原因为"+result.result);
+         }	
+			}, vm.fault);
+			
+			
+      },
+      cancel:function(index){	
+			vm.faulteditshow = false;				
+			layer.close(index);
+			window.location.reload();
+		},
+		btn2:function(index){	
+			vm.faulteditshow = false;				
+			layer.close(index);
+			window.location.reload();
+		}
+		
+	});
+
+}
+    
+    var g_util = new Utils();
+    
+    g_util.load("/fault",
+      true,
+      function(ret){
+        faults = ret;
+        reshen(1);
+      },{});
+    
+    //g_util.load("/getlist",
+        //true,
+        //function(ret) {
+            //tempobjs = ret;
+            //reshen(1);
+        //}, {
+            //"tbname": tbname
+        //});
+
+    g_util.load("/getlist",
+        true,
+        function(ret) {
+            vm.printertypes = ret;
+        }, {
+            "tbname": "printertype"
+        });
+
+    g_util.load("/getlist",
+        true,
+        function(ret) {
+            vm.person = ret;
+        }, {
+            "tbname": "person"
+        });
+</script>
+<!--<script src="/js/crud.js"></script>-->
+<script src="/js/qrcode.min.js"></script>
+<%include footer.ejs%>

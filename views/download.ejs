@@ -1,0 +1,48 @@
+<%include header.ejs%>
+<div class="right_col" role="main">
+<div class="page-title">
+            <div class="title_left">
+                <h3>请点击下方按钮进行模板下载</h3>
+            </div>
+        </div>
+
+<div class="col-md-12 col-sm-12 col-xs-12">
+  <div class="x_panel">
+    <div class="x_content">
+      <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+        <div class="ln_solid"></div>
+        <div class="form-group">
+          <div id="example" class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+            <input type="button" class="btn btn-primary" @click="downloadXML" value="模板下载" />
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<script src="/js/dpscommon.js"></script>
+<script src="/js/vue.js"></script>
+<script>
+  var vm = new Vue({
+    el: '#example',
+    data:{
+      name: ' 打印机信息.xlsx'
+    },
+    methods: {
+      downloadXML: function() {
+        //alert('Hello')
+        //var example = $("#example");
+        //example.click(function(){
+          //window.open("http://localhost:3000/downloadXML?dir=./downloadXML&name=打印机信息.xlsx");
+		  window.open("http://siso.sipso.com.cn/downloadXML?dir=./downloadXML&name=打印机信息.xlsx");
+          //window.open("http://192.168.1.120:3000/downloadXML?dir=./downloadXML&name=printer.xlsx");
+          //window.open("http://dpsmanager.sipso.com.cn/downloadXML?dir=./downloadXML&name=printer.xlsx");
+        //})
+      }
+    }
+  })
+  
+</script>
+<%include footer.ejs%>

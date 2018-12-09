@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>维修签到</title>
+    <link rel="stylesheet" href="statics/styles/weui.min.css">
+</head>
+
+<body>
+    <div class="page">
+        <div class="page__hd">
+            <h1 class="page__title">维修签到</h1>
+            <p class="page__desc"></p>
+        </div>
+        <div class="page__bd">
+        
+            <div class="weui-form-preview">
+                <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="printertype_id">设备类型</label>
+                                    <em id="printermodel"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="name">设备品牌</label>
+                                    <em id="printerbrand"></em>
+                                </div>
+                            </div>
+                            <div class="weui-form-preview__hd">
+                                <div class="weui-form-preview__item">
+                                    <label class="weui-form-preview__label" id="printertype_id">设备型号</label>
+                                    <em id="printertype"></em>
+                                </div>
+                            </div>
+
+                <div class="weui-form-preview__hd">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">设备ID</label>
+                        <em id="printerid"></em>
+                    </div>
+                </div>
+                <div class="weui-form-preview__hd">
+                    <div class="weui-form-preview__item">
+                        <label class="weui-form-preview__label">序列号</label>
+                        <em id="printerserialnum"></em>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="weui-btn-area">
+                <a class="weui-btn weui-btn_primary" id="submit">维修签到</a>
+            </div>
+            
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="/js/jweixin-1.0.0.js"></script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/dpscommon.js"></script>
+<script>
+    var printerid = 0;
+    var code, state;
+    
+    $(document).ready(function() {
+        var id = g_utils.GetQueryString("id");
+            code = g_utils.GetQueryString("code");
+            state = g_utils.GetQueryString("state");
+        
+        g_utils.load("/queryprinter",
+            true,
+            function(result) {
+                $("#printermodel").text(result.model);
+                   $("#printermodel").val(result.model);
+                   $("#printerbrand").text(result.brand);
+                   $("#printerbrand").val(result.brand);
+				   $("#printertype").text(result.type);
+                   $("#printertype").val(result.type);
+                $("#printerid").text(result.id);
+                $("#printerid").val(result.id);
+                $("#printerserialnum").text(result.serialnum);
+                $("#printerserialnum").val(result.serialnum);
+                //converttype(result.type);
+            }, {
+                "id": id,
+                "code": code,
+                "state": state
+            });
+    })
+
+    //function converttype(type){
+            //g_utils.load("/query",
+                //true,
+                //function(result) {
+                    //$("#printertype").text(result.type);
+                    //console.log(result.type);
+                //}, {
+                    //"tbname": "printertype",
+                    //"obj":JSON.stringify({"id":type})
+                //});
+        //}
+
+    $("#submit").click(function() {
+        g_utils.load("/faultlogadd",
+            true,
+            function(result) {
+                if (result != null) {
+                    //alert("提交成功");
+                    window.location.href = "msg_success.html?id=" + id + "&code=" + code + "&state=" + state;
+                }
+            }, {
+                "leaselocation": $("#content").val(),
+                "remarks": $("#remarks").val(),
+                "materialtype": faultId,
+                "time": new Date(),
+                "maintenancestatus": maintenancestatus
+            });
+    });
+	
+</script>
+
+</html>

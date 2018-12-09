@@ -1,0 +1,331 @@
+<% include header.ejs %>
+<!-- page content -->
+<div class="right_col" role="main" id="maintreport-table">
+ <div class="row"  v-show="maintreporteditshow" style="display: none; margin-right:0" id="editdlg">
+     <div class="x_panel">
+       <div class="x_content">
+         <br />
+         <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+		 
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >维护类型<span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="maintreport.mainttype">
+             </div>
+           </div>
+           
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >维护时间<span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="maintreport.time">
+             </div>
+           </div>
+		   
+          <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >租赁位置<span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="maintreport.leaselocation">
+             </div>
+           </div>
+		   
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">备注 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="maintreport.remarks">
+             </div>
+           </div>
+		   
+         </form>
+       </div>
+     </div>
+ </div>
+
+<div class="page-title">
+  <div class="title_left">
+  <h3>维护报表</h3>
+  </div>
+  <div class="title_right">
+    <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="维护记录">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="button">搜索</button>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="clearfix"></div>
+ <div class="row"  v-show="maintreportaddshow" style="display:none;">
+   <div class="col-md-12 col-sm-12 col-xs-12">
+     <div class="x_panel">
+       <div class="x_title">
+         <h2>添加维护记录</h2>
+        <ul class="nav navbar-right panel_toolbox">
+          <li><a @click="closemaintreportadd"><i class="fa fa-close"></i></a>
+          </li>
+        </ul>	
+         <div class="clearfix"></div>
+       </div>
+       <div class="x_content">
+         <br />
+         <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >维护类型 <span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="maintreport.mainttype">
+             </div>
+           </div>
+		   
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >维护时间<span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="maintreport.time">
+             </div>
+           </div>
+		   
+          <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12" >租赁位置<span class="required">*</span>
+             </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="maintreport.leaselocation">
+             </div>
+           </div>
+		   
+           <div class="form-group">
+             <label class="control-label col-md-3 col-sm-3 col-xs-12">备注 </label>
+             <div class="col-md-6 col-sm-6 col-xs-12">
+               <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="maintreport.remarks">
+             </div>
+           </div>
+		   
+           <div class="ln_solid"></div>
+           <div class="form-group">
+             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+               <input type="button"  class="btn btn-primary" @click="closemaintreportadd" value="取消"/>
+               <input type="button"  class="btn btn-success" @click="submitmaintreportadd" value ="添加">
+             </div>
+           </div>
+         </form>
+       </div>
+     </div>
+   </div>
+ </div>
+
+
+ <div class="col-md-12 col-sm-12 col-xs-12" >
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>维护报表信息 <small></small></h2>
+        <ul class="nav navbar-right panel_toolbox">
+			<a class="btn btn-default source" @click="addmaintreport"><i class="glyphicon glyphicon-plus">添加维护报表</i></a>
+        </ul>
+        <div class="clearfix"></div>
+      </div>
+	  
+      <div class="x_content">
+
+        <div class="table-responsive">
+          <table class="table table-striped jambo_table bulk_action">
+            <thead>
+              <tr class="headings">
+                <th>
+                  <!-- <input type="checkbox" id="check-all" class="flat"> -->
+                </th>
+                <th class="column-title">维护类型</th>
+								<th class="column-title">维护时间</th>
+								<th class="column-title">租赁位置</th>
+                <th class="column-title">备注</th>
+                <th class="column-title no-link last"><span class="nobr">动作</span>
+                </th>
+                <th class="bulk-actions" colspan="7">
+                  <a class="antoo" style="color:#fff; font-weight:500;">( <span class="action-cnt"> </span> )<i class="fa fa-chevron-down"></i></a>
+                </th>
+              </tr> 			  
+            </thead>
+			
+            <tbody >	
+				<tr class="even pointer"  v-for="(maintreport,index) in maintreports" v-show="maintreportshow" style="display: none;">
+                <td class="a-center ">{{index+1}}</td>
+                <td class="a-left">{{maintreport.mainttype}}</td>
+								<td class="a-left">{{maintreport.time}}</td>
+								<td class="a-left">{{maintreport.leaselocation}}</td>
+                <td class="a-right a-right ">{{maintreport.remarks}}</td>
+                <td class="last">
+                    <a class="btn btn-info btn-xs" @click="editmaintreport(maintreport,index)"><i class="fa fa-pencil"></i>修改</a>
+                    <a class="btn btn-danger btn-xs" @click="deletemaintreport(maintreport,index)"><i class="fa fa-trash-o"></i>删除</a>
+               </td> 
+              </tr>
+	
+            </tbody>					
+          </table>  
+		  <div class="btn-group" v-for ="n in pageCout">
+		   <button class="btn btn-info" @click="gopage(n)"  v-bind:class="activeNumber === n ? 'active' : ''">{{n}}</button>
+         </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="/layui/lay/dest/layui.all.js"></script> 
+<script src="/js/dpscommon.js"></script> 
+<script src="/js/vue.js"></script>
+
+<script>
+
+var maintreports = [];
+var pagesize = 10;
+
+var vm = new Vue({
+	el: "#maintreport-table",
+	data: {	
+		maintreport:{},
+		maintreporteditshow:false,
+		maintreportshow:true,
+		maintreportaddshow:false,
+		activeNumber:1,
+		pageCout:1,
+		maintreports: []
+	},
+	methods: {
+		viewmaintreport: function (maintreport) {	
+					
+			g_util.load("/maintreportquery",
+				true,
+				function (result) {	
+				lyview(result);
+			}, {
+				"maintreportid": maintreport.id
+			});
+		},
+		editmaintreport: function (maintreport) {		
+			editview(maintreport);
+		},
+		deletemaintreport: function (maintreport,maintreportindex) {
+			layer.confirm('删除&nbsp&nbsp' + maintreport.mainttype + '&nbsp?', {
+				icon: 2,
+				title: '警告：请谨慎操作，删除动作不可逆！'
+			}, function (index) {
+				g_util.load("/maintreportdelete", false, function (ret) {	
+					var mindex =0;
+					for(var i=0;i<maintreports.length;i++){
+						if(maintreports[i].id == maintreport.id){
+						mindex = i;
+						}
+					}
+					maintreports.splice(mindex,1);		
+					reshen(vm.activeNumber);			
+				}, {
+					"maintreportid": maintreport.id
+				});
+				layer.close(index);
+			});
+		},
+		addmaintreport:function () {
+			vm.maintreportaddshow = true;				
+		},
+		closemaintreportadd:function(){
+			vm.maintreportaddshow = false;	
+		},
+		submitmaintreportadd:function(){
+		
+			vm.maintreport.age = new Date().toLocaleDateString();
+			vm.maintreport.status = 0;
+			delete vm.maintreport.id;
+			delete vm.maintreport.createdAt;
+			delete vm.maintreport.updatedAt;
+			delete vm.maintreport.deletedAt;
+			
+			console.log(JSON.stringify(vm.maintreport));
+			
+			g_util.load("/maintreportadd",
+				true,
+				function (result) {	
+				if(result.status==0){
+					layer.alert("添加成功");
+					vm.maintreportaddshow = false;
+					maintreports.push(result.result);
+					reshen(vm.pageCout);
+				}else{
+					layer.alert("添加失败,错误原因为"+JSON.stringify(result.result));
+				}	
+			},vm.maintreport);			
+		},
+		convertDate:function(date){
+			return new Date(date).toLocaleDateStringString();
+		},
+		gopage:function(n){
+			reshen(n);		
+		}
+	}
+})
+
+function reshen(n){
+	vm.pageCout = Math.ceil(maintreports.length/pagesize);
+	n=n?n:1;
+	vm.maintreports = maintreports.slice((n-1)*10,n*10);
+	vm.activeNumber = n;
+}
+
+function editview(maintreport){
+	vm.maintreport = maintreport;
+	delete vm.maintreport.createdAt;
+	delete vm.maintreport.updatedAt;
+	delete vm.maintreport.deletedAt;
+	vm.maintreporteditshow = true;
+	layer.open({
+		type:1,
+		title:"维护信息修改",
+		area: '800px',		
+		scrollbar : false,
+		content:$("#editdlg"),
+		btn:["修改","关闭"],
+		yes:function(index){			
+			layer.close(index);
+	
+			g_util.load("/maintreportedit",
+			true,
+			function (result) {
+			if(result=="ok"){
+					vm.maintreporteditshow = false;
+					maintreport = vm.maintreport;
+					layer.alert("修改成功");
+				}else{
+					layer.alert("修改失败,错误原因为"+result.result);
+				}	
+			}, vm.maintreport);
+			
+			
+		},
+		cancel:function(index){	
+			vm.maintreporteditshow = false;				
+			layer.close(index);
+		},
+		btn2:function(index){	
+			vm.maintreporteditshow = false;				
+			layer.close(index);
+		}
+		
+	});
+
+}
+
+var g_util = new Utils();
+
+g_util.load("/maintreport",
+	true,
+	function (ret) {
+	maintreports = ret;
+	reshen(1);	
+}, {});
+
+</script>
+<% include footer.ejs %>

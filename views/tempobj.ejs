@@ -1,0 +1,891 @@
+<%include header.ejs%>
+<!-- 2017.8.9 批量打印 start-->
+<div class="x_panel" style="margin:0 auto;display:none;" id="qrcode2"> </div>
+<!-- 2017.8.9 批量打印 end-->
+<div class="right_col" role="main" id="tempobj-table">
+
+    <div class="row" v-show="qrcodeshow" style="display: none; margin-right:0;margin-left:18" id="qrcode">
+     
+        <div class="x_panel" style="margin:0 auto;" id="qrcode1">
+		
+            <div style="margin:0 auto;" align="left">
+              <div class="form-group">
+                <label class="control-label" id="model">类型:</label>
+                <em id="printermodel"><strong>{{newtempobjs.model}}</strong></em>
+				<br>
+				<label class="control-label" id="brand">品牌:</label>
+                <em id="printerbrand"><strong>{{newtempobjs.brand}}</strong></em>
+				<br>
+				<label class="control-label" id="type">规格:</label>
+                <em id="printertype" style="font-size:10px"><strong>{{newtempobjs.type}}</strong></em>
+				<br>
+				<label class="control-label" id="code">编码:</label>
+                <em id="printercode"><strong>{{newtempobjs.printercode}}</strong></em>
+				<br>
+              </div>
+			  <!-- <div class="form-group"> -->
+                <!-- <label class="control-label" id="name">品牌:</label> -->
+                <!-- <em id="printerbrand"><strong>{{newtempobjs.brand}}</strong></em> -->
+              <!-- </div> -->
+              <!-- <div class="form-group"> -->
+                <!-- <label class="control-label" id="serialnum">规格:</label> -->
+                <!-- <em id="printertype"><strong>{{newtempobjs.type}}</strong></em> -->
+              <!-- </div> -->
+              <!-- <div class="form-group"> -->
+                <!-- <label class="control-label" id="ID">编码:</label> -->
+                <!-- <em id="printerid"><strong>{{newtempobjs.printercode}}</strong></em> -->
+              <!-- </div> -->
+              <div class="form-group" style="height:0.2cm">
+                <label class="control-label" id="tel"></label>
+                <em style="font-size:20px"><strong>扫码呼叫服务</strong></em>
+              </div>
+            </div>
+            
+            <div class="x_content" id="qrcodepic" style="width:80%;height:80%;margin-top:10%;"></div>
+            
+			<div class="form-group">
+                <span style="font-size:10px;float:left;"><strong>校园文印全包服务商</strong></span>
+				<br>
+                <span style="font-size:10px;float:right;width:75%"><strong>——服务外包公司</strong></span>
+              </div>
+			 <!-- <div class="form-group" style="text-align:center"> -->
+                <!-- <label style="font-size:10px"><strong>校园文印全包服务商</strong></label><br> -->
+                <!-- <label style="font-size:10px"><strong>——服务外包公司</strong></label> -->
+              <!-- </div> -->
+              
+        </div>
+        
+        
+    </div>
+
+    <div class="row" v-show="tempobjeditshow" style="display: none; margin-right:0" id="editdlg">
+        <div class="x_panel">
+            <div class="x_content">
+                <br />
+                <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">类型 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.model">
+                            <!-- <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="tempobj.name"> -->
+                              <!-- <option v-for="item in printertypes" v-bind:value="item.name">{{item.name}}</option> -->
+                            <!-- </select> -->
+                        </div>
+                    </div>
+					
+					
+					<div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">品牌 <span class="required">*</span>
+                        </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.brand">
+                        </div>
+                    </div>
+					
+					
+					
+					<div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">型号 <span class="required">*</span></label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+							<input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.type">
+                            <!-- <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="tempobj.type"> -->
+                              <!-- <option v-for="item in printertypes" v-bind:value="item.id">{{item.type}}</option> -->
+                            <!-- </select> -->
+                        </div>
+                    </div>
+                    
+                    <!-- added by jingcheng 2017/4/26 start -->
+                        <div class="form-group">
+                          <label class="control-label col-md-3 col-sm-3 col-xs-12">序列号 <span class="required">*</span></label>
+                          <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" name="serialnum" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.serialnum">
+                          </div>
+                        </div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">硒鼓型号 <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.drumtype">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">位置IP <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.locationip">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">购置时间 <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.purtime">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">地点 <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.position">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">负责部门 <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.department">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">资产负责人 <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.assetmanager">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">联系人电话 <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.contacttel">
+							</div>
+						</div>
+						
+						<div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">维修负责人 </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="tempobj.manager">
+                                  <option v-for="item in person" v-bind:value="item.id">{{item.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- added by jingcheng 2017/4/26 start -->
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">纸盒数 </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="tempobj.ppbox">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">纸容量/张 </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="tempobj.ppmax">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">剩余纸量/百分比 </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="tempobj.ppnum">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">墨量/百分比 </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="tempobj.inknum">
+                        </div>
+                    </div>
+
+                    <!-- <div class="form-group"> -->
+                        <!-- <label class="control-label col-md-3 col-sm-3 col-xs-12">负责人 </label> -->
+                        <!-- <div class="col-md-6 col-sm-6 col-xs-12"> -->
+                            <!-- <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="tempobj.manager"> -->
+                              <!-- <option v-for="item in person" v-bind:value="item.id">{{item.name}}</option> -->
+                            <!-- </select> -->
+                        <!-- </div> -->
+                    <!-- </div> -->
+					
+					<div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">打印机编码 </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="tempobj.printercode">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">备注 </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="tempobj.remarks">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="page-title">
+        <div class="title_left">
+            <h3>打印机列表</h3>
+        </div>
+        <div class="title_right">
+            <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="打印机...">
+                    <span class="input-group-btn">
+          <button class="btn btn-default" type="button">搜索</button>
+        </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="row" v-show="tempobjaddshow" style="display:none;">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>添加打印机</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a @click="closetempobjadd"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <br />
+                    <form id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">类型 <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.model">
+                                <!-- <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="tempobj.name"> -->
+                                  <!-- <option v-for="item in printertypes" v-bind:value="item.name">{{item.name}}</option> -->
+                                <!-- </select> -->
+                            </div>
+                        </div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">品牌 <span class="required">*</span>
+								</label>
+								<div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.brand">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">型号 <span class="required">*</span></label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.type">
+								<!-- <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="tempobj.type"> -->
+								<!-- <option v-for="item in printertypes" v-bind:value="item.id">{{item.type}}</option> -->
+								<!-- </select> -->
+							</div>
+						</div>
+						
+						<div class="form-group">
+                          <label class="control-label col-md-3 col-sm-3 col-xs-12">序列号 <span class="required">*</span></label>
+                          <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input type="text" name="serialnum" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.serialnum">
+                          </div>
+                        </div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">硒鼓型号 <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.drumtype">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">位置IP <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.locationip">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">购置时间 <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.purtime">
+							</div>
+						</div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">地点 <span class="required">*</span>
+                            </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.position">
+                            </div>
+                        </div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">负责部门 <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.department">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">资产负责人 <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.assetmanager">
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3 col-sm-3 col-xs-12">联系人电话 <span class="required">*</span>
+							</label>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input type="text" name="last-name" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.contacttel">
+							</div>
+						</div>
+						
+						<div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">维修负责人 </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="tempobj.manager">
+                                  <option v-for="item in person" v-bind:value="item.id">{{item.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- <div class="form-group"> -->
+                            <!-- <label class="control-label col-md-3 col-sm-3 col-xs-12">型号 </label> -->
+                            <!-- <div class="col-md-6 col-sm-6 col-xs-12"> -->
+                                <!-- <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="tempobj.type"> -->
+                                  <!-- <option v-for="item in printertypes" v-bind:value="item.id">{{item.type}}</option> -->
+                                <!-- </select> -->
+                            <!-- </div> -->
+                        <!-- </div> -->
+                        
+                        <!-- added by jingcheng 2017/4/26 start -->
+                        <!-- <div class="form-group"> -->
+                          <!-- <label class="control-label col-md-3 col-sm-3 col-xs-12">序列号 <span class="required">*</span></label> -->
+                          <!-- <div class="col-md-6 col-sm-6 col-xs-12"> -->
+                            <!-- <input type="text" name="serialnum" required="required" class="form-control col-md-7 col-xs-12" v-model="tempobj.serialnum"> -->
+                          <!-- </div> -->
+                        <!-- </div> -->
+                        <!-- added by jingcheng 2017/4/26 start -->
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">纸盒数 </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="tempobj.ppbox">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">纸容量/张 </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="tempobj.ppmax">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">剩余纸量/百分比 </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="tempobj.ppnum">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">墨量/百分比 </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="tempobj.inknum">
+                            </div>
+                        </div>
+
+                        <!-- <div class="form-group"> -->
+                            <!-- <label class="control-label col-md-3 col-sm-3 col-xs-12">负责人 </label> -->
+                            <!-- <div class="col-md-6 col-sm-6 col-xs-12"> -->
+                                <!-- <select class="select2_single form-control " tabindex="-1" aria-hidden="true" v-model="tempobj.manager"> -->
+                                  <!-- <option v-for="item in person" v-bind:value="item.id">{{item.name}}</option> -->
+                                <!-- </select> -->
+                            <!-- </div> -->
+                        <!-- </div> -->
+						
+						<div class="form-group">
+                        <label class="control-label col-md-3 col-sm-3 col-xs-12">打印机编码 </label>
+                        <div class="col-md-6 col-sm-6 col-xs-12">
+                            <input class="date-picker form-control col-md-7 col-xs-12" type="text" v-model="tempobj.printercode">
+                        </div>
+                    </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">备注 </label>
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input class="date-picker form-control col-md-7 col-xs-12" required="required" type="text" v-model="tempobj.remarks">
+                            </div>
+                        </div>
+
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                <input type="button" class="btn btn-primary" @click="closetempobjadd" value="取消" />
+                                <input type="button" class="btn btn-success" @click="submittempobjadd" value="添加">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>基础信息 <small></small></h2>
+                <ul class="nav navbar-right panel_toolbox">
+					<button class="btn btn-default source" onclick="doPrint()"><i class="glyphicon glyphicon-plus">批量打印二维码</i></button>
+                    <a class="btn btn-default source" @click="addtempobj"><i class="glyphicon glyphicon-plus">添加打印机</i></a>
+                    <!--Excel批量导入 start-->
+                    <!-- <a class="btn btn-default source" @click="addxml"><i class="glyphicon glyphicon-plus">批量添加</i></a> -->
+                    <!--<a id="pf" href="" style="display:none" download=""><span id="fp"></span></a>-->
+                    <!--<input id="btndownload" type="button" class="btn" value="模板下载" style="height:25px; display:none" onclick="DownloadFile()"/>-->
+                    <!--Excel批量导入 end-->
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+			
+			<div id="container" class="container">
+                <% if(locals.success) { %>
+                  <div id="alt_success" class="alert alert-success">
+                  <%- success%>
+                  </div>
+                <% } %>
+                <% if(locals.error) { %>
+                  <div id="alt_warning" class="alert alert-warning">
+                  <%= error %>
+                  </div>
+                <% } %>
+                <form method="post" enctype="multipart/form-data">
+                      <h4>导入打印机信息Excel:</h4>
+                      <input id="fulAvatar" type="file" name="file" multiple="multiple" />
+                      <br/>
+                      <button id="btnSub" class="btn btn-lg btn-primary" type="submit" @click="addXML">导入打印机信息Excel</button>
+                </form>
+            </div>
+
+            <div class="x_content">
+
+                <!-- <p>Add class <code>bulk_action</code> to table for bulk actions options on row select</p> -->
+
+                <div class="table-responsive">
+					<!-- 2017.8.9 批量打印 start-->
+                    <table class="table table-striped jambo_table bulk_action" id='test_table'>
+					<!-- 2017.8.9 批量打印 end-->
+                        <thead>
+                            <tr class="headings">
+								<!-- 2017.8.9 批量打印 start-->
+								<th width="60"><label>
+                                    <input  type="checkbox"  v-model='all_check' @click="changecheck"/>
+                                    </label>全选
+                                </th>
+								<!-- 2017.8.9 批量打印 end-->
+                                <th>
+                                    <!-- <input type="checkbox" id="check-all" class="flat"> -->
+                                </th>
+                                <th class="column-title">类型 </th>
+                                <th class="column-title">品牌 </th>
+                                <th class="column-title">型号 </th>
+                                <th class="column-title">序列号 </th>
+                                <th class="column-title">硒鼓类型</th>
+								<th class="column-title">位置IP</th>
+								<th class="column-title">购置时间</th>
+                                <th class="column-title">地点</th>
+                                <th class="column-title">负责部门</th>
+								<th class="column-title">资产负责人</th>
+								<th class="column-title">联系人电话</th>
+								<th class="column-title">维修负责人</th>
+                                <th class="column-title">备注</th>
+                                <th class="column-title no-link last"><span class="nobr">动作</span>
+                                </th>
+                                <th class="bulk-actions" colspan="7">
+                                    <a class="antoo" style="color:#fff; font-weight:500;">( <span class="action-cnt"> </span> )<i class="fa fa-chevron-down"></i></a>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <tr class="even pointer" v-for="(tempobj,index) in tempobjs" v-show="tempobjshow" style="display: none;">
+                                <!-- <td class="a-center ">{{index+1}}</td> -->
+								<!-- 2017.8.9 批量打印 start-->
+								<td><input name='r' type="checkbox" v-model='items[index+1+(newpage-1)*10]'></td>
+								<!-- 2017.8.9 批量打印 end-->
+								<td class="a-center ">{{index+1+(pagen-1)*10}}</td>
+                                <td class="a-left">{{tempobj.model}}</td>
+								<td class="a-left">{{tempobj.brand}}</td>
+								<td class=" ">{{tempobj.type}}</td>
+								<td class=" ">{{tempobj.serialnum}}</td>
+								<td class=" ">{{tempobj.drumtype}}</td>
+								<td class=" ">{{tempobj.locationip}}</td>
+								<td class=" ">{{tempobj.purtime}}</td>
+                                <td class=" ">{{tempobj.position}}</td>
+								<td class=" ">{{tempobj.department}}</td>
+								<td class=" ">{{tempobj.assetmanager}}</td>
+								<td class=" ">{{tempobj.contacttel}}</td>
+								<td class=" ">{{convertperson(tempobj.manager)}}</td>
+                                <!--<td class=" ">{{tempobj.type}}</td>-->
+                                <!-- <td class=" ">{{converttype(tempobj.type)}}</td> -->
+                                <!-- <td class=" ">{{convertDate(tempobj.age)}}</td> -->
+                                <!-- <td class=" ">{{convertperson(tempobj.manager)}}</td> -->
+                                <!-- <td class=" ">{{convertstatus(tempobj.status)}}</td> -->
+                                <td class="a-right a-right ">{{tempobj.remarks}}</td>
+                                <td class="last">
+                                    <!-- <a class="btn btn-primary btn-xs" @click="viewtempobj(tempobj)"><i class="fa fa-folder" ></i>查看</a> -->
+                                    <a class="btn btn-info btn-xs" @click="edittempobj(tempobj,index)"><i class="fa fa-pencil"></i>修改</a>
+                                    <a class="btn btn-danger btn-xs" @click="deletetempobj(tempobj,index)"><i class="fa fa-trash-o"></i>删除</a>
+                                    <!--<a class="btn btn-success btn-xs" @click="qrcode(tempobj,index)"><i class="fa fa-qrcode"></i>设备二维码</a>-->
+                                    <!-- <a class="btn btn-warning btn-xs" @click="qrcoderepair(tempobj,index)"><i class="fa fa-qrcode"></i>维修二维码</a> -->
+                                    <a class="btn btn-success btn-xs" @click="qrcoderepair(tempobj,index)"><i class="fa fa-qrcode"></i>设备二维码</a>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <div class="btn-group" v-for="n in pageCout">
+                        <button class="btn btn-info" @click="gopage(n)" v-bind:class="activeNumber === n ? 'active' : ''">{{n}}</button>
+                    </div>
+                    <!--下拉选取可显示的数据条数   未完成-->
+                    <!--<select name="page.pageSize" id="pageSizeSelector">  
+                      <option value="5" class="pageSize">5</option>  
+                      <option value="10" class="pageSize">10</option>
+                      <option value="20" class="pageSize">20</option>                       
+                    </select> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/layui/lay/dest/layui.all.js"></script>
+<script src="/js/dpscommon.js"></script>
+<script src="/js/vue.js"></script>
+<script>
+    var g_util = new Utils();
+
+    var tbname = "printer";
+    var tempobjs = [];
+    var pagesize = 10;
+	//2017.8.9 批量打印 start
+	var newpagen=1;
+    var allprint_tempobjs=[];
+    //声明数组
+    var items_check=new Array();
+	//2017.8.9 批量打印 end
+
+    var vm = new Vue({
+        el: "#tempobj-table",
+        data: {
+            tempobj: {},
+            tempobjeditshow: false,
+            tempobjshow: true,
+            tempobjaddshow: false,
+            qrcodeshow: false,
+            activeNumber: 1,
+            pageCout: 1,
+            tempobjs: [],
+			//liuhui 二维码新加内容 start 2017.7.13
+			newtempobjs:{},
+			pagen:1,//页数
+			//liuhui 二维码新加内容 end 2017.7.13
+            printertypes: [],
+            person: [],
+            //2017.8.9 start 批量打印二维码
+            all_check:false,
+            items:items_check,
+            newpage:1,
+            printtempobj:{},
+            allprint_tempobjs:[],
+            all_code:[]
+            //2017.8.9 end 批量打印二维码
+        },
+        methods: {
+            viewtempobj: function(tempobj) {
+                tempobjview(tempobj);
+            },
+            edittempobj: function(tempobj) {
+                editview(tempobj);
+            },
+            deletetempobj: function(tempobj, tempobjindex) {
+                tempobjdelete(tempobj, tempobjindex);
+            },
+            addtempobj: function() {
+                vm.tempobjaddshow = true;
+            },
+            //qrcode: function(tempobj, tempobjindex) {
+              //getqrcode("http://192.168.1.170:3000/indexuser/indexuser.html?id="+tempobj.id);
+              //getqrcode("http://192.168.1.170:3000/wxfaultpush?id="+tempobj.id);
+                //getqrcode("http://dpsmanager.sipso.com.cn/wxfaultpush?id="+tempobj.id);
+             //},
+            qrcoderepair :function(tempobj, tempobjindex){
+                //getqrcode("http://192.168.1.170:3000/indexuser/indexuser.html?id="+tempobj.id);
+                //getqrcode("http://192.168.1.170:3000/wxfaultpush?id="+tempobj.id);
+                //getqrcode("http://dpsmanager.sipso.com.cn/wxfaultpull?id="+tempobj.id);
+              //getqrcode("http://192.168.1.108:3000/customer/index.html?id="+tempobj.id);
+                getqrcode("http://siso.sipso.com.cn/wxfaultpush?id="+tempobj.id);
+             },
+            qrcoderepair :function(tempobj, tempobjindex){
+				//liuhui 二维码新加内容 start 2017.7.13
+				newtempobjs={};
+				code(tempobj);
+				//liuhui 二维码新加内容 end 2017.7.13
+                  //getqrcode("http://192.168.1.170:3000/indexuser/indexuser.html?id="+tempobj.id);
+                //getqrcode("http://192.168.1.170:3000/customer/index.html?id="+tempobj.id);
+                //getqrcode("http://192.168.1.170:3000/wxfaultpull?id="+tempobj.id);
+                getqrcode("http://siso.sipso.com.cn/wxfaultpull?id="+tempobj.id);
+            },
+            closetempobjadd: function() {
+                vm.tempobjaddshow = false;
+            },
+            submittempobjadd: function() {
+                tempobjadd();
+            },
+            convertDate: function(date) {
+                return new Date(date).toLocaleDateString();
+            },
+            //converttype: function(type) {
+                //for (var i = 0; i < vm.printertypes.length; i++) {
+                    //if (vm.printertypes[i].id == type) {
+                        //return vm.printertypes[i].type;
+                    //}
+                //}
+            //},
+            convertperson: function(personid) {
+                for (var i = 0; i < vm.person.length; i++) {
+                    if (vm.person[i].id == personid) {
+                        return vm.person[i].name;
+                    }
+                }
+            },
+            convertstatus: function(status) {
+                return (status == 0) ? "正常" : "故障";
+            },
+            //gopage: function(n) {
+                //reshen(n);
+            //},
+			//2017.8.9 批量打印 start
+			gopage: function(n) {
+                vm.pagen=1;
+                newreshen(n);
+                vm.pagen=n;
+				newpage=n;
+            },
+			//2017.8.9 批量打印 end
+            //Excel批量导入 start 2017.06.05
+            addXML: function(){
+                //alert("导入成功！");
+                var fulAvatarVal = $("#fulAvatar").val();
+                if(fulAvatarVal.length == 0){
+                    alert("温馨提示：请先下载打印机信息模板Excel进行填写!");
+                    return false;
+                }
+            },
+            //Excel批量导入 end 2017.06.05
+			//2017.8.9 批量打印 start
+			changecheck:function(){        //点击全选时
+                for(var i=0;i<vm.items.length;i++){
+                    vm.items[i]=vm.all_check;
+                }
+            }
+			//2017.8.9 批量打印 end
+        }
+    });
+    
+    function getqrcode(str) {
+        $("#qrcodepic").empty();
+        var qrcode = new QRCode(document.getElementById("qrcodepic"), {
+            text: str,
+            width: 128,
+            height: 128,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.Q
+        });
+        vm.qrcodeshow = true;
+        layer.open({
+            type: 1,
+            title: "二维码",
+            content: $("#qrcode"),
+            cancel: function(index, layero) {
+                vm.qrcodeshow = false;
+                layer.close(index);
+            }
+        });
+    }
+	
+	//liuhui 二维码新加内容 start 2017.7.13
+	function code(tempobj){
+	  vm.newtempobjs=tempobj;
+	}
+	//liuhui 二维码新加内容 end 2017.7.13
+    
+	//打印二维码 start jingcheng 2017.7.27
+      //function doPrint(){
+      //alert("二维码打印开始~");
+      //var head_str = "<html><head><title></title></head><body>";//先生成头部
+      //var foot_str = "</body></html>";//生成尾部
+      //var older = document.body.innerHTML;
+      //var new_str = document.getElementById("qrcode1").innerHTML;//获取指定打印区域
+      //var old_str = document.body.innerHTML;//获取原本页面的代码
+      //document.body.innerHTML = head_str + new_str + foot_str;//构建新网页
+      //window.print();//打印刚才新建的网页
+      //document.body.innerHTML = older;//将网页还原
+      //window.location.reload();
+      //return false;
+      //}
+    //打印二维码 end jingcheng 2017.7.27
+	
+    //二维码上添加信息 start jingcheng 2017.6.9
+    // var printerid = 0;
+    // $(document).ready(function() {
+    //     //alert("进入到了该方法");
+    //     var id = g_utils.GetQueryString("id");
+    //     g_utils.load("/queryprinter",
+    //       true,
+    //       function(result) {
+    //         console.dir(result);
+    //         $("#printerid").text(result.id);
+    //         $("#printerid").val(result.id);
+    //       },{
+    //         "id": id
+    //       });
+    //    });
+    //二维码上添加信息 end jingcheng 2017.6.9
+	
+	//2017.8.9 批量打印 start
+	function newreshen(n) {
+		vm.pageCout = Math.ceil(tempobjs.length / pagesize);
+		items_check=new Array(tempobjs.length);
+		n = n ? n : 1;
+		vm.tempobjs = tempobjs.slice((n - 1) * 10, n * 10);
+		vm.activeNumber = n;   
+		for(var i=0;i<items_check.length;i++)
+		{
+			items_check[i]=vm.all_check ;//默认false,不显示
+		}
+		vm.items=items_check;      
+	} 
+	
+	function doPrint(){
+          var rows = document.getElementById("test_table").rows; 
+          var a = document.getElementsByName("r"); 
+          var  table = document.getElementById("test_table");
+            for(var i=0;i<a.length;i++) { 
+            if(a[i].checked){ 
+            var row = a[i].parentElement.parentElement.rowIndex; 
+            //var index= row-(vm.pagen-1)*10-1;//index+1+(pagen-1)*10}=row
+               allprint_tempobjs.push(tempobjs[row -1+(vm.pagen-1)*10]);
+            } 
+        }
+         var html = "";
+            allprint_tempobjs.forEach(function(item,index) {
+                html+=' <div style=\"margin:0 auto;\" align=\"left\">';
+                html +='<div><label  class=\"control-label\"   id=\"model\">类型:</label>';
+                html +=' <em id="printermodel"><strong>'+ item.model +'</strong></em></div>';//类型
+                html +='<div><label  id=\"brand\">品牌:</label>';
+                html +=' <em id=\"printerbrand\"><strong>'+item.brand+'</strong></em></div>';//品牌
+                html +='<div ><label  id=\"type\">规格:</label>';
+                html +='<em id=\"printertype\" style="font-size:10px"><strong>'+item.type+'</strong></em></div>'//规格
+                html +='<div ><label  id="code">编码:</label>';
+                html +='<em id=\"printercode\"><strong>'+item.printercode+'</strong></em></div>';//编码
+                html +='<div ><label  id=\"tel\"></label>';
+                html +=' <em style=\"font-size:20px\"><strong>扫码呼叫服务</strong></em></div> </div>';//扫码呼叫服务
+                html +=' <div class=\"x_content\" id=\"qrcodepic'+index+'\"  style=\"width:100%;height:100%;\"> </div>';//二维码
+				html +='<div class="form-group"><span style="font-size:10px;float:left;"><strong>校园文印全包服务商</strong></span>';
+                html +='<br>';
+				html +='<span style="font-size:10px;float:right;width:75%"><strong>——服务外包公司</strong></span></div>';
+              });
+                    $("#qrcode2").append(html);
+      //alert("二维码打印开始~");
+
+        var head_str = '<html><head><title></title></head><body>';//先生成头部
+        var foot_str = "</body></html>";//生成尾部
+        //var older = document.body.innerHTML;
+        var new_str = document.getElementById("qrcode2").innerHTML;//获取指定打印区域
+        document.body.innerHTML = head_str + new_str + foot_str;//构建新网页
+        for(var i=0;i< allprint_tempobjs.length;i++){
+        $("#qrcodepic"+i).empty();
+        var qrcode="qrcodepic"+i;
+            str="http://siso.sipso.com.cn/indexuser/indexuser.html?id="+allprint_tempobjs[i].id;
+        var qrcode = new QRCode(document.getElementById(qrcode), {
+            text: str,
+            width: 128,
+            height: 128,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.Q
+        });
+        
+       }
+        //document.all.WebBrowser.ExecWB(7,2);
+        window.print();//打印刚才新建的网页
+        //wb.ExecWB(7,2);
+        //document.body.innerHTML = older;//将网页还原
+        //document.body.innerHTML = older;//将网页还原
+        window.location.reload();
+        return false;
+      }
+	
+
+    g_util.load("/getlist",
+        true,
+        function(ret) {
+            tempobjs = ret;
+            newreshen(1);
+        }, {
+            "tbname": tbname
+        });
+	//2017.8.9 批量打印 end
+
+    //g_util.load("/getlist",
+        //true,
+        //function(ret) {
+            //vm.printertypes = ret;
+        //}, {
+            //"tbname": "printertype"
+        //});
+
+    g_util.load("/getlist",
+        true,
+        function(ret) {
+            vm.person = ret;
+        }, {
+            "tbname": "person"
+        });
+
+    //pageSize start jingcheng 2017/5/12 未完成
+    $(document).ready(function(){
+    //用于页面初始化的时候选中与Pager对象的pageSize属性值相同的option
+      $(".pageSize").each(function(){
+        if($(this).val() == pagesize){
+            $(this).attr("selected","selected");
+        } 
+      });
+    //用于设置每页显示的数据条数
+      //console.log($("#pageSizeSelector"));
+      if($("#pageSizeSelector")){
+        $("#pageSizeSelector").change(function(){
+          //alert("value:"+$(this).attr("value"));  
+          $(this).src = "?pagesize=" + pageSize;
+            //alert("...");
+            //submit();
+        });
+      }
+
+    });
+    //pageSize end jingcheng 2017/5/12 未完成
+
+</script>
+<script src="/js/jquery.min.js"></script>
+<script src="/js/crud.js"></script>
+<script src="/js/qrcode.min.js"></script>
+<%include footer.ejs%>

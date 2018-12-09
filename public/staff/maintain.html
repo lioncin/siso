@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>日常维护</title>
+    <link rel="stylesheet" href="statics/styles/weui.min.css">
+</head>
+
+<body>
+    <div class="page">
+        <div class="page__hd">
+            <h1 class="page__title">日常维护</h1>
+            <p class="page__desc"></p>
+        </div>
+        <div class="weui-form-preview">
+            <div class="weui-form-preview__hd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label" id="customer">客户信息</label>
+                    <em id="customerinf" class="weui-form-preview"></em>
+                </div>
+            </div>
+
+            <div class="weui-form-preview__hd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label" id="name">设备名称</label>
+                    <em id="printername" class="weui-form-preview"></em>
+                </div>
+            </div>
+            <div class="weui-form-preview__hd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label" id="type">设备型号</label>
+                    <em id="printertype" class="weui-form-preview"></em>
+                </div>
+            </div>
+            <div class="weui-form-preview__hd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label" id="id">设备id</label>
+                    <em id="printerid" class="weui-form-preview"></em>
+                </div>
+            </div>
+            <div class="weui-form-preview__hd">
+                <div class="weui-form-preview__item">
+                    <label class="weui-form-preview__label" id="number">序列号</label>
+                    <em id="serial_number" class="weui-form-preview"></em>
+                </div>
+            </div>
+        </div>
+        <div class="page__bd">
+            <div class="weui-cells__title">维护内容（打√表示已完成项）：</div>
+            <div class="weui-cells weui-cells_checkbox">
+                <label class="weui-cell weui-check__label" for="s11">
+                <div class="weui-cell__hd">
+                    <input type="checkbox" class="weui-check" name="checkbox1" id="s11" checked="checked">
+                    <i class="weui-icon-checked"></i>
+                </div>
+                <div class="weui-cell__bd">
+                    <p>打印机打印速度</p>
+                </div>
+ 
+            </label>
+                <label class="weui-cell weui-check__label" for="s12">
+                <div class="weui-cell__hd">
+                    <input type="checkbox" name="checkbox1" class="weui-check" id="s12">
+                    <i class="weui-icon-checked"></i>
+                </div>
+                <div class="weui-cell__bd">
+                    <p>打印测试页</p>
+                </div>
+  
+            </label>
+                <label class="weui-cell weui-check__label" for="s13">
+                <div class="weui-cell__hd">
+                    <input type="checkbox" name="checkbox2" class="weui-check" id="s13">
+                    <i class="weui-icon-checked"></i>
+                </div>
+                <div class="weui-cell__bd">
+                    <p>打印头校准</p>
+                </div>
+            </label>
+                <label class="weui-cell weui-check__label" for="s14">
+                <div class="weui-cell__hd">
+                    <input type="checkbox" name="checkbox3" class="weui-check" id="s14">
+                    <i class="weui-icon-checked"></i>
+                </div>
+                <div class="weui-cell__bd">
+                    <p>定位是否正常</p>
+                </div>
+            </label>
+                <label class="weui-cell weui-check__label" for="s15">
+                <div class="weui-cell__hd">
+                    <input type="checkbox" name="checkbox4" class="weui-check" id="s15">
+                    <i class="weui-icon-checked"></i>
+                </div>
+                <div class="weui-cell__bd">
+                    <p>分页器磨损</p>
+                </div>
+            </label>
+            </div>
+            <div class="weui-cells__title">其他维护内容：</div>
+
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <textarea id="status" name="status" maxlength="200" onkeydown="countChar('status','counter')" onkeyup="countChar('status','counter')" class="weui-textarea" placeholder="请输入文本：" rows="3"></textarea>
+                        <div class="weui-textarea-counter"><span id="counter">200</span>/200</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weui-cells__title">耗材使用情况：</div>
+            <div class="weui-cells weui-cells_form">
+                <div class="weui-cell">
+                    <div class="weui-cell__bd">
+                        <textarea id="status1" name="status1" maxlength="200" onkeydown="countChar('status1','counter1')" onkeyup="countChar('status1','counter1')" class="weui-textarea" placeholder="请输入文本：" rows="3"></textarea>
+                        <div class="weui-textarea-counter"><span id="counter1">200</span>/200</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="weui-cells__title">维护结果：</div>
+            <div class="weui-cells weui-cells_radio">
+                <label class="weui-cell weui-check__label" for="x11">
+                <div class="weui-cell__bd">
+                    <p>未完成</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" class="weui-check" name="radio1" id="x11">
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+                <label class="weui-cell weui-check__label" for="x12">
+
+                <div class="weui-cell__bd">
+                    <p>已完成</p>
+                </div>
+                <div class="weui-cell__ft">
+                    <input type="radio" name="radio1" class="weui-check" id="x12" checked="checked">
+                    <span class="weui-icon-checked"></span>
+                </div>
+            </label>
+
+            </div>
+
+            <div class="weui-btn-area">
+                <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">确定</a>
+            </div>
+
+        </div>
+    </div>
+</body>
+<script>
+    function countChar(textareaName, spanName) {
+        var rem = document.getElementById(spanName).innerHTML;
+        document.getElementById(spanName).innerHTML = 200 - document.getElementById(textareaName).value.length;
+        if (rem < 0) {
+            rem = 0;
+        }
+    }
+	
+	 var printerid = 0;
+        var code,state;
+
+        $(document).ready(function() {
+            var id = g_utils.GetQueryString("id");
+            code = g_utils.GetQueryString("code");
+            state = g_utils.GetQueryString("state");
+            g_utils.load("/queryprinter",
+                true,
+                function(result) {
+                    console.dir(result);
+                   $("#customerinf").text(result.customer);
+                   $("#customerinf").val(result.customer);
+                   $("#printername").text(result.name);
+                   $("#printername").val(result.name);
+                   $("#printertype").text(result.type);
+                   $("#printertype").val(result.type);
+                   $("#printerid").text(result.id);
+                   $("#printerid").val(result.id);
+				   $("#serial_number").text(result.number);
+                   $("#serial_number").val(result.number);
+                   converttype(result.type);
+                }, {
+                    "id": id,
+                    "code": code,
+                    "state": state
+                });
+                
+             g_utils.load("/getlist",
+                true,
+                function(result) {
+                    console.dir(result);
+                    $("#typeid").empty();
+                    var html = "";
+                    result.forEach(function(element) {
+                        html+="<option value="+element.id+">"+element.name+"</option>"
+                    });
+                    $("#typeid").html(html);
+                    }, {
+                        "tbname": "faulttype",
+                   });
+
+        });
+
+
+        $("#submit").click(function(){
+
+            var formData = new FormData($("#upfileform")[0]);
+            $.ajax({
+                url: "/upload",
+                type: "POST",
+                data: formData,
+                contentType: false,
+                processData: false,
+                "code": code,
+                "state": state,
+                success:function(result){
+                    $("#result").html(result.data);
+                    alert("提交成功");
+                },
+            });
+
+
+            g_utils.load("/reportfault",
+                true,
+                function(result) {
+                    if(result != null){
+                        //alert("提交成功");
+                    }
+                    }, {
+                    "printerid":$("#id").val(),
+                    "type":$("#typeid").val(),
+                    "name": $("#personname").val(),
+                    "phone": $("#phone").val(),
+                    "details":$("#status").val(),
+                    "code": code,
+                    "state": state
+                });
+        });
+
+
+        function converttype(type){
+            g_utils.load("/query",
+                true,
+                function(result) {
+                    $("#printertype").text(result.name);
+                    console.log(result.name);
+                }, {
+                    "tbname": "printertype",
+                    "obj":JSON.stringify({"id":type})
+                });
+        }
+
+
+</script>
+
+</html>
